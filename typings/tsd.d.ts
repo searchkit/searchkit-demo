@@ -11,3 +11,5 @@
 /// <reference path="requirejs/require.d.ts" />
 /// <reference path="selenium-webdriver/selenium-webdriver.d.ts" />
 /// <reference path="typescript/typescript.d.ts" />
+/// <reference path="../node_modules/axios/axios.d.ts" />
+/// <reference path="../node_modules/rx/ts/rx.all.d.ts" />

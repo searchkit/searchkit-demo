@@ -52,7 +52,6 @@
   },
   "devDependencies": {
     "html-webpack-plugin": "^1.6.2",
-    "rx": "^4.0.7",
     "webpack-config": "^2.3.0",
     "webpack-dev-middleware": "^1.2.0",
     "webpack-dev-server": "^1.12.1",

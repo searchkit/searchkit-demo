@@ -13,7 +13,10 @@ module.exports = {
     css: 'styles.css'
   },
   resolve: {
-    extensions:[".js", ".ts", ".tsx","", ".webpack.js", ".web.js",]
+    alias: {
+      react: path.resolve('./node_modules/react')
+    },
+    extensions:[".js", ".ts", ".tsx","", ".webpack.js", ".web.js"]
   },
   plugins: [
     new webpack.optimize.DedupePlugin(),
@@ -45,7 +48,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract("style","css!sass")
+        loader: ExtractTextPlugin.extract(require.resolve("style-loader"),require.resolve("css-loader")+"!"+require.resolve("sass-loader"))
       },
       {
         test: /\.(jpg|png|svg)$/,
