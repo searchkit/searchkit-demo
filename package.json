@@ -38,10 +38,11 @@
     "style-loader": "^0.13.0",
     "ts-loader": "^0.5.6",
     "tsd": "^0.6.5",
-    "typescript": "^1.6.2",
+    "typescript": "1.6.2",
     "url-loader": "^0.5.6",
     "webpack": "^1.12.2",
-    "webpack-config": "^1.1.1"
+    "webpack-config": "^1.1.1",
+    "react-router":"1.0.0"
   },
   "devDependencies": {
     "html-webpack-plugin": "^1.6.2",
