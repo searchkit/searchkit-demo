@@ -1,4 +1,3 @@
-require("coffee-script/register")
 var path = require("path");
 var express = require("express");
 var elasticsearch = require("elasticsearch")
