@@ -53,7 +53,7 @@ module.exports = {
     }
 
     var client = new elasticsearch.Client({
-      host: 'https://read:teetndhjnrspbzxxyfxmf5fb24suqxuj@kili-eu-west-1.searchly.com',
+      host: 'https://site:a5b218f61c1c18039315dedfc9461d2e@kili-eu-west-1.searchly.com',
       log: 'debug'
     });
 
