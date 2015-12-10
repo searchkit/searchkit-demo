@@ -7,8 +7,14 @@ import { Router, Route, Link, Redirect } from 'react-router'
 
 const searchkit = new SearchkitManager("movies")
 
+// ReactDOM.render((
+// 	<Router history={history}>
+// 		<Route path="/movies-app" component={SearchkitProvider.wrap(App, searchkit)}/>
+// 	</Router>
+// ), document.getElementById('root'))
+
 ReactDOM.render((
-	<Router history={history}>
-		<Route path="/movies-app" component={SearchkitProvider.wrap(App, searchkit)}/>
-	</Router>
-), document.getElementById('root'))
+	<SearchkitProvider searchkit={searchkit}>
+		<App/>
+	</SearchkitProvider>
+),  document.getElementById('root'))
