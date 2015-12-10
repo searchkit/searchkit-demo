@@ -18,6 +18,9 @@ module.exports = {
     new webpack.NoErrorsPlugin()
   ],
   resolve: {
+    alias: {
+      react: path.resolve('./node_modules/react')
+    },
     extensions:[".js", ".ts", ".tsx","", ".webpack.js", ".web.js",]
   },
   module: {
@@ -29,7 +32,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loaders: ["style", "css", "sass"]
+        loaders: [require.resolve("style-loader"), require.resolve("css-loader"), require.resolve("sass-loader")]
       },
       {
         test: /\.(jpg|png|svg)$/,
