@@ -9,6 +9,28 @@ html {
   box-sizing: inherit;
 }
 
+.filter--categories {
+  .hierarchical-menu-list__header {
+    color:#c99a5d;
+  }
+}
+
+.selected-filter {
+
+  &--categories {
+    border-color:#c99a5d;
+  }
+
+  &--categories &__name {
+    color:#c99a5d;
+  }
+
+  &--categories &__remove-action {
+    color:#c99a5d;
+  }
+}
+
+
 .layout {
 
   &__search-box {
