@@ -7,20 +7,8 @@ import { Router, Route, Link, Redirect } from 'react-router'
 
 const searchkit = new SearchkitManager("movies")
 
-
-class Root extends React.Component<any, any> {
-	render(){
-		return (
-			<SearchkitProvider searchkit={searchkit}>
-				<App/>
-			</SearchkitProvider>
-		)
-	}
-}
-
-
 ReactDOM.render((
 	<Router history={history}>
-		<Route path="/movies-app" component={Root}/>
+		<Route path="/movies-app" component={SearchkitProvider.wrap(App, searchkit)}/>
 	</Router>
 ), document.getElementById('root'))
