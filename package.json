@@ -24,7 +24,6 @@
     "method-override": "^2.3.5",
     "normalize.css": "^3.0.3",
     "qs": "^4.0.0",
-    "rx": "^4.0.7",
     "react": "^0.14.0",
     "react-addons-update": "^0.14.3",
     "react-dom": "^0.14.0",
