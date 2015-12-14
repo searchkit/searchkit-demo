@@ -21,7 +21,11 @@ module.exports = {
     alias: {
       react: path.resolve('./node_modules/react')
     },
-    extensions:[".js", ".ts", ".tsx","", ".webpack.js", ".web.js",]
+    extensions:[".js", ".ts", ".tsx","", ".webpack.js", ".web.js"],
+    fallback: path.join(__dirname, "node_modules")
+  },
+  resolveLoader: {
+    root: path.join(__dirname, "node_modules")
   },
   module: {
     loaders: [
@@ -32,7 +36,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loaders: [require.resolve("style-loader"), require.resolve("css-loader"), require.resolve("sass-loader")]
+        loaders: ["style-loader", "css-loader", "sass-loader"]
       },
       {
         test: /\.(jpg|png|svg)$/,
