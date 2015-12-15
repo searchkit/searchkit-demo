@@ -62,7 +62,7 @@ processedMovies = movies.map (movie)->
     imdbRating:Number(movie.imdbRating)
     imdbVotes:toNumber(movie.imdbVotes)
     imdbId:movie.imdbID
-    type:movie.Type
+    type:_.capitalize(movie.Type)
     suggest:{
       input:movie.Title?.split?(" ") or []
       output: movie.Title

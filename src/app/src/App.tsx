@@ -10,7 +10,8 @@ import {
 	MenuFilter,
 	SelectedFilters,
 	HierarchicalMenuFilter,
-	NumericRefinementListFilter
+	NumericRefinementListFilter,
+	SortingSelector
 } from "searchkit";
 
 import {
@@ -68,6 +69,11 @@ export class App extends SearchkitComponent<any, any> {
 					</div>
 					<div className="layout__results-info">
 						<HitsStats/>
+						<SortingSelector options={[
+							{label:"Relevance", field:"_score", order:"desc"},
+							{label:"Latest Releases", field:"released", order:"desc"},
+							{label:"Earliest Releases", field:"released", order:"asc"}
+						]}/>
 					</div>
 					<div className="layout__results">
 						<MovieHits hitsPerPage={50}/>
