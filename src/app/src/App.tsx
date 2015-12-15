@@ -61,11 +61,11 @@ export class App extends SearchkitComponent<any, any> {
 						<RefinementListFilter id="countries" title="Countries" field="countries.raw" operator="OR"/>
 						<NumericRefinementListFilter id="metascore" title="Meta score" field="metaScore" options={[
 							{title:"All"},
-							{title:"0 to 20", from:0, to:20},
-							{title:"20 to 40", from:20, to:40},
-							{title:"40 to 60", from:40, to:60},
-							{title:"60 to 80", from:60, to:80},
-							{title:"80 to 100", from:80, to:100}
+							{title:"up to 20", from:0, to:21},
+							{title:"21 to 40", from:21, to:41},
+							{title:"41 to 60", from:41, to:61},
+							{title:"61 to 80", from:61, to:81},
+							{title:"81 to 100", from:81, to:101}
 						]} />
 					</div>
 					<div className="layout__results-info">
