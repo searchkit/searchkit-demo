@@ -9,7 +9,8 @@ import {
 	ResetFilters,
 	MenuFilter,
 	SelectedFilters,
-	HierarchicalMenuFilter
+	HierarchicalMenuFilter,
+	NumericRefinementListFilter
 } from "searchkit";
 
 import {
@@ -58,6 +59,14 @@ export class App extends SearchkitComponent<any, any> {
 						<RefinementListFilter id="actors" title="Actors" field="actors.raw" operator="AND"/>
 						<RefinementListFilter id="writers" title="Writers" field="writers.raw" operator="OR"/>
 						<RefinementListFilter id="countries" title="Countries" field="countries.raw" operator="OR"/>
+						<NumericRefinementListFilter id="metascore" title="Meta score" field="metaScore" options={[
+							{title:"All"},
+							{title:"0 to 20", from:0, to:20},
+							{title:"20 to 40", from:20, to:40},
+							{title:"40 to 60", from:40, to:60},
+							{title:"60 to 80", from:60, to:80},
+							{title:"80 to 100", from:80, to:100}
+						]} />
 					</div>
 					<div className="layout__results-info">
 						<HitsStats/>
