@@ -4,7 +4,7 @@ var elasticsearch = require("elasticsearch")
 var bodyParser = require("body-parser")
 var methodOverride = require("method-override")
 var compression = require("compression")
-
+var ElasticExpressProxy = require("./ElasticExpressProxy")
 var _ = require("lodash")
 
 module.exports = {
@@ -52,28 +52,11 @@ module.exports = {
       app.use("/static", express.static(__dirname + '/dist'));
     }
 
-    var client = new elasticsearch.Client({
-      host: 'https://site:a5b218f61c1c18039315dedfc9461d2e@kili-eu-west-1.searchly.com',
-      log: 'debug'
-    });
-
-
-    app.post("/api/search/:index", function(req, res){
-      var queryBody = req.body || {}
-      client.search({
-        index: req.params.index,
-        body:queryBody
-      }).then(function(resp){
-        res.send(resp)
-      })
-    });
-
-    app.post("/api/multisearch", function(req, res){
-      client.msearch({body:req.body})
-        .then(function(resp){
-          res.send(resp)
-        })
-    });
+    ElasticExpressProxy({
+      host:process.env.ELASTIC_URL || "http://localhost:9200",
+      log: 'debug',
+      index:'movies'
+    }, app)
 
     app.get('*', function(req, res) {
       res.render('index');

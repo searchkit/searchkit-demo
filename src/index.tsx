@@ -5,7 +5,7 @@ import {App} from "./app/src/App.tsx";
 import {SearchkitManager, history, SearchkitProvider} from "searchkit";
 import { Router, Route, Link, Redirect } from 'react-router'
 
-const searchkit = new SearchkitManager("movies")
+const searchkit = new SearchkitManager("/")
 
 // ReactDOM.render((
 // 	<Router history={history}>
