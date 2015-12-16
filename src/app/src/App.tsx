@@ -48,7 +48,7 @@ export class App extends SearchkitComponent<any, any> {
 				<div className="layout">
 					<div className="layout__search-box">
 						<SelectedFilters/>
-						<SearchBox/>
+						<SearchBox searchOnChange={true}/>
 					</div>
 
 					<div className="layout__filters">
