@@ -76,7 +76,7 @@ export class App extends SearchkitComponent<any, any> {
 						]}/>
 					</div>
 					<div className="layout__results">
-						<MovieHits hitsPerPage={50}/>
+						<MovieHits hitsPerPage={20}/>
 						<Pagination/>
 					</div>
 				</div>
