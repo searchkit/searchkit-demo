@@ -1,6 +1,6 @@
 elasticsearch = require "elasticsearch"
 promise       = require "bluebird"
-movies        = require "./imdbMovies"
+movies        = require "./imdbMoviesNew"
 moment        = require "moment"
 _             = require "lodash"
 args = process.argv.slice(2);
@@ -57,7 +57,7 @@ processedMovies = movies.map (movie)->
     languages:splitComma(movie.Language)
     countries:splitComma(movie.Country)
     awards:movie.Awards if notNA(movie.Awards)
-    poster:movie.Poster
+    poster:movie.PosterS3
     metaScore:Number(movie.Metascore) if notNA(movie.Metascore)
     imdbRating:Number(movie.imdbRating)
     imdbVotes:toNumber(movie.imdbVotes)
