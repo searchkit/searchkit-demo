@@ -29,7 +29,7 @@ class MovieHits extends Hits {
 		return (
 			<div className="hit" key={result._id}>
 				<a href={url} target="_blank">
-					<img className="hit__poster" src={result._source.poster}/>
+					<img className="hit__poster" src={result._source.poster} width="180" height="270"/>
 				</a>
 				<a href={url} target="_blank">
 					<div className="hit__title">{result._source.title}</div>
