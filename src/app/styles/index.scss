@@ -1,5 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,600);
 @import "~normalize.css/normalize.css";
+@import "~searchkit/src/components/search/hits/styles/index.scss";
 
 html {
   font-family:"Open Sans";
@@ -8,28 +9,6 @@ html {
 *, *:before, *:after {
   box-sizing: inherit;
 }
-
-// .filter--categories {
-//   .hierarchical-menu-list__header {
-//     color:#c99a5d;
-//   }
-// }
-
-// .selected-filter {
-//
-//   &--categories {
-//     border-color:#c99a5d !important;
-//   }
-//
-//   &--categories &__name {
-//     color:#c99a5d;
-//   }
-//
-//   &--categories &__remove-action {
-//     color:#c99a5d;
-//   }
-// }
-
 
 .layout {
 
@@ -105,4 +84,25 @@ html {
 .layout__filters__heading {
   margin-bottom:30px;
   margin-top:20px;
+}
+
+.hits-hit {
+
+  a {
+    text-decoration:none;
+    color:#08c;
+  }
+
+  &__poster {
+    max-width:180px;
+    max-height:280px;
+    margin-bottom:10px;
+  }
+
+  &__title {
+    line-height:20px;
+    text-align:center;
+    font-size:12px;
+  }
+
 }

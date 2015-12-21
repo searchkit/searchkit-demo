@@ -1,5 +1,6 @@
 import * as React from "react";
 
+
 import {
 	SearchBox,
 	Hits,
@@ -27,12 +28,12 @@ class MovieHits extends Hits {
 	renderResult(result:any) {
 		let url = "http://www.imdb.com/title/" + result._source.imdbId
 		return (
-			<div className="hit" key={result._id}>
+			<div className={this.bemBlocks.item().mix(this.bemBlocks.container("item"))} key={result._id}>
 				<a href={url} target="_blank">
-					<img className="hit__poster" src={result._source.poster} width="180" height="270"/>
+					<img className={this.bemBlocks.item("poster")} src={result._source.poster} width="180" height="270"/>
 				</a>
 				<a href={url} target="_blank">
-					<div className="hit__title">{result._source.title}</div>
+					<div className={this.bemBlocks.item("title")}>{result._source.title}</div>
 				</a>
 			</div>
 		)
