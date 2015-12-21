@@ -6,7 +6,7 @@ import {
 	SearchkitManager, SearchkitProvider
 } from "searchkit";
 
-const searchkit = new SearchkitManager("/")
+const searchkit = new SearchkitManager("/", {multipleSearchers:false})
 
 ReactDOM.render((
 	<SearchkitProvider searchkit={searchkit}>
