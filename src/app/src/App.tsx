@@ -85,6 +85,7 @@ export class App extends SearchkitComponent<any, any> {
 						<MovieHits hitsPerPage={20}/>
 						<Pagination/>
 					</div>
+					<a className="view-src-link" href="https://github.com/searchkit/searchkit-demo/blob/master/src/app/src/App.tsx">View source »</a>
 				</div>
 			</SearcherProvider>
 

@@ -106,3 +106,15 @@ html {
   }
 
 }
+
+.view-src-link {
+  position:fixed;
+  line-height:40px;
+  background:#ddd;
+  right:10px;
+  bottom:10px;
+  text-decoration: none;
+  padding:0 20px;
+  border-radius: 3px;
+  color:#08c;
+}
