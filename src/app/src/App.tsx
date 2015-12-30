@@ -1,47 +1,47 @@
 import * as React from "react";
 import {
-	SearchBox,
-	Hits,
-	HitsStats,
-	RefinementListFilter,
-	Pagination,
-	ResetFilters,
-	MenuFilter,
-	SelectedFilters,
-	HierarchicalMenuFilter,
-	NumericRefinementListFilter,
-	SortingSelector,
-	SearchkitComponent,
-	Searcher,
-	SearcherProvider
+  SearchBox,
+  Hits,
+  HitsStats,
+  RefinementListFilter,
+  Pagination,
+  ResetFilters,
+  MenuFilter,
+  SelectedFilters,
+  HierarchicalMenuFilter,
+  NumericRefinementListFilter,
+  SortingSelector,
+  SearchkitComponent,
+  Searcher,
+  SearcherProvider
 } from "searchkit";
 
 require("./../styles/index.scss");
 
 class MovieHits extends Hits {
-	renderResult(result:any) {
-		let url = "http://www.imdb.com/title/" + result._source.imdbId
-		return (
-			<div className={this.bemBlocks.item().mix(this.bemBlocks.container("item"))} key={result._id}>
-				<a href={url} target="_blank">
-					<img className={this.bemBlocks.item("poster")} src={result._source.poster} width="180" height="270"/>
-				</a>
-				<a href={url} target="_blank">
-					<div className={this.bemBlocks.item("title")}>{result._source.title}</div>
-				</a>
-			</div>
-		)
-	}
+  renderResult(result:any) {
+    let url = "http://www.imdb.com/title/" + result._source.imdbId
+    return (
+      <div className={this.bemBlocks.item().mix(this.bemBlocks.container("item"))} key={result._id}>
+        <a href={url} target="_blank">
+          <img className={this.bemBlocks.item("poster")} src={result._source.poster} width="180" height="270"/>
+        </a>
+        <a href={url} target="_blank">
+          <div className={this.bemBlocks.item("title")}>{result._source.title}</div>
+        </a>
+      </div>
+    )
+  }
 }
 
 export class App extends SearchkitComponent<any, any> {
 
-	render(){ return (
-		<div className="layout">
-			<div className="layout__search-box">
-				<SelectedFilters/>
-				<SearchBox searchOnChange={true} prefixQueryFields={["actors^1","type^2","languages","title^10"]}/>
-			</div>
+  render(){ return (
+    <div className="layout">
+      <div className="layout__search-box">
+        <SelectedFilters/>
+        <SearchBox searchOnChange={true} prefixQueryFields={["actors^1","type^2","languages","title^10"]}/>
+      </div>
 
 			<div className="layout__filters">
 				<ResetFilters />
@@ -74,4 +74,5 @@ export class App extends SearchkitComponent<any, any> {
 			<a className="view-src-link" href="https://github.com/searchkit/searchkit-demo/blob/master/src/app/src/App.tsx">View source »</a>
 		</div>
 	)}
+
 }
