@@ -40,7 +40,7 @@ export class App extends SearchkitComponent<any, any> {
     <div className="layout">
       <div className="layout__search-box">
         <SelectedFilters/>
-        <SearchBox searchOnChange={true} prefixQueryFields={["actors^1","type^2","languages","title^10"]}/>
+        <SearchBox autofocus={true} searchOnChange={true} prefixQueryFields={["actors^1","type^2","languages","title^10"]}/>
       </div>
 
 			<div className="layout__filters">
