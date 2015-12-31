@@ -6,10 +6,14 @@ import {
   SearchkitManager, SearchkitProvider
 } from "searchkit";
 
-const searchkit = new SearchkitManager("/", {multipleSearchers:false})
+const host = "https://kili-eu-west-1.searchly.com/movies/"
+const sk = new SearchkitManager(host, {
+  multipleSearchers:false,
+  basicAuth:"read:teetndhjnrspbzxxyfxmf5fb24suqxuj"
+})
 
 ReactDOM.render((
-  <SearchkitProvider searchkit={searchkit}>
+  <SearchkitProvider searchkit={sk}>
     <App/>
   </SearchkitProvider>
 ),  document.getElementById('root'))
