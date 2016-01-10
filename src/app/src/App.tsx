@@ -40,16 +40,15 @@ export class App extends SearchkitComponent<any, any> {
     <div className="layout">
       <div className="layout__search-box">
         <SelectedFilters/>
-        <SearchBox autofocus={true} searchOnChange={true} prefixQueryFields={["actors^1","type^2","languages","title^10"]}/>
+        <SearchBox autofocus={true} searchOnChange={true} queryFields={["actors^1","type^2","languages","title^5", "genres^2"]}/>
       </div>
 
 			<div className="layout__filters">
 				<ResetFilters />
 				<HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
-				<MenuFilter field="languages.raw" title="Languages" id="languages"/>
-				<RefinementListFilter id="actors" title="Actors" field="actors.raw" operator="AND"/>
-				<RefinementListFilter id="writers" title="Writers" field="writers.raw" operator="OR"/>
-				<RefinementListFilter id="countries" title="Countries" field="countries.raw" operator="OR"/>
+				<RefinementListFilter id="actors" title="Actors" field="actors.raw" operator="AND" size={10}/>
+				<RefinementListFilter id="writers" title="Writers" field="writers.raw" operator="OR" size={10}/>
+				<RefinementListFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={10}/>
 				<NumericRefinementListFilter id="metascore" title="Meta score" field="metaScore" options={[
 					{title:"All"},
 					{title:"up to 20", from:0, to:21},
@@ -68,7 +67,7 @@ export class App extends SearchkitComponent<any, any> {
 				]}/>
 			</div>
 			<div className="layout__results">
-				<MovieHits hitsPerPage={20}/>
+				<MovieHits hitsPerPage={10}/>
 				<Pagination/>
 			</div>
 			<a className="view-src-link" href="https://github.com/searchkit/searchkit-demo/blob/master/src/app/src/App.tsx">View source »</a>
