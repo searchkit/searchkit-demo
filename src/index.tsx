@@ -1,18 +1,15 @@
-import * as React from "react";
 import * as ReactDOM from "react-dom";
+import * as React from "react";
 import {App} from "./app/src/App.tsx";
+import {TaxonomyApp} from "./app/src/TaxonomyApp.tsx";
 
-import {
-  SearchkitManager, SearchkitProvider
-} from "searchkit";
-
-const host = "https://d78cfb11f565e845000.qb0x.com/movies"
-const sk = new SearchkitManager(host, {
-  multipleSearchers:false
-})
+import {Router, Route, IndexRoute} from "react-router";
+const createBrowserHistory = require('history/lib/createBrowserHistory')
 
 ReactDOM.render((
-  <SearchkitProvider searchkit={sk}>
-    <App/>
-  </SearchkitProvider>
-),  document.getElementById('root'))
+  <Router history={createBrowserHistory()}>
+    <Route component={App} path="/"/>
+    <Route component={App} path="imdb"/>
+    <Route component={TaxonomyApp} path="taxonomy"/>
+  </Router>
+), document.getElementById('root'));

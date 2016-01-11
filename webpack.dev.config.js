@@ -18,9 +18,6 @@ module.exports = {
     new webpack.NoErrorsPlugin()
   ],
   resolve: {
-    alias: {
-      react: path.resolve('./node_modules/react')
-    },
     extensions:[".js", ".ts", ".tsx","", ".webpack.js", ".web.js"],
     fallback: path.join(__dirname, "node_modules")
   },
