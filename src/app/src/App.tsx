@@ -57,7 +57,7 @@ export class App extends React.Component<any, any> {
         <div className="layout">
           <div className="layout__search-box">
             <SelectedFilters/>
-            <SearchBox autofocus={true} queryFields={["actors^1","type^2","languages","title^5", "genres^2"]}/>
+            <SearchBox autofocus={true} searchOnChange={true} queryFields={["actors^1","type^2","languages","title^5", "genres^2"]}/>
           </div>
 
     			<div className="layout__filters">
