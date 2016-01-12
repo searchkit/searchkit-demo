@@ -1,4 +1,6 @@
 import * as React from "react";
+import * as _ from "lodash";
+
 import {
   SearchBox,
   Hits,
@@ -28,7 +30,8 @@ class MovieHits extends Hits {
           <img className={this.bemBlocks.item("poster")} src={result._source.poster} width="180" height="270"/>
         </a>
         <a href={url} target="_blank">
-          <div className={this.bemBlocks.item("title")}>{result._source.title}</div>
+          <div className={this.bemBlocks.item("title")} dangerouslySetInnerHTML={{__html:_.get(result,"highlight.title",false) || result._source.title}}>
+          </div>
         </a>
       </div>
     )
@@ -84,7 +87,7 @@ export class App extends React.Component<any, any> {
     				]}/>
     			</div>
     			<div className="layout__results">
-    				<MovieHits hitsPerPage={10}/>
+    				<MovieHits hitsPerPage={10} highlightFields={["title"]}/>
     				<Pagination/>
     			</div>
     			<a className="view-src-link" href="https://github.com/searchkit/searchkit-demo/blob/master/src/app/src/App.tsx">View source »</a>

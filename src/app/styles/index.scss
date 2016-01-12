@@ -102,6 +102,11 @@ html {
     line-height:20px;
     text-align:center;
     font-size:12px;
+    em {
+      background:yellow;
+      font-weight:700;
+      font-style: normal;
+    }
   }
 
 }

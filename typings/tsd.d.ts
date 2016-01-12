@@ -5,3 +5,4 @@
 /// <reference path="../node_modules/axios/axios.d.ts" />
 /// <reference path="../node_modules/definition-header/dist/index.d.ts" />
 /// <reference path="requirejs/require.d.ts" />
+/// <reference path="lodash/lodash.d.ts" />

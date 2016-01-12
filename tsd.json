@@ -19,6 +19,9 @@
     },
     "requirejs/require.d.ts": {
       "commit": "3444d37717e4ff7c6f56a130cd7a14f56428713a"
+    },
+    "lodash/lodash.d.ts": {
+      "commit": "faa49cc68025118355b677b936892435b9be7247"
     }
   }
 }
