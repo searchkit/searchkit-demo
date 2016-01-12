@@ -13,7 +13,7 @@ import {
   HierarchicalMenuFilter,
   NumericRefinementListFilter,
   SortingSelector,
-  SearchkitComponent,  
+  SearchkitComponent,
   SearchkitProvider,
   SearchkitManager
 } from "searchkit";
@@ -39,22 +39,19 @@ class MovieHits extends Hits {
 
 export class App extends React.Component<any, any> {
 
-  sk:SearchkitManager
+  searchkit:SearchkitManager
 
   constructor() {
     const host = "https://d78cfb11f565e845000.qb0x.com/movies"
-    this.sk = new SearchkitManager(host, {
-      multipleSearchers:false
-    })
+    this.searchkit = new SearchkitManager(host)
     super()
   }
 
   render(){
-
-
+    
     return (
       <div>
-      <SearchkitProvider searchkit={this.sk}>
+      <SearchkitProvider searchkit={this.searchkit}>
       <div>
         <div className="layout">
           <div className="layout__search-box">

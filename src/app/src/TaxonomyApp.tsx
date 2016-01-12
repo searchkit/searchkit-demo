@@ -26,19 +26,17 @@ class TaxonomyHits extends Hits {
 
 export class TaxonomyApp extends React.Component<any, any> {
 
-  sk:SearchkitManager
+  searchkit:SearchkitManager
 
   constructor() {
     const host = "https://d78cfb11f565e845000.qb0x.com/taxonomynested"
-    this.sk = new SearchkitManager(host, {
-      multipleSearchers:false
-    })
+    this.searchkit = new SearchkitManager(host)
     super()
   }
 
   render(){ return (
     <div>
-    <SearchkitProvider searchkit={this.sk}>
+    <SearchkitProvider searchkit={this.searchkit}>
     <div className="layout">
       <div className="layout__search-box">
         <SelectedFilters/>
