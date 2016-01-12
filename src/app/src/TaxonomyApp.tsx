@@ -7,8 +7,6 @@ import {
   ResetFilters,
   SelectedFilters,
   SearchkitComponent,
-  Searcher,
-  SearcherProvider,
   HitsStats,
   SearchkitManager,
   SearchkitProvider

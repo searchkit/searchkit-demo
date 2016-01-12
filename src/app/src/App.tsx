@@ -13,8 +13,7 @@ import {
   HierarchicalMenuFilter,
   NumericRefinementListFilter,
   SortingSelector,
-  SearchkitComponent,
-  Searcher,
+  SearchkitComponent,  
   SearchkitProvider,
   SearchkitManager
 } from "searchkit";
