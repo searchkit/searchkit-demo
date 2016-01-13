@@ -86,6 +86,7 @@ export class App extends React.Component<any, any> {
     				]}/>
     			</div>
     			<div className="layout__results">
+            <Pagination/>
     				<MovieHits hitsPerPage={10} highlightFields={["title"]}/>
     				<Pagination/>
     			</div>
