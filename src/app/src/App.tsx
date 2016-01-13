@@ -44,11 +44,14 @@ export class App extends React.Component<any, any> {
   constructor() {
     const host = "https://d78cfb11f565e845000.qb0x.com/movies"
     this.searchkit = new SearchkitManager(host)
+    this.searchkit.translateFunction = (key)=> {
+      return {"pagination.next":"Next Page"}[key]
+    }
     super()
   }
 
   render(){
-    
+
     return (
       <div>
       <SearchkitProvider searchkit={this.searchkit}>
