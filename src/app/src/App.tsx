@@ -88,7 +88,7 @@ export class App extends React.Component<any, any> {
     			</div>
     			<div className="layout__results">
     				<MovieHits hitsPerPage={10} highlightFields={["title"]}/>
-            <NoHits/>
+            <NoHits suggestionsField={"title"}/>
     				<Pagination/>
     			</div>
     			<a className="view-src-link" href="https://github.com/searchkit/searchkit-demo/blob/master/src/app/src/App.tsx">View source »</a>
