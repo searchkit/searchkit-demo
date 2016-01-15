@@ -15,7 +15,8 @@ import {
   SortingSelector,
   SearchkitComponent,
   SearchkitProvider,
-  SearchkitManager
+  SearchkitManager,
+  NoHits
 } from "searchkit";
 
 require("./../styles/index.scss");
@@ -88,6 +89,7 @@ export class App extends React.Component<any, any> {
     			<div className="layout__results">
             <Pagination/>
     				<MovieHits hitsPerPage={10} highlightFields={["title"]}/>
+            <NoHits/>
     				<Pagination/>
     			</div>
     			<a className="view-src-link" href="https://github.com/searchkit/searchkit-demo/blob/master/src/app/src/App.tsx">View source »</a>

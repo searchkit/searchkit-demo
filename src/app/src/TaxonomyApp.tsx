@@ -9,7 +9,8 @@ import {
   SearchkitComponent,
   HitsStats,
   SearchkitManager,
-  SearchkitProvider
+  SearchkitProvider,
+  NoHits
 } from "searchkit";
 
 require("./../styles/index.scss");
@@ -52,6 +53,7 @@ export class TaxonomyApp extends React.Component<any, any> {
 			</div>
 			<div className="layout__results">
 				<TaxonomyHits hitsPerPage={10}/>
+        <NoHits/>
 				<Pagination/>
 			</div>
 			<a className="view-src-link" href="https://github.com/searchkit/searchkit-demo/blob/master/src/app/src/App.tsx">View source »</a>
