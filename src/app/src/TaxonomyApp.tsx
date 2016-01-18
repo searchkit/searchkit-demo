@@ -56,7 +56,7 @@ export class TaxonomyApp extends React.Component<any, any> {
         <NoHits/>
 				<Pagination/>
 			</div>
-			<a className="view-src-link" href="https://github.com/searchkit/searchkit-demo/blob/master/src/app/src/App.tsx">View source »</a>
+			<a className="view-src-link" href="https://github.com/searchkit/searchkit-demo/blob/master/src/app/src/TaxonomyApp.tsx">View source »</a>
 		</div>
     </SearchkitProvider>
     </div>
