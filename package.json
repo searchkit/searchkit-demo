@@ -30,7 +30,7 @@
     "react-addons-update": "^0.14.3",
     "react-dom": "^0.14.0",
     "react-hot-loader": "^1.3.0",
-    "searchkit": "searchkit/searchkit#develop"
+    "searchkit": "0.3.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.0.3",
