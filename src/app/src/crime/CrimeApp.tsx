@@ -19,7 +19,12 @@ import {
   NoHits
 } from "searchkit";
 
-require("./../styles/index.scss");
+import {
+  CrimeAccessor,
+  GeoMap
+} from "./CrimeAggs"
+
+require("./../../styles/index.scss");
 
 class CrimeHits extends Hits {
   renderResult(result:any) {
@@ -51,21 +56,18 @@ export class CrimeApp extends React.Component<any, any> {
         <div className="layout">
           <div className="layout__search-box">
             <SelectedFilters/>
-            <SearchBox queryOptions={{"minimum_should_match":"70%"}} autofocus={true} searchOnChange={true} queryFields={["crime_type","force"]}/>
           </div>
 
     			<div className="layout__filters">
     				<ResetFilters />
-    				<RefinementListFilter id="crime_type" title="Crime Type" field="crime_type.raw" operator="OR" size={10}/>
-    				<RefinementListFilter id="force" title="Force" field="force.raw" operator="OR" size={10}/>
+    				<MenuFilter id="crime_type" title="Crime Type" field="crime_type.raw"/>
+    				<MenuFilter id="force" title="Force" field="force.raw"/>
     			</div>
     			<div className="layout__results-info">
     				<HitsStats/>
     			</div>
     			<div className="layout__results">
-    				<CrimeHits hitsPerPage={10} />
-            <NoHits/>
-    				<Pagination/>
+            <GeoMap/>
     			</div>
     			<a className="view-src-link" href="https://github.com/searchkit/searchkit-demo/blob/master/src/app/src/App.tsx">View source »</a>
     		</div>
