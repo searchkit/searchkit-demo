@@ -67,6 +67,7 @@ export class App extends React.Component<any, any> {
     			<div className="layout__filters">
     				<ResetFilters />
             <RangeFilter min={0} max={100} field="metaScore" id="metascore1" title="metascore"/>
+            <RangeFilter min={0} max={10} field="imdbRating" id="imdbRating" title="IMDB Rating"/>
     				<HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
     				<RefinementListFilter id="actors" title="Actors" field="actors.raw" operator="AND" size={10}/>
     				<RefinementListFilter translations={{"facets.view_more":"View more writers"}} id="writers" title="Writers" field="writers.raw" operator="OR" size={10}/>
