@@ -132,7 +132,7 @@ export class GeoMap extends SearchkitComponent<any, any> {
     let timesCalled = 0
     let fn = _.debounce(this.onBoundsChanged.bind(this), 500)
     let onBoundsChanged = ()=> {
-      if(timesCalled > 1){
+      if(timesCalled > 0){
         fn()
       }else {
         timesCalled++
