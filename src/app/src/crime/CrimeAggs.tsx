@@ -6,32 +6,55 @@ import {
   AggsContainer,
   SearchkitComponent,
   FilterBucket,
-  Utils
-
+  Utils,
+  GeohashBucket,
+  GeoBoundsMetric,
+  SignificantTermsBucket,
+  FilteredQuery
 } from "searchkit"
 
-export function GeohashBucket(key, field, options, ...childAggs){
-  return AggsContainer(key, {geohash_grid:_.extend({field}, options)}, childAggs)
-}
-export function GeoBoundsMetric(key, field){
-  return AggsContainer(key, {geo_bounds:{field}})
-}
-export function SignificantTermsBucket(key, field, options, ...childAggs){
-  return AggsContainer(key, {significant_terms:_.extend({field}, options)}, childAggs)
-}
 
 
 export class CrimeAccessor extends Accessor{
+  area:any
+  precision:number = 6
+  setArea(area){
+    this.area = area
+  }
+  setPrecision(precision){
+    this.precision = precision
+  }
+
+  setResults(results){
+    super.setResults(results)
+     let significant = _.pluck(
+      this.getAggregations(["geo", "significant", "buckets"], [])
+    , "key")
+    console.log("significant", significant)
+  }
+
+  buildSharedQuery(query){
+    if(this.area){
+      return query.addQuery(FilteredQuery({
+        filter:{
+          geo_bounding_box:{
+            location:this.area
+          }
+        }
+      }))
+    }
+    return query
+  }
 
   buildOwnQuery(query){
     return query.setAggs(FilterBucket(
       "geo", query.getFilters(),
       GeohashBucket(
         "areas", "location",
-        {precision:6, size:100},
-        GeoBoundsMetric("cell", "location"),
-        SignificantTermsBucket("significant","crime_type.raw", {size:2})
+        {precision:this.precision, size:100},
+        GeoBoundsMetric("cell", "location")
       ),
+      SignificantTermsBucket("significant","crime_type.raw", {size:2}),
       GeoBoundsMetric("bounds", "location")
     ))
   }
@@ -42,7 +65,10 @@ declare var google:any
 
 export class GeoMap extends SearchkitComponent<any, any> {
   map:any
-
+  accessor:CrimeAccessor
+  constructor(){
+    super()
+  }
   defineAccessor(){
     return new CrimeAccessor()
   }
@@ -50,7 +76,7 @@ export class GeoMap extends SearchkitComponent<any, any> {
   geoPointToLatLng(point){
     return new google.maps.LatLng(point.lat, point.lon)
   }
-  getBounds(){
+  setBounds(){
     let bounds = new google.maps.LatLngBounds()
     let data = (this.accessor.getAggregations(["geo", "bounds", "bounds"], null))
     if(data){
@@ -58,7 +84,6 @@ export class GeoMap extends SearchkitComponent<any, any> {
       bounds.extend(this.geoPointToLatLng(data.bottom_right))
     }
     this.map.fitBounds(bounds)
-    return bounds
   }
   centerFromBound(bound){
     return {
@@ -75,14 +100,45 @@ export class GeoMap extends SearchkitComponent<any, any> {
         title:area["doc_count"] +""
       }
     })
-    console.log(markers)
     return markers
+  }
+
+  onBoundsChanged(event){
+    console.log("onBoundsChanged")
+    let bounds = this.map.getBounds()
+    let ne = bounds.getNorthEast()
+    let sw = bounds.getSouthWest()
+    let area = {
+      top_right:{ lat:ne.lat(), lon:ne.lng() },
+      bottom_left:{ lat:sw.lat(), lon:sw.lng() }
+    }
+    this.accessor.setPrecision(_.min([10, this.map.getZoom()-1]))
+    this.accessor.setArea(area)
+    this.searchkit.search()
+  }
+  onCenterChanged(event){
+    console.log("onCenterChanged", event)
+  }
+  onZoomChanged(event){
+    console.log("onZoomChanged", event)
   }
 
   render(){
     setTimeout(()=> {
-      this.getBounds()
+      if(!this.accessor.area){
+        this.setBounds()
+      }
     })
+    let timesCalled = 0
+    let fn = _.debounce(this.onBoundsChanged.bind(this), 500)
+    let onBoundsChanged = ()=> {
+      if(timesCalled > 0){
+        fn()
+      }else {
+        timesCalled++
+      }
+    }
+
     return (
       <section style={{height: "100%"}}>
        <GoogleMapLoader
@@ -96,6 +152,7 @@ export class GeoMap extends SearchkitComponent<any, any> {
          }
          googleMapElement={
            <GoogleMap
+             onBoundsChanged={onBoundsChanged}
              ref={(map) => this.map = map}>
              {
                _.map(this.getMarkers(), (marker)=>{

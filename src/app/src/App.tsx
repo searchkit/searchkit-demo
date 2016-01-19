@@ -66,6 +66,11 @@ export class App extends React.Component<any, any> {
 
     			<div className="layout__filters">
     				<ResetFilters />
+<<<<<<< HEAD
+=======
+            <RangeFilter min={0} max={100} field="metaScore" id="metascore1" title="metascore"/>
+            <RangeFilter min={0} max={10} field="imdbRating" id="imdbRating" title="IMDB Rating"/>
+>>>>>>> origin/develop
     				<HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
             <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore"/>
             <RefinementListFilter id="actors" title="Actors" field="actors.raw" operator="AND" size={10}/>
