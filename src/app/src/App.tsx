@@ -66,12 +66,12 @@ export class App extends React.Component<any, any> {
 
     			<div className="layout__filters">
     				<ResetFilters />
-            <RangeFilter min={0} max={100} field="metaScore" id="metascore1" title="metascore"/>
     				<HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
-    				<RefinementListFilter id="actors" title="Actors" field="actors.raw" operator="AND" size={10}/>
+            <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore"/>
+            <RefinementListFilter id="actors" title="Actors" field="actors.raw" operator="AND" size={10}/>
     				<RefinementListFilter translations={{"facets.view_more":"View more writers"}} id="writers" title="Writers" field="writers.raw" operator="OR" size={10}/>
     				<RefinementListFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={10}/>
-    			</div>
+          </div>
     			<div className="layout__results-info">
     				<HitsStats/>
     				<SortingSelector options={[
