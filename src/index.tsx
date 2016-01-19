@@ -2,7 +2,7 @@ import * as ReactDOM from "react-dom";
 import * as React from "react";
 import {App} from "./app/src/App.tsx";
 import {TaxonomyApp} from "./app/src/TaxonomyApp.tsx";
-import {CrimeApp} from "./app/src/CrimeApp.tsx";
+import {CrimeApp} from "./app/src/crime/CrimeApp.tsx";
 
 import {Router, Route, IndexRoute} from "react-router";
 const createBrowserHistory = require('history/lib/createBrowserHistory')
