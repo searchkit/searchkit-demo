@@ -16,7 +16,8 @@ import {
   SearchkitComponent,
   SearchkitProvider,
   SearchkitManager,
-  NoHits
+  NoHits,
+  RangeFilter
 } from "searchkit";
 
 require("./../styles/index.scss");
@@ -66,18 +67,12 @@ export class App extends React.Component<any, any> {
     			<div className="layout__filters">
     				<ResetFilters />
     				<HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
-    				<RefinementListFilter id="actors" title="Actors" field="actors.raw" operator="AND" size={10}/>
+            <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
+            <RangeFilter min={0} max={10} field="imdbRating" id="imdbRating" title="IMDB Rating" showHistogram={true}/>            
+            <RefinementListFilter id="actors" title="Actors" field="actors.raw" operator="AND" size={10}/>
     				<RefinementListFilter translations={{"facets.view_more":"View more writers"}} id="writers" title="Writers" field="writers.raw" operator="OR" size={10}/>
     				<RefinementListFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={10}/>
-    				<NumericRefinementListFilter id="metascore" title="Meta score" field="metaScore" options={[
-    					{title:"All"},
-    					{title:"up to 20", from:0, to:21},
-    					{title:"21 to 40", from:21, to:41},
-    					{title:"41 to 60", from:41, to:61},
-    					{title:"61 to 80", from:61, to:81},
-    					{title:"81 to 100", from:81, to:101}
-    				]} />
-    			</div>
+          </div>
     			<div className="layout__results-info">
     				<HitsStats/>
     				<SortingSelector options={[
