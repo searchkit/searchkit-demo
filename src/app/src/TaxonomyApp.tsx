@@ -13,8 +13,6 @@ import {
   NoHits
 } from "searchkit";
 
-// require("./../styles/index.scss");
-
 class TaxonomyHits extends Hits {
   renderResult(result:any) {
     return (

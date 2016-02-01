@@ -24,7 +24,7 @@ import {
   GeoMap
 } from "./CrimeAggs"
 
-require("./../../styles/index.scss");
+// require("./../../styles/index.scss");
 
 class CrimeHits extends Hits {
   renderResult(result:any) {

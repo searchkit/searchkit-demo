@@ -20,7 +20,8 @@ import {
   RangeFilter
 } from "searchkit";
 
-require("./../styles/index.scss");
+import "./../styles/customisations.scss";
+
 
 class MovieHits extends Hits {
   renderResult(result:any) {
@@ -109,7 +110,6 @@ export class App extends React.Component<any, any> {
                 </div>
 
               </div>
-
       				<MovieHits hitsPerPage={12} highlightFields={["title"]}/>
               <NoHits suggestionsField={"title"}/>
       				<Pagination/>
