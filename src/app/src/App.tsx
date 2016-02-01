@@ -29,7 +29,7 @@ class MovieHits extends Hits {
     return (
       <div className={this.bemBlocks.item().mix(this.bemBlocks.container("item"))} key={result._id}>
         <a href={url} target="_blank">
-          <img className={this.bemBlocks.item("poster")} src={result._source.poster} width="170" height="250"/>
+          <img className={this.bemBlocks.item("poster")} src={result._source.poster} width="170" height="240"/>
         </a>
         <a href={url} target="_blank">
           <div className={this.bemBlocks.item("title")} dangerouslySetInnerHTML={{__html:_.get(result,"highlight.title",false) || result._source.title}}>
