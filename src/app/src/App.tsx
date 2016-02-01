@@ -93,6 +93,7 @@ export class App extends React.Component<any, any> {
       			<div className="layout__results results-list">
 
               <div className="results-list__action-bar action-bar">
+
                 <div className="action-bar__info">
           				<HitsStats/>
           				<SortingSelector options={[
