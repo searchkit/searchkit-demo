@@ -6,8 +6,6 @@ import {CrimeApp} from "./app/src/crime/CrimeApp.tsx";
 
 import {Router, Route, IndexRoute} from "react-router";
 const createBrowserHistory = require('history/lib/createBrowserHistory')
-import "searchkit/release/theme.css";
-
 
 ReactDOM.render((
   <Router history={createBrowserHistory()}>

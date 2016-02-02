@@ -13,6 +13,9 @@ import {
   NoHits
 } from "searchkit";
 
+import "searchkit/release/theme.css";
+
+
 class TaxonomyHits extends Hits {
   renderResult(result:any) {
     return (

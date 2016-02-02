@@ -4,6 +4,29 @@ html {
   font-family:"Open Sans";
 }
 
+.layout__crime-app {
+  .layout__results {
+    position:fixed;
+    top:0;
+    left:300px;
+    right:0;
+    bottom:0;
+    padding:0;
+    margin:0;
+  }
+
+  .layout__filters {
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    width:300px;
+    margin:0;
+    overflow:auto;
+  }
+
+}
+
 .my-logo {
   color:white;
   flex:0 0 250px;
@@ -23,4 +46,8 @@ html {
   border-radius: 3px;
   color:#08c;
   display:none;
+}
+
+.layout__crime-app {
+
 }
