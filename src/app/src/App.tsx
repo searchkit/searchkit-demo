@@ -17,28 +17,28 @@ import {
   SearchkitProvider,
   SearchkitManager,
   NoHits,
-  RangeFilter
+  RangeFilter,
+  InitialLoader
 } from "searchkit";
 
 import "./../styles/customisations.scss";
 import "searchkit/release/theme.css";
 
 
-class MovieHits extends Hits {
-  renderResult(result:any) {
-    let url = "http://www.imdb.com/title/" + result._source.imdbId
-    return (
-      <div className={this.bemBlocks.item().mix(this.bemBlocks.container("item"))} key={result._id}>
-        <a href={url} target="_blank">
-          <img className={this.bemBlocks.item("poster")} src={result._source.poster} width="170" height="240"/>
-        </a>
-        <a href={url} target="_blank">
-          <div className={this.bemBlocks.item("title")} dangerouslySetInnerHTML={{__html:_.get(result,"highlight.title",false) || result._source.title}}>
-          </div>
-        </a>
-      </div>
-    )
-  }
+const MovieHitsItem = (props)=> {
+  const {bemBlocks, result} = props
+  let url = "http://www.imdb.com/title/" + result._source.imdbId
+  return (
+    <div className={bemBlocks.item().mix(bemBlocks.container("item"))}>
+      <a href={url} target="_blank">
+        <img className={bemBlocks.item("poster")} src={result._source.poster} width="170" height="240"/>
+      </a>
+      <a href={url} target="_blank">
+        <div className={bemBlocks.item("title")} dangerouslySetInnerHTML={{__html:_.get(result,"highlight.title",false) || result._source.title}}>
+        </div>
+      </a>
+    </div>
+  )
 }
 
 
@@ -111,8 +111,9 @@ export class App extends React.Component<any, any> {
                 </div>
 
               </div>
-      				<MovieHits hitsPerPage={12} highlightFields={["title"]}/>
+      				<Hits hitsPerPage={12} highlightFields={["title"]} itemComponent={MovieHitsItem}/>
               <NoHits suggestionsField={"title"}/>
+              <InitialLoader/>
       				<Pagination showNumbers={true}/>
       			</div>
           </div>

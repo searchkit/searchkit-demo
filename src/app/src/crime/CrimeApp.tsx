@@ -24,16 +24,6 @@ import {
   GeoMap
 } from "./CrimeAggs"
 
-class CrimeHits extends Hits {
-  renderResult(result:any) {
-    let url = "http://www.imdb.com/title/" + result._source.imdbId
-    return (
-      <div className={this.bemBlocks.item().mix(this.bemBlocks.container("item"))} key={result._id}>
-        {result._id}
-      </div>
-    )
-  }
-}
 
 export class CrimeApp extends React.Component<any, any> {
 

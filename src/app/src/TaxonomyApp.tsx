@@ -10,20 +10,20 @@ import {
   HitsStats,
   SearchkitManager,
   SearchkitProvider,
-  NoHits
+  NoHits,
+  InitialLoader
 } from "searchkit";
 
 import "searchkit/release/theme.css";
 
 
-class TaxonomyHits extends Hits {
-  renderResult(result:any) {
-    return (
-      <div className={this.bemBlocks.item().mix(this.bemBlocks.container("item"))} key={result._id}>
-        {result._source.name}
-      </div>
-    )
-  }
+const TaxonomyHitsItem = (props)=> {
+  const {result, bemBlocks} = props
+  return (
+    <div className={bemBlocks.item().mix(bemBlocks.container("item"))}>
+      {result._source.name}
+    </div>
+  )
 }
 
 export class TaxonomyApp extends React.Component<any, any> {
@@ -73,9 +73,10 @@ export class TaxonomyApp extends React.Component<any, any> {
             </div>
           </div>
 
-  				<TaxonomyHits hitsPerPage={10}/>
+  				<Hits hitsPerPage={10} itemComponent={TaxonomyHitsItem}/>
           <NoHits/>
-  				<Pagination/>
+          <InitialLoader/>
+  				<Pagination showNumbers={true}/>
         </div>
 			</div>
 			<a className="view-src-link" href="https://github.com/searchkit/searchkit-demo/blob/master/src/app/src/App.tsx">View source »</a>
