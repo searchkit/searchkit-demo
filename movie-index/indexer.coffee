@@ -132,6 +132,7 @@ mapping = {
         yearEnded:{type:"integer"}
         released:{type:"date"}
         runtimeMinutes:{type:"integer"}
+        rated: getMultiFieldDef("rated")
         genres: getMultiFieldDef("genres")
         countries: getMultiFieldDef("countries")
         languages: getMultiFieldDef("languages")
