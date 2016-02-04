@@ -97,7 +97,9 @@ export class App extends React.Component<any, any> {
               <div className="results-list__action-bar action-bar">
 
                 <div className="action-bar__info">
-          				<HitsStats/>
+          				<HitsStats translations={{
+                    "hitstats.results_found":"{hitCount} results found"
+                  }}/>
           				<SortingSelector options={[
           					{label:"Relevance", field:"_score", order:"desc"},
           					{label:"Latest Releases", field:"released", order:"desc"},
