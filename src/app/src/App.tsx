@@ -29,12 +29,12 @@ const MovieHitsItem = (props)=> {
   const {bemBlocks, result} = props
   let url = "http://www.imdb.com/title/" + result._source.imdbId
   return (
-    <div className={bemBlocks.item().mix(bemBlocks.container("item"))}>
+    <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
       <a href={url} target="_blank">
-        <img className={bemBlocks.item("poster")} src={result._source.poster} width="170" height="240"/>
+        <img data-qa="poster" className={bemBlocks.item("poster")} src={result._source.poster} width="170" height="240"/>
       </a>
       <a href={url} target="_blank">
-        <div className={bemBlocks.item("title")} dangerouslySetInnerHTML={{__html:_.get(result,"highlight.title",false) || result._source.title}}>
+        <div data-qa="title" className={bemBlocks.item("title")} dangerouslySetInnerHTML={{__html:_.get(result,"highlight.title",false) || result._source.title}}>
         </div>
       </a>
     </div>
