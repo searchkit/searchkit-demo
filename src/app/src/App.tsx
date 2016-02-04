@@ -111,7 +111,7 @@ export class App extends React.Component<any, any> {
                 </div>
 
               </div>
-      				<Hits hitsPerPage={12} highlightFields={["title"]} itemComponent={MovieHitsItem}/>
+      				<Hits sourceFilter={["title", "poster"]} hitsPerPage={12} highlightFields={["title"]} itemComponent={MovieHitsItem}/>
               <NoHits suggestionsField={"title"}/>
               <InitialLoader/>
       				<Pagination showNumbers={true}/>
