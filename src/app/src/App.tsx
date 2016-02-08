@@ -22,8 +22,7 @@ import {
 } from "searchkit";
 
 import "./../styles/customisations.scss";
-import "searchkit/release/theme.css";
-
+import "searchkit/theming/theme.scss";
 
 const MovieHitsItem = (props)=> {
   const {bemBlocks, result} = props
