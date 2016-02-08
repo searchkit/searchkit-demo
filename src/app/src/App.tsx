@@ -99,7 +99,7 @@ export class App extends React.Component<any, any> {
                 <div className="action-bar__info">
           				<HitsStats/>
           				<SortingSelector options={[
-          					{label:"Relevance", field:"_score", order:"desc"},
+          					{label:"Relevance", field:"_score", order:"desc",defaultOption:true},
           					{label:"Latest Releases", field:"released", order:"desc"},
           					{label:"Earliest Releases", field:"released", order:"asc"}
           				]}/>
@@ -111,7 +111,10 @@ export class App extends React.Component<any, any> {
                 </div>
 
               </div>
-      				<Hits hitsPerPage={12} highlightFields={["title"]} itemComponent={MovieHitsItem}/>
+      				<Hits hitsPerPage={12} highlightFields={["title"]}
+                    itemComponent={MovieHitsItem} sourceFilter={["title", "poster"]}
+                    scrollTo="body"
+              />
               <NoHits suggestionsField={"title"}/>
               <InitialLoader/>
       				<Pagination showNumbers={true}/>
