@@ -47,7 +47,7 @@ export class App extends React.Component<any, any> {
   searchkit:SearchkitManager
 
   constructor() {
-    const host = "https://d78cfb11f565e845000.qb0x.com/movies"
+    const host = "/api/movies"
     this.searchkit = new SearchkitManager(host)
     this.searchkit.translateFunction = (key)=> {
       return {"pagination.next":"Next Page", "pagination.previous":"Previous Page"}[key]
@@ -101,7 +101,7 @@ export class App extends React.Component<any, any> {
                     "hitstats.results_found":"{hitCount} results found"
                   }}/>
           				<SortingSelector options={[
-          					{label:"Relevance", field:"_score", order:"desc"},
+          					{label:"Relevance", field:"_score", order:"desc",defaultOption:true},
           					{label:"Latest Releases", field:"released", order:"desc"},
           					{label:"Earliest Releases", field:"released", order:"asc"}
           				]}/>
@@ -113,7 +113,10 @@ export class App extends React.Component<any, any> {
                 </div>
 
               </div>
-      				<Hits hitsPerPage={12} highlightFields={["title"]} itemComponent={MovieHitsItem} scrollTo="body" sourceFilter={["title", "poster"]}/>
+      				<Hits hitsPerPage={12} highlightFields={["title"]}
+                    itemComponent={MovieHitsItem} sourceFilter={["title", "poster"]}
+                    scrollTo="body"
+              />
               <NoHits suggestionsField={"title"}/>
               <InitialLoader/>
       				<Pagination showNumbers={true}/>

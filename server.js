@@ -4,8 +4,9 @@ var elasticsearch = require("elasticsearch")
 var bodyParser = require("body-parser")
 var methodOverride = require("method-override")
 var compression = require("compression")
-var ElasticExpressProxy = require("./ElasticExpressProxy")
 var _ = require("lodash")
+var cors = require('cors')
+var SearchkitExpress = require("searchkit-express")
 
 module.exports = {
   start: function(prodMode) {
@@ -52,11 +53,24 @@ module.exports = {
       app.use("/static", express.static(__dirname + '/dist'));
     }
 
-    ElasticExpressProxy({
-      host:process.env.ELASTIC_URL || "http://localhost:9200",
-      log: 'debug',
-      index:'movies'
-    }, app)
+
+    var host = "http://d78cfb11f565e845000.qb0x.com"
+    app.use("/api", cors({
+      origin:"*",
+      maxAge:20*24*60*60 //20 days like elastic
+    }))
+    app.use("/api/movies", SearchkitExpress.createRouter({
+      host, index:"movies"
+    }))
+
+    app.use("/api/crimes", SearchkitExpress.createRouter({
+      host, index:"crimes"
+    }))
+
+    app.use("/api/taxonomy", SearchkitExpress.createRouter({
+      host, index:"taxonomynested"
+    }))
+
 
     app.get('*', function(req, res) {
       res.render('index');
