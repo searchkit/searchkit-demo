@@ -31,7 +31,7 @@ export class TaxonomyApp extends React.Component<any, any> {
   searchkit:SearchkitManager
 
   constructor() {
-    const host = "https://d78cfb11f565e845000.qb0x.com/taxonomynested"
+    const host = "/api/taxonomy"
     this.searchkit = new SearchkitManager(host)
     super()
   }

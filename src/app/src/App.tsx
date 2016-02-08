@@ -47,7 +47,7 @@ export class App extends React.Component<any, any> {
   searchkit:SearchkitManager
 
   constructor() {
-    const host = "https://d78cfb11f565e845000.qb0x.com/movies"
+    const host = "/api/movies"
     this.searchkit = new SearchkitManager(host)
     this.searchkit.translateFunction = (key)=> {
       return {"pagination.next":"Next Page", "pagination.previous":"Previous Page"}[key]
