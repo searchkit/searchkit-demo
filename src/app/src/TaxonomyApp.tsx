@@ -14,7 +14,7 @@ import {
   InitialLoader
 } from "searchkit";
 
-import "searchkit/release/theme.css";
+// import "searchkit/release/theme.css";
 
 
 const TaxonomyHitsItem = (props)=> {
