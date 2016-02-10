@@ -5,13 +5,14 @@
 }
 
 .grouped-selected-filters-option {
-  border: 1px solid #0088cc;
+  border: none;
+  background: #f4f4f4;
   display: flex;
   padding: 10px 10px 10px 0px;
   font-size: 14px;
   line-height: 20px;
   border-radius: 3px;
-    color: #08c;
+  color: #08c;
 }
 
 .grouped-selected-filters__item {
