@@ -28,12 +28,12 @@ const MovieHitsItem = (props)=> {
   const {bemBlocks, result} = props
   let url = "http://www.imdb.com/title/" + result._source.imdbId
   return (
-    <div className={bemBlocks.item().mix(bemBlocks.container("item"))}>
+    <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
       <a href={url} target="_blank">
-        <img className={bemBlocks.item("poster")} src={result._source.poster} width="170" height="240"/>
+        <img data-qa="poster" className={bemBlocks.item("poster")} src={result._source.poster} width="170" height="240"/>
       </a>
       <a href={url} target="_blank">
-        <div className={bemBlocks.item("title")} dangerouslySetInnerHTML={{__html:_.get(result,"highlight.title",false) || result._source.title}}>
+        <div data-qa="title" className={bemBlocks.item("title")} dangerouslySetInnerHTML={{__html:_.get(result,"highlight.title",false) || result._source.title}}>
         </div>
       </a>
     </div>
@@ -46,7 +46,7 @@ export class App extends React.Component<any, any> {
   searchkit:SearchkitManager
 
   constructor() {
-    const host = "/api/movies"
+    const host = "http://demo.searchkit.co/api/movies"
     this.searchkit = new SearchkitManager(host)
     this.searchkit.translateFunction = (key)=> {
       return {"pagination.next":"Next Page", "pagination.previous":"Previous Page"}[key]
@@ -96,7 +96,9 @@ export class App extends React.Component<any, any> {
               <div className="results-list__action-bar action-bar">
 
                 <div className="action-bar__info">
-          				<HitsStats/>
+          				<HitsStats translations={{
+                    "hitstats.results_found":"{hitCount} results found"
+                  }}/>
           				<SortingSelector options={[
           					{label:"Relevance", field:"_score", order:"desc",defaultOption:true},
           					{label:"Latest Releases", field:"released", order:"desc"},
