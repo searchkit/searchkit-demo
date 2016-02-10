@@ -23,6 +23,7 @@ InitialLoader
 
 import "./../../styles/customisations.scss";
 import "searchkit/theming/theme.scss";
+import MultiSelectFilter from './MultiSelectFilter/MultiSelectFilter';
 
 const MovieHitsItem = (props) => {
   const {bemBlocks, result} = props
@@ -46,7 +47,8 @@ export class PlaygroundApp extends React.Component<any, any> {
   searchkit: SearchkitManager
 
   constructor() {
-    const host = "/api/movies"
+    // const host = "/api/movies"
+    const host = "/api/mock"
     this.searchkit = new SearchkitManager(host)
     this.searchkit.translateFunction = (key) => {
       return { "pagination.next": "Next Page", "pagination.previous": "Previous Page" }[key]
@@ -88,7 +90,7 @@ export class PlaygroundApp extends React.Component<any, any> {
               ]}/>
               <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={10}/>
               <RefinementListFilter translations={{ "facets.view_more": "View more writers" }} id="writers" title="Writers" field="writers.raw" operator="OR" size={10}/>
-              <RefinementListFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={10}/>
+              <MultiSelectFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={100}/>
               <NumericRefinementListFilter id="runtimeMinutes" title="Length" field="runtimeMinutes" options={[
                 { title: "All" },
                 { title: "up to 20", from: 0, to: 20 },
