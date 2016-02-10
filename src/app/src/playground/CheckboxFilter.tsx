@@ -21,10 +21,10 @@ export default class CheckboxFilter extends SearchkitComponent<CheckboxFilterPro
     accessor: FacetAccessor
 
     defineAccessor() {
-        const { field, id, title, translations } = this.props;
+        const { field, id, title, translations, value } = this.props;
         return new FacetAccessor(field, {
             id, operator: "AND", title, size: 50, translations,
-            include: ["r"]
+            include: [value]
         })
     }
 
