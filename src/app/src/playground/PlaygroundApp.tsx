@@ -55,7 +55,8 @@ const MovieHitsDetails = (props) => {
     <div className={bemBlocks.item().mix(bemBlocks.container("item")) } key={result._id} style={{
       width: '99%',
       minWidth: '99%',
-      display: 'table-row'
+      display: 'table-row',
+      boxShadow: '0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)'
     }}>
       <div style={{ marginLeft: 'auto', marginRight: 'auto' }}>
         <div style={{ display: "table-cell", height: 200 }}>
