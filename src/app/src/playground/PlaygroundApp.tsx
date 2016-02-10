@@ -42,18 +42,67 @@ const MovieHitsItem = (props) => {
 }
 
 
+
+const MovieHitsDetails = (props) => {
+  const { bemBlocks, result } = props
+  const source = result._source;
+  let url = "http://www.imdb.com/title/" + result._source.imdbId
+
+  const { title, poster, writers = [], actors = [], genres = [], plot, released, rated } = source;
+
+  return (
+    <div className={bemBlocks.item().mix(bemBlocks.container("item")) } key={result._id} style={{
+      width: '99%',
+      minWidth: '99%',
+      display: 'table-row'
+    }}>
+      <div style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+        <div style={{ display: "table-cell", height: 200 }}>
+          <a href={url} target="_blank">
+            <div className={bemBlocks.item("poster") } style={{
+              width: 180, height: 280,
+              background: 'url(' + poster + ')',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center center'
+            }} />
+          </a>
+        </div>
+        <div style={{ display: "table-cell", verticalAlign: 'top', paddingLeft: 8 }}>
+          <h2 style={{ marginTop: 0, marginBottom: 0 }}>{title}</h2>
+          <ul style={{ marginTop: 8, marginBottom: 8, listStyle: 'none', paddingLeft: 20 }}>
+            <li>Released: {released}</li>
+            <li>Rating: {rated}</li>
+            <li>Writers: {writers.join(', ')}</li>
+            <li>Actors: {actors.join(', ') }</li>
+          </ul>
+          <div style={{ marginTop: 8, marginBottom: 8 }}>{plot}</div>
+        </div>
+      </div>
+    </div>
+  )
+}
+// "title", "poster", "imdbId", "released", "rated", "genres", "writers", "actors", "plot"]
+
+
 export class PlaygroundApp extends React.Component<any, any> {
 
   searchkit: SearchkitManager
 
   constructor() {
-    // const host = "/api/movies"
-    const host = "/api/mock"
+    super()
+    const host = "http://demo.searchkit.co/api/movies"
+    // const host = "/api/mock"
     this.searchkit = new SearchkitManager(host)
     this.searchkit.translateFunction = (key) => {
       return { "pagination.next": "Next Page", "pagination.previous": "Previous Page" }[key]
     }
-    super()
+    this.state = {
+      displayMode: "thumbnail"
+    }
+  }
+
+  onDisplayModeChange(e) {
+    this.setState({ displayMode: e.target.value })
   }
 
   render() {
@@ -62,6 +111,7 @@ export class PlaygroundApp extends React.Component<any, any> {
       <div>
       <SearchkitProvider searchkit={this.searchkit}>
       <div>
+      hello
         <div className="layout">
 
           <div className="layout__top-bar top-bar">
@@ -105,6 +155,15 @@ export class PlaygroundApp extends React.Component<any, any> {
 
                 <div className="action-bar__info">
                   <HitsStats/>
+
+
+                  <div className="sorting-selector" style={{ marginRight: 8 }}>
+                    <select value={this.state.displayMode} onChange={this.onDisplayModeChange.bind(this) }>
+                      <option value="thumbnail">Thumbnails</option>
+                      <option value="list">List</option>
+                    </select>
+                  </div>
+
                   <SortingSelector options={[
                     { label: "Relevance", field: "_score", order: "desc", defaultOption: true },
                     { label: "Latest Releases", field: "released", order: "desc" },
@@ -119,8 +178,9 @@ export class PlaygroundApp extends React.Component<any, any> {
 
                 </div>
               <Hits hitsPerPage={12} highlightFields={["title"]}
-                itemComponent={MovieHitsItem} sourceFilter={["title", "poster", "imdbId"]}
-                scrollTo="body"
+                    itemComponent={this.state.displayMode == "thumbnail" ? MovieHitsItem : MovieHitsDetails }
+                    sourceFilter={["title", "poster", "imdbId", "released", "rated", "genres", "writers", "actors", "plot"]}
+                    scrollTo="body"
                 />
               <NoHits suggestionsField={"title"}/>
               <InitialLoader/>

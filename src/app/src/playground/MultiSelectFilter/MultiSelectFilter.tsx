@@ -61,7 +61,7 @@ const _ = require('lodash');
 //   }
 // }
 
-export default class MultiSelectFilter2 extends SearchkitComponent<any, any> {
+export default class MultiSelectFilter extends SearchkitComponent<any, any> {
   accessor: FacetAccessor
 
   constructor() {
