@@ -1,6 +1,7 @@
 import * as ReactDOM from "react-dom";
 import * as React from "react";
 import {App} from "./app/src/App.tsx";
+import {PlaygroundApp} from "./app/src/playground/PlaygroundApp.tsx";
 import {TaxonomyApp} from "./app/src/TaxonomyApp.tsx";
 import {CrimeApp} from "./app/src/crime/CrimeApp.tsx";
 
@@ -13,5 +14,6 @@ ReactDOM.render((
     <Route component={App} path="imdb"/>
     <Route component={TaxonomyApp} path="taxonomy"/>
     <Route component={CrimeApp} path="crime"/>
+    <Route component={PlaygroundApp} path="playground"/>
   </Router>
 ), document.getElementById('root'));
