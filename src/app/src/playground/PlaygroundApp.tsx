@@ -25,6 +25,7 @@ import "./../../styles/customisations.scss";
 import "searchkit/theming/theme.scss";
 import MultiSelectFilter from './MultiSelectFilter/MultiSelectFilter';
 import CheckboxFilter from './CheckboxFilter';
+import TagFilter from './TagFilter';
 
 const MovieHitsItem = (props) => {
   const {bemBlocks, result} = props
@@ -42,7 +43,15 @@ const MovieHitsItem = (props) => {
   )
 }
 
-
+function mapAndJoin(array=[], func, joinString=", "){
+  const result = []
+  const length = array.length
+  array.forEach((c, idx) => {
+    result.push(func(c))
+    if (idx < length - 1) result.push(<span key={"joinString-" + idx}>{joinString}</span>)
+  })
+  return result;
+}
 
 const MovieHitsDetails = (props) => {
   const { bemBlocks, result } = props
@@ -74,8 +83,8 @@ const MovieHitsDetails = (props) => {
           <ul style={{ marginTop: 8, marginBottom: 8, listStyle: 'none', paddingLeft: 20 }}>
             <li>Released: {released}</li>
             <li>Rating: {rated}</li>
-            <li>Writers: {writers.join(', ')}</li>
-            <li>Actors: {actors.join(', ') }</li>
+            <li>Writers: {mapAndJoin(writers, a => <TagFilter field="writers.raw" value={a}>{a}</TagFilter>)}</li>
+            <li>Actors: {mapAndJoin(actors, a => <TagFilter field="actors.raw" value={a}>{a}</TagFilter>)}</li>
           </ul>
           <div style={{ marginTop: 8, marginBottom: 8 }}>{plot}</div>
         </div>
