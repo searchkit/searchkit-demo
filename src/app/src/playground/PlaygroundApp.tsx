@@ -26,6 +26,7 @@ import "searchkit/theming/theme.scss";
 import MultiSelectFilter from './MultiSelectFilter/MultiSelectFilter';
 import CheckboxFilter from './CheckboxFilter';
 import TagFilter from './TagFilter';
+import FacetEnabler from './FacetEnabler';
 
 const MovieHitsItem = (props) => {
   const {bemBlocks, result} = props
@@ -83,6 +84,7 @@ const MovieHitsDetails = (props) => {
           <ul style={{ marginTop: 8, marginBottom: 8, listStyle: 'none', paddingLeft: 20 }}>
             <li>Released: {released}</li>
             <li>Rating: {rated}</li>
+            <li>Genres: {mapAndJoin(genres, a => <TagFilter field="genres.raw" value={a}>{a}</TagFilter>)}</li>
             <li>Writers: {mapAndJoin(writers, a => <TagFilter field="writers.raw" value={a}>{a}</TagFilter>)}</li>
             <li>Actors: {mapAndJoin(actors, a => <TagFilter field="actors.raw" value={a}>{a}</TagFilter>)}</li>
           </ul>
@@ -149,6 +151,7 @@ export class PlaygroundApp extends React.Component<any, any> {
                 { title: "\u2605\u2605\u2606\u2606\u2606 & up", from: 4, to: 10 },
                 { title: "\u2605\u2606\u2606\u2606\u2606 & up", from: 2, to: 10 },
               ]}/>
+              <FacetEnabler id="genres" title="Genres" field="genres.raw" operator="OR"/>
               <MultiSelectFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={100}/>
               <CheckboxFilter id="rating" title="Rating" field="rated" value={"r"} label="Rated 'R'"/>
               <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={10}/>
@@ -170,11 +173,19 @@ export class PlaygroundApp extends React.Component<any, any> {
 
 
                   <div className="sorting-selector" style={{ marginRight: 8 }}>
+                    <select value={this.state.hitCount} onChange={this.onDisplayModeChange.bind(this) }>
+                      <option value="thumbnail">12</option>
+                      <option value="list">24</option>
+                      <option value="list">48</option>
+                      </select>
+                    </div>
+
+                  <div className="sorting-selector" style={{ marginRight: 8 }}>
                     <select value={this.state.displayMode} onChange={this.onDisplayModeChange.bind(this) }>
                       <option value="thumbnail">Thumbnails</option>
                       <option value="list">List</option>
-                    </select>
-                  </div>
+                      </select>
+                    </div>
 
                   <SortingSelector options={[
                     { label: "Relevance", field: "_score", order: "desc", defaultOption: true },
