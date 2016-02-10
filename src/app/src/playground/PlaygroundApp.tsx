@@ -24,6 +24,7 @@ InitialLoader
 import "./../../styles/customisations.scss";
 import "searchkit/theming/theme.scss";
 import MultiSelectFilter from './MultiSelectFilter/MultiSelectFilter';
+import CheckboxFilter from './CheckboxFilter';
 
 const MovieHitsItem = (props) => {
   const {bemBlocks, result} = props
@@ -139,6 +140,7 @@ export class PlaygroundApp extends React.Component<any, any> {
                 { title: "\u2605\u2606\u2606\u2606\u2606 & up", from: 2, to: 10 },
               ]}/>
               <MultiSelectFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={100}/>
+              <CheckboxFilter id="rating" title="Rating" field="rated" value={"r"} label="Rated 'R'"/>
               <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={10}/>
               <RefinementListFilter translations={{ "facets.view_more": "View more writers" }} id="writers" title="Writers" field="writers.raw" operator="OR" size={10}/>
               <NumericRefinementListFilter id="runtimeMinutes" title="Length" field="runtimeMinutes" options={[
