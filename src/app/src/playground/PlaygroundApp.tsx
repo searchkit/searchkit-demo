@@ -138,9 +138,9 @@ export class PlaygroundApp extends React.Component<any, any> {
                 { title: "\u2605\u2605\u2606\u2606\u2606 & up", from: 4, to: 10 },
                 { title: "\u2605\u2606\u2606\u2606\u2606 & up", from: 2, to: 10 },
               ]}/>
+              <MultiSelectFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={100}/>
               <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={10}/>
               <RefinementListFilter translations={{ "facets.view_more": "View more writers" }} id="writers" title="Writers" field="writers.raw" operator="OR" size={10}/>
-              <MultiSelectFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={100}/>
               <NumericRefinementListFilter id="runtimeMinutes" title="Length" field="runtimeMinutes" options={[
                 { title: "All" },
                 { title: "up to 20", from: 0, to: 20 },
