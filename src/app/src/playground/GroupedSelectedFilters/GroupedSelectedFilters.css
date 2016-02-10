@@ -1,0 +1,43 @@
+.grouped-selected-filters {
+    display: flex;
+    flex-flow: row;
+    margin-right: 10px;
+}
+
+.grouped-selected-filters-option {
+  border: 1px solid #0088cc;
+  display: flex;
+  padding: 10px 10px 10px 10px;
+  font-size: 14px;
+  line-height: 20px;
+  border-radius: 3px;
+    color: #08c;
+}
+
+.grouped-selected-filters__item {
+    flex: auto;
+    margin-right: 10px;
+}
+
+.grouped-selected-filters-option__name {
+  font-weight: bold;
+}
+
+.grouped-selected-filters-option__value {
+  padding-left: 4px;
+}
+
+.grouped-selected-filters-option__value:hover {
+  text-decoration: line-through;
+  cursor: pointer;
+}
+
+.grouped-selected-filters-option__remove-action {
+    flex: auto;
+    padding: 0 10px;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 18px;
+    color: #08c;
+    font-weight: 700;
+}

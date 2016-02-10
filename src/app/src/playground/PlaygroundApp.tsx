@@ -24,6 +24,7 @@ InitialLoader
 import "./../../styles/customisations.scss";
 import "searchkit/theming/theme.scss";
 import MultiSelectFilter from './MultiSelectFilter/MultiSelectFilter';
+import GroupedSelectedFilters from './GroupedSelectedFilters/GroupedSelectedFilters';
 import CheckboxFilter from './CheckboxFilter';
 import TagFilter from './TagFilter';
 import FacetEnabler from './FacetEnabler';
@@ -151,7 +152,7 @@ export class PlaygroundApp extends React.Component<any, any> {
                 { title: "\u2605\u2605\u2606\u2606\u2606 & up", from: 4, to: 10 },
                 { title: "\u2605\u2606\u2606\u2606\u2606 & up", from: 2, to: 10 },
               ]}/>
-              <FacetEnabler id="genres" title="Genres" field="genres.raw" operator="OR"/>
+              <FacetEnabler id="genres" title="Genres" field="genres.raw" operator="AND"/>
               <MultiSelectFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={100}/>
               <CheckboxFilter id="rating" title="Rating" field="rated" value={"r"} label="Rated 'R'"/>
               <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={10}/>
@@ -195,7 +196,7 @@ export class PlaygroundApp extends React.Component<any, any> {
                   </div>
 
                 <div className="action-bar__filters">
-                  <SelectedFilters/>
+                  <GroupedSelectedFilters/>
                   <ResetFilters/>
                   </div>
 
