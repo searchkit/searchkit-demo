@@ -6,7 +6,7 @@ RefinementListFilter, SearchkitComponentProps
 
 
 class NullComponent extends React.Component<{}, {}> {
-  render(){return false}
+  render(){return null}
 }
 
 export interface FacetEnablerProps extends SearchkitComponentProps {
