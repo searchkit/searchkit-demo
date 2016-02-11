@@ -23,7 +23,7 @@
     "elasticsearch": "^10.0.1",
     "express": "^4.13.3",
     "history": "1.13.1",
-    "lodash": "^3.10.1",
+    "lodash": "^4.2.0",
     "method-override": "^2.3.5",
     "normalize.css": "^3.0.3",
     "qs": "^4.0.0",
