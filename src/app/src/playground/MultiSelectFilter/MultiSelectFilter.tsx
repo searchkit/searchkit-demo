@@ -69,8 +69,9 @@ export default class MultiSelectFilter extends SearchkitComponent<any, any> {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  defaultProps = {
-    size: 200
+  static defaultProps = {
+    size: 200,
+    clearable: false
   }
 
   defineAccessor() {
@@ -116,7 +117,7 @@ export default class MultiSelectFilter extends SearchkitComponent<any, any> {
   }
 
   render() {
-    const { id, placeholder, title } = this.props;
+    const { id, placeholder, title, clearable, size } = this.props;
     var block = this.bemBlocks.container
     const buckets = this.accessor.getBuckets()//.slice()
     var className = block()
@@ -124,7 +125,6 @@ export default class MultiSelectFilter extends SearchkitComponent<any, any> {
       .state({
         disabled: buckets.length == 0
       })
-    // _.sortBy(buckets, 'key')
 
     const options = buckets.map((v) => ({ value: v.key, label: v.key + ' (' + v.doc_count + ') ', }))
     return (
@@ -135,6 +135,7 @@ export default class MultiSelectFilter extends SearchkitComponent<any, any> {
           placeholder={placeholder}
           options={options}
           valueRenderer={(v) => v.value}
+          clearable={clearable}
           onChange={this.handleChange} />
 
 
