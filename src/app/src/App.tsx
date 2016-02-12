@@ -2,8 +2,6 @@ import * as React from "react";
 import * as _ from "lodash";
 const BEMBlock = require("bem-cn")
 
-import {ViewSwitcher, ViewSwitcherHits} from "./ViewSwitcher";
-
 import {
   SearchBox,
   Hits,
@@ -21,7 +19,9 @@ import {
   SearchkitManager,
   NoHits,
   RangeFilter,
-  InitialLoader
+  InitialLoader,
+  ViewSwitcherToggle,
+  ViewSwitcherHits
 } from "searchkit";
 
 import "./../styles/customisations.scss";
@@ -120,7 +120,7 @@ export class App extends React.Component<any, any> {
           				<HitsStats translations={{
                     "hitstats.results_found":"{hitCount} results found"
                   }}/>
-                  <ViewSwitcher/>
+                  <ViewSwitcherToggle/>
           				<SortingSelector options={[
           					{label:"Relevance", field:"_score", order:"desc",defaultOption:true},
           					{label:"Latest Releases", field:"released", order:"desc"},
