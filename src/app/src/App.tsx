@@ -2,7 +2,7 @@ import * as React from "react";
 import * as _ from "lodash";
 const BEMBlock = require("bem-cn")
 
-import {ViewSwitcher} from "./ViewSwitcher";
+import {ViewSwitcher, ViewSwitcherHits} from "./ViewSwitcher";
 
 import {
   SearchBox,
@@ -71,15 +71,9 @@ export class App extends React.Component<any, any> {
     this.searchkit.translateFunction = (key)=> {
       return {"pagination.next":"Next Page", "pagination.previous":"Previous Page"}[key]
     }
-    this.state = {
-      view:"Grid"
-    }
     super()
   }
 
-  setView(view) {
-    this.setState({view})
-  }
 
   render(){
 
@@ -126,7 +120,7 @@ export class App extends React.Component<any, any> {
           				<HitsStats translations={{
                     "hitstats.results_found":"{hitCount} results found"
                   }}/>
-                  <ViewSwitcher active={this.state.view} onChange={this.setView.bind(this)} views={["Grid", "List"]}/>
+                  <ViewSwitcher/>
           				<SortingSelector options={[
           					{label:"Relevance", field:"_score", order:"desc",defaultOption:true},
           					{label:"Latest Releases", field:"released", order:"desc"},
@@ -141,11 +135,14 @@ export class App extends React.Component<any, any> {
                 </div>
 
               </div>
-      				<Hits hitsPerPage={12} highlightFields={["title","plot"]}
-                    sourceFilter={["plot", "title", "poster", "imdbId", "imdbRating", "year"]}
-                    mod={'sk-hits-'+this.state.view.toLowerCase()}
-                    itemComponent={this.state.view == "Grid" ? MovieHitsGridItem : MovieHitsListItem}
-                    scrollTo="body"
+              <ViewSwitcherHits
+      				    hitsPerPage={12} highlightFields={["title","plot"]}
+                  sourceFilter={["plot", "title", "poster", "imdbId", "imdbRating", "year"]}
+                  hitComponents = {[
+                    {key:"grid", title:"Grid", itemComponent:MovieHitsGridItem},
+                    {key:"list", title:"List", itemComponent:MovieHitsListItem}
+                  ]}
+                  scrollTo="body"
               />
               <NoHits suggestionsField={"title"}/>
               <InitialLoader/>
