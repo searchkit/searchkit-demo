@@ -139,7 +139,7 @@ export class App extends React.Component<any, any> {
       				    hitsPerPage={12} highlightFields={["title","plot"]}
                   sourceFilter={["plot", "title", "poster", "imdbId", "imdbRating", "year"]}
                   hitComponents = {[
-                    {key:"grid", title:"Grid", itemComponent:MovieHitsGridItem},
+                    {key:"grid", title:"Grid", itemComponent:MovieHitsGridItem, defaultOption:true},
                     {key:"list", title:"List", itemComponent:MovieHitsListItem}
                   ]}
                   scrollTo="body"

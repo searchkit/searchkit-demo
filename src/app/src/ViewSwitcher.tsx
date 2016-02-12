@@ -26,6 +26,7 @@ export class ViewSwitcherAccessor extends StatefulAccessor<ValueState>{
 
   getSelectedOption(){
     return find(this.options, {key:this.state.getValue()}) ||
+           find(this.options, {defaultOption:true}) ||
            head(this.options)
   }
 }
@@ -56,9 +57,13 @@ export class ViewSwitcher extends SearchkitComponent<any, any> {
   getViewSwitcherAccessor(){
     return this.searchkit.getAccessorsByType(ViewSwitcherAccessor)[0]
   }
-  changeView(viewKey){
+  changeView(view){
     let viewSwitcherAccessor = this.getViewSwitcherAccessor()
-    viewSwitcherAccessor.state = viewSwitcherAccessor.state.setValue(viewKey)
+    if(view.defaultOption){
+      viewSwitcherAccessor.state = viewSwitcherAccessor.state.clear()
+    } else {
+      viewSwitcherAccessor.state = viewSwitcherAccessor.state.setValue(view.key)
+    }
 
     //this won't fire search as query didn't change, but it will serialize url
     //might need better way
@@ -74,7 +79,7 @@ export class ViewSwitcher extends SearchkitComponent<any, any> {
       const actions = map(options, (option) => {
         return React.createElement(ViewItemComponent, {
           view:option.title,
-          setView: ()=> this.changeView(option.key),
+          setView: ()=> this.changeView(option),
           bemBlock: this.block,
           key:option.key,
           isActive: option == selectedOption
