@@ -67,7 +67,7 @@ export class ViewSwitcher extends SearchkitComponent<any, any> {
 
     //this won't fire search as query didn't change, but it will serialize url
     //might need better way
-    this.searchkit.performSearch()
+    this.searchkit.performSearch(false, false)
     this.searchkit.emitter.trigger()
   }
 
