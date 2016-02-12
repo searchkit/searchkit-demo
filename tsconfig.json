@@ -15,7 +15,7 @@
   "files": [
     "./src/app/src/App.tsx",
     "./src/app/src/crime/CrimeAggs.tsx",
-    "./src/app/src/crime/CrimeApp.tsx",  
+    "./src/app/src/crime/CrimeApp.tsx",
     "./src/app/src/TaxonomyApp.tsx",
     "./src/app/src/ViewSwitcher.tsx",
     "./src/app/test/unit/AppSpec.tsx",

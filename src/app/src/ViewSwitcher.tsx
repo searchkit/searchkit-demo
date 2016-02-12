@@ -9,7 +9,7 @@ const omit = require("lodash/omit")
 const ViewItemComponent = (props) => {
   return (
     <div
-      className={props.bemBlock("action").state({active:props.isActive})}
+      className={props.bemBlocks.container("action").state({active:props.isActive})}
       onClick={props.setView}>
       {props.view}
     </div>
@@ -48,12 +48,12 @@ export class ViewSwitcherHits extends SearchkitComponent<any, any> {
 
 export class ViewSwitcher extends SearchkitComponent<any, any> {
 
-  block:any
-
-  constructor(props) {
-    this.block = BEMBlock("grid-switcher")
-    super(props)
+  defineBEMBlocks() {
+    return {
+      container:"grid-switcher"
+    }
   }
+
   getViewSwitcherAccessor(){
     return this.searchkit.getAccessorsByType(ViewSwitcherAccessor)[0]
   }
@@ -80,14 +80,14 @@ export class ViewSwitcher extends SearchkitComponent<any, any> {
         return React.createElement(ViewItemComponent, {
           view:option.title,
           setView: ()=> this.changeView(option),
-          bemBlock: this.block,
+          bemBlocks: this.bemBlocks,
           key:option.key,
           isActive: option == selectedOption
         })
       })
 
       return (
-      <div className={this.block()}>
+      <div className={this.bemBlocks.container()}>
         {actions}
       </div>)
     }
