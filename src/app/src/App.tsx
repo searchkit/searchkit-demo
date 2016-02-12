@@ -146,7 +146,7 @@ export class App extends React.Component<any, any> {
               />
               <NoHits suggestionsField={"title"}/>
               <InitialLoader/>
-      				<Pagination showNumbers={false}/>
+      				<Pagination showNumbers={true}/>
       			</div>
           </div>
     			<a className="view-src-link" href="https://github.com/searchkit/searchkit-demo/blob/master/src/app/src/App.tsx">View source »</a>
