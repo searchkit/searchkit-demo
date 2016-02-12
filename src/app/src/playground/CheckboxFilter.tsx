@@ -29,7 +29,7 @@ export default class CheckboxFilter extends SearchkitComponent<CheckboxFilterPro
     }
 
     defineBEMBlocks() {
-        var blockName = "refinement-list"
+        var blockName = "sk-refinement-list"
         return {
             container: blockName,
             option: `${blockName}-option`

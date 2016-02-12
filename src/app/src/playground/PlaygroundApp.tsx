@@ -85,9 +85,9 @@ const MovieHitsDetails = (props) => {
           <ul style={{ marginTop: 8, marginBottom: 8, listStyle: 'none', paddingLeft: 20 }}>
             <li>Released: {released}</li>
             <li>Rating: {rated}</li>
-            <li>Genres: {mapAndJoin(genres, a => <TagFilter field="genres.raw" value={a}>{a}</TagFilter>)}</li>
-            <li>Writers: {mapAndJoin(writers, a => <TagFilter field="writers.raw" value={a}>{a}</TagFilter>)}</li>
-            <li>Actors: {mapAndJoin(actors, a => <TagFilter field="actors.raw" value={a}>{a}</TagFilter>)}</li>
+            <li>Genres: {mapAndJoin(genres, a => <TagFilter key={a} field="genres.raw" value={a}>{a}</TagFilter>)}</li>
+            <li>Writers: {mapAndJoin(writers, a => <TagFilter key={a} field="writers.raw" value={a}>{a}</TagFilter>) }</li>
+            <li>Actors: {mapAndJoin(actors, a => <TagFilter key={a} field="actors.raw" value={a}>{a}</TagFilter>) }</li>
           </ul>
           <div style={{ marginTop: 8, marginBottom: 8 }}>{plot}</div>
         </div>
@@ -111,7 +111,8 @@ export class PlaygroundApp extends React.Component<any, any> {
       return { "pagination.next": "Next Page", "pagination.previous": "Previous Page" }[key]
     }
     this.state = {
-      displayMode: "thumbnail"
+      displayMode: "thumbnail",
+      hitsPerPage: 12
     }
   }
 
@@ -119,8 +120,12 @@ export class PlaygroundApp extends React.Component<any, any> {
     this.setState({ displayMode: e.target.value })
   }
 
-  render() {
+  onHitsPerPageChange(e) {
+    this.setState({ hitsPerPage: parseInt(e.target.value, 10) })
+  }
 
+  render() {
+    const { displayMode, hitsPerPage } = this.state;
     return (
       <div>
       <SearchkitProvider searchkit={this.searchkit}>
@@ -174,15 +179,15 @@ export class PlaygroundApp extends React.Component<any, any> {
 
 
                   <div className="sorting-selector" style={{ marginRight: 8 }}>
-                    <select value={this.state.hitCount} onChange={this.onDisplayModeChange.bind(this) }>
-                      <option value="thumbnail">12</option>
-                      <option value="list">24</option>
-                      <option value="list">48</option>
+                    <select value={"" + hitsPerPage} onChange={this.onHitsPerPageChange.bind(this) }>
+                      <option value="12">12</option>
+                      <option value="24">24</option>
+                      <option value="48">48</option>
                       </select>
                     </div>
 
                   <div className="sorting-selector" style={{ marginRight: 8 }}>
-                    <select value={this.state.displayMode} onChange={this.onDisplayModeChange.bind(this) }>
+                    <select value={displayMode} onChange={this.onDisplayModeChange.bind(this) }>
                       <option value="thumbnail">Thumbnails</option>
                       <option value="list">List</option>
                       </select>
@@ -201,8 +206,8 @@ export class PlaygroundApp extends React.Component<any, any> {
                   </div>
 
                 </div>
-              <Hits hitsPerPage={12} highlightFields={["title"]}
-                    itemComponent={this.state.displayMode == "thumbnail" ? MovieHitsItem : MovieHitsDetails }
+              <Hits key={displayMode} hitsPerPage={hitsPerPage} highlightFields={["title"]}
+                    itemComponent={displayMode == "thumbnail" ? MovieHitsItem : MovieHitsDetails }
                     sourceFilter={["title", "poster", "imdbId", "released", "rated", "genres", "writers", "actors", "plot"]}
                     scrollTo="body"
                 />

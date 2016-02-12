@@ -18,7 +18,7 @@ export default class TagFilter extends SearchkitComponent<any, any> {
   }
 
   handleClick() {
-    const { field, value } = this.props;
+    const { field, value } = this.props
     const accessor = this.searchkit.accessors.statefulAccessors[field]
     if (!accessor) {
       console.error('Missing accessor for', field, 'in TagFilter')
@@ -29,9 +29,10 @@ export default class TagFilter extends SearchkitComponent<any, any> {
   }
 
   render() {
+    const { value } = this.props
     return (
       <FastClick handler={this.handleClick}>
-        <span style={{ cursor: 'pointer', color: '#08c' }}>{this.props.children}</span>
+        <span key={value} style={{ cursor: 'pointer', color: '#08c' }}>{this.props.children}</span>
       </FastClick>
     )
   }
