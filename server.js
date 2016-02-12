@@ -54,7 +54,8 @@ module.exports = {
     }
 
 
-    var host = "http://d78cfb11f565e845000.qb0x.com"
+    var host = process.env.ES_URL
+
     app.use("/api", cors({
       origin:"*",
       maxAge:20*24*60*60 //20 days like elastic

@@ -1,5 +1,8 @@
 import * as React from "react";
 import * as _ from "lodash";
+const BEMBlock = require("bem-cn")
+
+import {ViewSwitcher} from "./ViewSwitcher";
 
 import {
   SearchBox,
@@ -24,34 +27,58 @@ import {
 import "./../styles/customisations.scss";
 import "searchkit/theming/theme.scss";
 
-const MovieHitsItem = (props)=> {
+const MovieHitsGridItem = (props)=> {
   const {bemBlocks, result} = props
   let url = "http://www.imdb.com/title/" + result._source.imdbId
   return (
-    <div className={bemBlocks.item().mix(bemBlocks.container("item"))}>
+    <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
       <a href={url} target="_blank">
-        <img className={bemBlocks.item("poster")} src={result._source.poster} width="170" height="240"/>
+        <img data-qa="poster" className={bemBlocks.item("poster")} src={result._source.poster} width="170" height="240"/>
       </a>
       <a href={url} target="_blank">
-        <div className={bemBlocks.item("title")} dangerouslySetInnerHTML={{__html:_.get(result,"highlight.title",false) || result._source.title}}>
+        <div data-qa="title" className={bemBlocks.item("title")} dangerouslySetInnerHTML={{__html:_.get(result,"highlight.title",false) || result._source.title}}>
         </div>
       </a>
     </div>
   )
 }
 
+const MovieHitsListItem = (props)=> {
+  const {bemBlocks, result} = props
+  let url = "http://www.imdb.com/title/" + result._source.imdbId
+  const source:any = _.extend({}, result._source, result.highlight)
+  return (
+    <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
+      <div className={bemBlocks.item("poster")}>
+        <img data-qa="poster" src={result._source.poster}/>
+      </div>
+      <div className={bemBlocks.item("details")}>
+        <h2 className={bemBlocks.item("title")} dangerouslySetInnerHTML={{__html:source.title}}></h2>
+        <h3 className={bemBlocks.item("subtitle")}>Released in {source.year}, rated {source.imdbRating}/10</h3>
+        <div className={bemBlocks.item("text")} dangerouslySetInnerHTML={{__html:source.plot}}></div>
+      </div>
+    </div>
+  )
+}
 
 export class App extends React.Component<any, any> {
 
   searchkit:SearchkitManager
 
   constructor() {
-    const host = "/api/movies"
+    const host = "http://demo.searchkit.co/api/movies"
     this.searchkit = new SearchkitManager(host)
     this.searchkit.translateFunction = (key)=> {
       return {"pagination.next":"Next Page", "pagination.previous":"Previous Page"}[key]
     }
+    this.state = {
+      view:"Grid"
+    }
     super()
+  }
+
+  setView(view) {
+    this.setState({view})
   }
 
   render(){
@@ -70,7 +97,7 @@ export class App extends React.Component<any, any> {
                 queryOptions={{"minimum_should_match":"70%"}}
                 autofocus={true}
                 searchOnChange={true}
-                queryFields={["actors^1","type^2","languages","title^5", "genres^2"]}/>
+                queryFields={["actors^1","type^2","languages","title^5", "genres^2", "plot"]}/>
             </div>
           </div>
 
@@ -96,12 +123,16 @@ export class App extends React.Component<any, any> {
               <div className="results-list__action-bar action-bar">
 
                 <div className="action-bar__info">
-          				<HitsStats/>
+          				<HitsStats translations={{
+                    "hitstats.results_found":"{hitCount} results found"
+                  }}/>
+                  <ViewSwitcher active={this.state.view} onChange={this.setView.bind(this)} views={["Grid", "List"]}/>
           				<SortingSelector options={[
           					{label:"Relevance", field:"_score", order:"desc",defaultOption:true},
           					{label:"Latest Releases", field:"released", order:"desc"},
           					{label:"Earliest Releases", field:"released", order:"asc"}
           				]}/>
+
           			</div>
 
                 <div className="action-bar__filters">
@@ -110,13 +141,15 @@ export class App extends React.Component<any, any> {
                 </div>
 
               </div>
-      				<Hits hitsPerPage={12} highlightFields={["title"]}
-                    itemComponent={MovieHitsItem} sourceFilter={["title", "poster", "imdbId"]}
+      				<Hits hitsPerPage={12} highlightFields={["title","plot"]}
+                    sourceFilter={["plot", "title", "poster", "imdbId", "imdbRating", "year"]}
+                    mod={'sk-hits-'+this.state.view.toLowerCase()}
+                    itemComponent={this.state.view == "Grid" ? MovieHitsGridItem : MovieHitsListItem}
                     scrollTo="body"
               />
               <NoHits suggestionsField={"title"}/>
               <InitialLoader/>
-      				<Pagination showNumbers={true}/>
+      				<Pagination showNumbers={false}/>
       			</div>
           </div>
     			<a className="view-src-link" href="https://github.com/searchkit/searchkit-demo/blob/master/src/app/src/App.tsx">View source »</a>
