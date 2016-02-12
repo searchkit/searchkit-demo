@@ -14,8 +14,8 @@ import {
   InitialLoader
 } from "searchkit";
 
-// import "searchkit/release/theme.css";
-
+import "./../styles/customisations.scss";
+import "searchkit/theming/theme.scss";
 
 const TaxonomyHitsItem = (props)=> {
   const {result, bemBlocks} = props
@@ -73,7 +73,7 @@ export class TaxonomyApp extends React.Component<any, any> {
             </div>
           </div>
 
-  				<Hits hitsPerPage={10} itemComponent={TaxonomyHitsItem}/>
+  				<Hits hitsPerPage={10} mod="sk-hits-list" itemComponent={TaxonomyHitsItem}/>
           <NoHits/>
           <InitialLoader/>
   				<Pagination showNumbers={true}/>

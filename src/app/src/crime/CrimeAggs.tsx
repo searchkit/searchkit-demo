@@ -27,7 +27,7 @@ export class CrimeAccessor extends Accessor{
 
   setResults(results){
     super.setResults(results)
-     let significant = _.pluck(
+     let significant = _.map(
       this.getAggregations(["geo", "significant", "buckets"], [])
     , "key")
     console.log("significant", significant)
