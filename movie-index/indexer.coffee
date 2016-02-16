@@ -20,7 +20,7 @@ splitComma = (str)->
   return str.split(", ")
 
 splitWriter = (str)->
-  _.unique _.map splitComma(str), (writer)->
+  _.uniq _.map splitComma(str), (writer)->
     writer.replace(/\s\(.+\)/,"")
 
 processAwards = (str)->
@@ -45,7 +45,7 @@ processedMovies = movies.map (movie)->
     title:movie.Title
     year:years.year
     yearEnded:years.yearEnded
-    rated:movie.Rated
+    rated:splitComma(movie.Rated)
     released:moment(movie.Released, "DD MMM YYYY").format("YYYY-MM-DD") if notNA(movie.Released)
     runtimeMinutes:toNumber(movie.Runtime)
     genres:splitComma(movie.Genre)

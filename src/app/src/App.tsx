@@ -2,8 +2,6 @@ import * as React from "react";
 import * as _ from "lodash";
 const BEMBlock = require("bem-cn")
 
-import {ViewSwitcher, ViewSwitcherHits} from "./ViewSwitcher";
-
 import {
   SearchBox,
   Hits,
@@ -21,7 +19,9 @@ import {
   SearchkitManager,
   NoHits,
   RangeFilter,
-  InitialLoader
+  InitialLoader,
+  ViewSwitcherToggle,
+  ViewSwitcherHits
 } from "searchkit";
 
 import "./../styles/customisations.scss";
@@ -30,13 +30,12 @@ import "searchkit/theming/theme.scss";
 const MovieHitsGridItem = (props)=> {
   const {bemBlocks, result} = props
   let url = "http://www.imdb.com/title/" + result._source.imdbId
+  const source:any = _.extend({}, result._source, result.highlight)
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
       <a href={url} target="_blank">
         <img data-qa="poster" className={bemBlocks.item("poster")} src={result._source.poster} width="170" height="240"/>
-      </a>
-      <a href={url} target="_blank">
-        <div data-qa="title" className={bemBlocks.item("title")} dangerouslySetInnerHTML={{__html:_.get(result,"highlight.title",false) || result._source.title}}>
+        <div data-qa="title" className={bemBlocks.item("title")} dangerouslySetInnerHTML={{__html:source.title}}>
         </div>
       </a>
     </div>
@@ -53,7 +52,7 @@ const MovieHitsListItem = (props)=> {
         <img data-qa="poster" src={result._source.poster}/>
       </div>
       <div className={bemBlocks.item("details")}>
-        <h2 className={bemBlocks.item("title")} dangerouslySetInnerHTML={{__html:source.title}}></h2>
+        <a href={url} target="_blank"><h2 className={bemBlocks.item("title")} dangerouslySetInnerHTML={{__html:source.title}}></h2></a>
         <h3 className={bemBlocks.item("subtitle")}>Released in {source.year}, rated {source.imdbRating}/10</h3>
         <div className={bemBlocks.item("text")} dangerouslySetInnerHTML={{__html:source.plot}}></div>
       </div>
@@ -81,10 +80,10 @@ export class App extends React.Component<any, any> {
       <div>
       <SearchkitProvider searchkit={this.searchkit}>
       <div>
-        <div className="layout">
+        <div className="sk-layout sk-layout__size-l">
 
-          <div className="layout__top-bar top-bar">
-            <div className="top-bar__content">
+          <div className="sk-layout__top-bar sk-top-bar">
+            <div className="sk-top-bar__content">
               <div className="my-logo">Searchkit Acme co</div>
               <SearchBox
                 translations={{"searchbox.placeholder":"search movies"}}
@@ -95,9 +94,9 @@ export class App extends React.Component<any, any> {
             </div>
           </div>
 
-          <div className="layout__body">
+          <div className="sk-layout__body">
 
-      			<div className="layout__filters">
+      			<div className="sk-layout__filters">
       				<HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
               <RangeFilter min={0} max={10} field="imdbRating" id="imdbRating" title="IMDB Rating" showHistogram={true}/>
@@ -112,15 +111,16 @@ export class App extends React.Component<any, any> {
               ]}/>
             </div>
 
-      			<div className="layout__results results-list">
+      			<div className="sk-layout__results sk-results-list">
 
-              <div className="results-list__action-bar action-bar">
+              <div className="sk-results-list__action-bar sk-action-bar">
 
-                <div className="action-bar__info">
+                <div className="sk-action-bar__info">
           				<HitsStats translations={{
                     "hitstats.results_found":"{hitCount} results found"
                   }}/>
-                  <ViewSwitcher/>
+
+                  <ViewSwitcherToggle/>
           				<SortingSelector options={[
           					{label:"Relevance", field:"_score", order:"desc",defaultOption:true},
           					{label:"Latest Releases", field:"released", order:"desc"},
@@ -129,7 +129,7 @@ export class App extends React.Component<any, any> {
 
           			</div>
 
-                <div className="action-bar__filters">
+                <div className="sk-action-bar__filters">
                   <SelectedFilters/>
                   <ResetFilters/>
                 </div>
@@ -139,14 +139,15 @@ export class App extends React.Component<any, any> {
       				    hitsPerPage={12} highlightFields={["title","plot"]}
                   sourceFilter={["plot", "title", "poster", "imdbId", "imdbRating", "year"]}
                   hitComponents = {[
-                    {key:"grid", title:"Grid", itemComponent:MovieHitsGridItem},
+                    {key:"grid", title:"Grid", itemComponent:MovieHitsGridItem, defaultOption:true},
                     {key:"list", title:"List", itemComponent:MovieHitsListItem}
                   ]}
                   scrollTo="body"
               />
+
               <NoHits suggestionsField={"title"}/>
               <InitialLoader/>
-      				<Pagination showNumbers={false}/>
+      				<Pagination showNumbers={true}/>
       			</div>
           </div>
     			<a className="view-src-link" href="https://github.com/searchkit/searchkit-demo/blob/master/src/app/src/App.tsx">View source »</a>

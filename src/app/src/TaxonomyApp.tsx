@@ -14,8 +14,8 @@ import {
   InitialLoader
 } from "searchkit";
 
-// import "searchkit/release/theme.css";
-
+import "./../styles/customisations.scss";
+import "searchkit/theming/theme.scss";
 
 const TaxonomyHitsItem = (props)=> {
   const {result, bemBlocks} = props
@@ -39,10 +39,10 @@ export class TaxonomyApp extends React.Component<any, any> {
   render(){ return (
     <div>
     <SearchkitProvider searchkit={this.searchkit}>
-    <div className="layout">
+    <div className="sk-layout">
 
-      <div className="layout__top-bar top-bar">
-        <div className="top-bar__content">
+      <div className="sk-layout__top-bar sk-top-bar">
+        <div className="sk-top-bar__content">
           <div className="my-logo">Searchkit Acme co</div>
           <SearchBox
             translations={{"searchbox.placeholder":"search regions"}}
@@ -53,27 +53,27 @@ export class TaxonomyApp extends React.Component<any, any> {
         </div>
       </div>
 
-      <div className="layout__body">
+      <div className="sk-layout__body">
 
-  			<div className="layout__filters">
+  			<div className="sk-layout__filters">
           <HierarchicalRefinementFilter field="taxonomy" id="categories" title="Region" startLevel={2}/>
   			</div>
 
-        <div className="layout__results results-list">
+        <div className="sk-layout__results sk-results-list">
 
-          <div className="results-list__action-bar action-bar">
+          <div className="sk-results-list__action-bar sk-action-bar">
 
-            <div className="action-bar__info">
+            <div className="sk-action-bar__info">
               <HitsStats/>
             </div>
 
-            <div className="action-bar__filters">
+            <div className="sk-action-bar__filters">
               <SelectedFilters/>
               <ResetFilters/>
             </div>
           </div>
 
-  				<Hits hitsPerPage={10} itemComponent={TaxonomyHitsItem}/>
+  				<Hits hitsPerPage={10} mod="sk-hits-list" itemComponent={TaxonomyHitsItem}/>
           <NoHits/>
           <InitialLoader/>
   				<Pagination showNumbers={true}/>

@@ -23,6 +23,7 @@ InitialLoader
 
 import "./../../styles/customisations.scss";
 import "searchkit/theming/theme.scss";
+
 import MultiSelectFilter from './MultiSelectFilter/MultiSelectFilter';
 import GroupedSelectedFilters from './GroupedSelectedFilters/GroupedSelectedFilters';
 import CheckboxFilter from './CheckboxFilter';
@@ -131,10 +132,10 @@ export class PlaygroundApp extends React.Component<any, any> {
       <SearchkitProvider searchkit={this.searchkit}>
       <div>
       hello
-        <div className="layout">
+        <div className="sk-layout">
 
-          <div className="layout__top-bar top-bar">
-            <div className="top-bar__content">
+          <div className="sk-layout__top-bar sk-top-bar">
+            <div className="sk-top-bar__content">
               <div className="my-logo">Searchkit Acme co</div>
               <SearchBox
                 translations={{ "searchbox.placeholder": "search movies" }}
@@ -145,9 +146,9 @@ export class PlaygroundApp extends React.Component<any, any> {
               </div>
             </div>
 
-          <div className="layout__body">
+          <div className="sk-layout__body">
 
-            <div className="layout__filters">
+            <div className="sk-layout__filters">
               <HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
               <NumericRefinementListFilter id="imdbRating" title="IMDB Rating" field="imdbRating" options={[
@@ -170,15 +171,15 @@ export class PlaygroundApp extends React.Component<any, any> {
               ]}/>
               </div>
 
-            <div className="layout__results results-list">
+            <div className="sk-layout__results sk-results-list">
 
-              <div className="results-list__action-bar action-bar">
+              <div className="sk-results-list__action-bar sk-action-bar">
 
-                <div className="action-bar__info">
+                <div className="sk-action-bar__info">
                   <HitsStats/>
 
 
-                  <div className="sorting-selector" style={{ marginRight: 8 }}>
+                  <div className="sk-sorting-selector" style={{ marginRight: 8 }}>
                     <select value={"" + hitsPerPage} onChange={this.onHitsPerPageChange.bind(this) }>
                       <option value="12">12</option>
                       <option value="24">24</option>
@@ -186,7 +187,7 @@ export class PlaygroundApp extends React.Component<any, any> {
                       </select>
                     </div>
 
-                  <div className="sorting-selector" style={{ marginRight: 8 }}>
+                  <div className="sk-sorting-selector" style={{ marginRight: 8 }}>
                     <select value={displayMode} onChange={this.onDisplayModeChange.bind(this) }>
                       <option value="thumbnail">Thumbnails</option>
                       <option value="list">List</option>
@@ -200,7 +201,7 @@ export class PlaygroundApp extends React.Component<any, any> {
                   ]}/>
                   </div>
 
-                <div className="action-bar__filters">
+                <div className="sk-action-bar__filters">
                   <GroupedSelectedFilters/>
                   <ResetFilters/>
                   </div>
