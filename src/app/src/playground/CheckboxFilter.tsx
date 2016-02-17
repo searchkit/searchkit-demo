@@ -23,7 +23,7 @@ export default class CheckboxFilter extends SearchkitComponent<CheckboxFilterPro
     defineAccessor() {
         const { field, id, title, translations, value } = this.props;
         return new FacetAccessor(field, {
-            id, operator: "AND", title, size: 50, translations,
+            id, operator: "AND", title, size: 1, translations,
             include: [value]
         })
     }
@@ -58,6 +58,7 @@ export default class CheckboxFilter extends SearchkitComponent<CheckboxFilterPro
         const selected = this.accessor.state.contains(value)
 
         const key = value.toLowerCase();
+        console.log('this.accessor.getBuckets()', this.accessor.getBuckets());
         var option = this.accessor.getBuckets().find(v => v.key === key);
         const count = option ? option.doc_count : 0;
 
