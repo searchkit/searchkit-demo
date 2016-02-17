@@ -18,7 +18,9 @@ SearchkitProvider,
 SearchkitManager,
 NoHits,
 RangeFilter,
-InitialLoader
+InitialLoader,
+ViewSwitcherToggle,
+ViewSwitcherHits
 } from "searchkit";
 
 import "./../../styles/customisations.scss";
@@ -30,16 +32,17 @@ import CheckboxFilter from './CheckboxFilter';
 import TagFilter from './TagFilter';
 import FacetEnabler from './FacetEnabler';
 
-const MovieHitsItem = (props) => {
+
+
+const MovieHitsGridItem = (props) => {
   const {bemBlocks, result} = props
   let url = "http://www.imdb.com/title/" + result._source.imdbId
+  const source: any = _.extend({}, result._source, result.highlight)
   return (
-    <div className={bemBlocks.item().mix(bemBlocks.container("item")) }>
+    <div className={bemBlocks.item().mix(bemBlocks.container("item")) } data-qa="hit">
       <a href={url} target="_blank">
-        <img className={bemBlocks.item("poster") } src={result._source.poster} width="170" height="240"/>
-        </a>
-      <a href={url} target="_blank">
-        <div className={bemBlocks.item("title") } dangerouslySetInnerHTML={{ __html: _.get(result, "highlight.title", false) || result._source.title }}>
+        <img data-qa="poster" className={bemBlocks.item("poster") } src={result._source.poster} width="170" height="240"/>
+        <div data-qa="title" className={bemBlocks.item("title") } dangerouslySetInnerHTML={{ __html: source.title }}>
           </div>
         </a>
       </div>
@@ -56,47 +59,121 @@ function mapAndJoin(array=[], func, joinString=", "){
   return result;
 }
 
-const MovieHitsDetails = (props) => {
-  const { bemBlocks, result } = props
-  const source = result._source;
-  let url = "http://www.imdb.com/title/" + result._source.imdbId
 
+
+const MovieHitsListItem = (props) => {
+  const {bemBlocks, result} = props
+  let url = "http://www.imdb.com/title/" + result._source.imdbId
+  const source: any = _.extend({}, result._source, result.highlight)
   const { title, poster, writers = [], actors = [], genres = [], plot, released, rated } = source;
 
   return (
-    <div className={bemBlocks.item().mix(bemBlocks.container("item")) } key={result._id} style={{
-      width: '99%',
-      minWidth: '99%',
-      display: 'table-row',
-      boxShadow: '0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)'
-    }}>
-      <div style={{ marginLeft: 'auto', marginRight: 'auto' }}>
-        <div style={{ display: "table-cell", height: 200 }}>
-          <a href={url} target="_blank">
-            <div className={bemBlocks.item("poster") } style={{
-              width: 180, height: 280,
-              background: 'url(' + poster + ')',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center center'
-            }} />
-          </a>
+    <div className={bemBlocks.item().mix(bemBlocks.container("item")) } data-qa="hit">
+      <div className={bemBlocks.item("poster") }>
+        <img data-qa="poster" src={result._source.poster}/>
         </div>
-        <div style={{ display: "table-cell", verticalAlign: 'top', paddingLeft: 8 }}>
-          <h2 style={{ marginTop: 0, marginBottom: 0 }}>{title}</h2>
-          <ul style={{ marginTop: 8, marginBottom: 8, listStyle: 'none', paddingLeft: 20 }}>
-            <li>Released: {released}</li>
-            <li>Rating: {rated}</li>
-            <li>Genres: {mapAndJoin(genres, a => <TagFilter key={a} field="genres.raw" value={a}>{a}</TagFilter>)}</li>
-            <li>Writers: {mapAndJoin(writers, a => <TagFilter key={a} field="writers.raw" value={a}>{a}</TagFilter>) }</li>
-            <li>Actors: {mapAndJoin(actors, a => <TagFilter key={a} field="actors.raw" value={a}>{a}</TagFilter>) }</li>
-          </ul>
-          <div style={{ marginTop: 8, marginBottom: 8 }}>{plot}</div>
+      <div className={bemBlocks.item("details") }>
+        <a href={url} target="_blank"><h2 className={bemBlocks.item("title") } dangerouslySetInnerHTML={{ __html: source.title }}></h2></a>
+        <h3 className={bemBlocks.item("subtitle") }>Released in {source.year}, rated {source.imdbRating}/10</h3>
+        <ul style={{ marginTop: 8, marginBottom: 8, listStyle: 'none', paddingLeft: 20 }}>
+          <li>Released: {released}</li>
+          <li>Rating: {rated}</li>
+          <li>Genres: {mapAndJoin(genres, a => <TagFilter key={a} field="genres.raw" value={a}>{a}</TagFilter>) }</li>
+          <li>Writers: {mapAndJoin(writers, a => <TagFilter key={a} field="writers.raw" value={a}>{a}</TagFilter>) }</li>
+          <li>Actors: {mapAndJoin(actors, a => <TagFilter key={a} field="actors.raw" value={a}>{a}</TagFilter>) }</li>
+        </ul>
+        <div className={bemBlocks.item("text") } dangerouslySetInnerHTML={{ __html: source.plot }}></div>
         </div>
       </div>
-    </div>
   )
 }
 // "title", "poster", "imdbId", "released", "rated", "genres", "writers", "actors", "plot"]
+
+var serialize = JSON.stringify;
+
+function filterMap(boolMust) {
+  var filters = {}
+  _.forEach(boolMust, filter => {
+    filters[serialize(filter)] = filter
+  })
+  return filters
+}
+
+function queryOptimizer(query){
+  console.log(query)
+  console.log("initial:", JSON.stringify(query).length, "bytes")
+
+  // Find common filters...
+  if (!query.filter || !query.filter.bool || !query.filter.bool.must) {
+    console.log('No common filters');
+    return query
+  }
+  var commonFilters = filterMap(query.filter.bool.must)
+  console.log('Filters to check', _.keys(commonFilters))
+
+  if (query.aggs){
+    // Find missing keys...
+    _.forIn(query.aggs, (agg, name) => {
+      const boolMust = (agg.filter && agg.filter.bool && agg.filter.bool.must) || [];
+      if (boolMust.length == 0) {
+        console.log('Empty filters for', name)
+        commonFilters = {} // flush
+        return
+      }
+      const filtersToCheck = filterMap(boolMust)
+      // Remove non-common filters
+      _.forEach(_.keys(commonFilters), key => {
+        if (!filtersToCheck[key]){
+          console.log('delete', key, ', missing from ', name)
+          delete commonFilters[key]
+        }
+      })
+    })
+  }
+
+  if (_.keys(commonFilters).length == 0) {
+    // Nothing to optimize
+    console.log('Nothing to optimize')
+    return query
+  }
+
+  console.log('Found filters to optimize !!', commonFilters)
+
+  // Add filters query to query
+  if (query.query){
+    query.query.bool.filter = {
+      bool:{
+        must:_.values(commonFilters)
+      }
+    }
+  } else {
+
+    query.query = {
+      bool: {
+        filter: {
+          bool: {
+            must: _.values(commonFilters)
+          }
+        }
+      }
+    }
+  }
+
+  // Remove these filters everywhere else...
+  if (query.aggs) {
+    _.forIn(query.aggs, (agg, name) => {
+      const boolMust = (agg.filter && agg.filter.bool && agg.filter.bool.must) || [];
+      agg.filter.bool.must = _.filter(agg.filter.bool.must, filter => {
+        // Keep filters NOT in the common filters
+        return !(serialize(filter) in commonFilters)
+      })
+    })
+  }
+
+  console.log("=>", JSON.stringify(query).length, "bytes")
+
+  return query
+}
 
 
 export class PlaygroundApp extends React.Component<any, any> {
@@ -105,9 +182,11 @@ export class PlaygroundApp extends React.Component<any, any> {
 
   constructor() {
     super()
-    const host = "http://demo.searchkit.co/api/movies"
+    const host = "http://localhost:9200/imdb/movies"
+    // const host = "http://demo.searchkit.co/api/movies"
     // const host = "/api/mock"
     this.searchkit = new SearchkitManager(host)
+    // this.searchkit.setQueryProcessor(queryOptimizer)
     this.searchkit.translateFunction = (key) => {
       return { "pagination.next": "Next Page", "pagination.previous": "Previous Page" }[key]
     }
@@ -116,6 +195,10 @@ export class PlaygroundApp extends React.Component<any, any> {
       hitsPerPage: 12
     }
   }
+
+  // queryOptimizer(query){
+  //   if (this.state.optimizeQuery)
+  // }
 
   onDisplayModeChange(e) {
     this.setState({ displayMode: e.target.value })
@@ -160,7 +243,7 @@ export class PlaygroundApp extends React.Component<any, any> {
               ]}/>
               <FacetEnabler id="genres" title="Genres" field="genres.raw" operator="AND"/>
               <MultiSelectFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={100}/>
-              <CheckboxFilter id="rating" title="Rating" field="rated" value={"r"} label="Rated 'R'"/>
+              <CheckboxFilter id="rating" title="Rating" field="rated.raw" value="R" label="Rated 'R'"/>
               <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={10}/>
               <RefinementListFilter translations={{ "facets.view_more": "View more writers" }} id="writers" title="Writers" field="writers.raw" operator="OR" size={10}/>
               <NumericRefinementListFilter id="runtimeMinutes" title="Length" field="runtimeMinutes" options={[
@@ -187,32 +270,31 @@ export class PlaygroundApp extends React.Component<any, any> {
                       </select>
                     </div>
 
-                  <div className="sk-sorting-selector" style={{ marginRight: 8 }}>
-                    <select value={displayMode} onChange={this.onDisplayModeChange.bind(this) }>
-                      <option value="thumbnail">Thumbnails</option>
-                      <option value="list">List</option>
-                      </select>
-                    </div>
+                  <ViewSwitcherToggle/>
 
                   <SortingSelector options={[
                     { label: "Relevance", field: "_score", order: "desc", defaultOption: true },
                     { label: "Latest Releases", field: "released", order: "desc" },
                     { label: "Earliest Releases", field: "released", order: "asc" }
                   ]}/>
-                  </div>
+                </div>
 
                 <div className="sk-action-bar__filters">
                   <GroupedSelectedFilters/>
                   <ResetFilters/>
-                  </div>
-
                 </div>
-              <Hits key={displayMode} hitsPerPage={hitsPerPage} highlightFields={["title"]}
-                    itemComponent={displayMode == "thumbnail" ? MovieHitsItem : MovieHitsDetails }
-                    sourceFilter={["title", "poster", "imdbId", "released", "rated", "genres", "writers", "actors", "plot"]}
-                    scrollTo="body"
+
+              </div>
+              <ViewSwitcherHits
+                hitsPerPage={12} highlightFields={["title", "plot"]}
+                sourceFilter={["plot", "title", "poster", "imdbId", "imdbRating", "year", "actors", "writers", "genres", "rated"]}
+                hitComponents = {[
+                  { key: "grid", title: "Grid", itemComponent: MovieHitsGridItem, defaultOption: true },
+                  { key: "list", title: "List", itemComponent: MovieHitsListItem }
+                ]}
+                scrollTo="body"
                 />
-              <NoHits suggestionsField={"title"}/>
+              {/*<NoHits suggestionsField={"title"}/>*/}
               <InitialLoader/>
               <Pagination showNumbers={true}/>
               </div>
