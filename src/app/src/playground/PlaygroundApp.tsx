@@ -216,6 +216,7 @@ export class PlaygroundApp extends React.Component<any, any> {
 
               <div className="sk-action-bar__info">
                 <Pagination showNumbers={true}/>
+                <Pagination showNumbers={true} listComponent={Selector} />
               </div>
 
                 <div className="sk-action-bar__filters">

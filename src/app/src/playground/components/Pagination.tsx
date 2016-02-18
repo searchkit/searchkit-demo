@@ -65,24 +65,26 @@ export class PaginationDisplay extends React.Component<PaginationDisplayProps, a
           key: 'ellipsis-' + idx,
           label: '...',
           page: undefined,
-          disabled: true
+          disabled: true,
+          hideInSelector: false
         }
         case 'number': return {
           key: p.page,
           label: '' + p.page,
           page: p.page,
-          disabled: false
+          disabled: false,
+          hideInSelector: false
         }
         case 'previous':  // continue
         case 'next': return {
           key: p.type,
           label: translate('pagination.' + p.type),
           page: p.page,
-          disabled: p.disabled
+          disabled: p.disabled,
+          hideInSelector: true
         }
       }
     })
-    console.log(items);
 
     return React.createElement(listComponent, {
       items,
@@ -98,6 +100,7 @@ export class PaginationDisplay extends React.Component<PaginationDisplayProps, a
 export interface PaginationProps extends SearchkitComponentProps {
   showNumbers?: boolean
   pageScope?: number // Number of page to show before/after the current number
+  listComponent?: any
 }
 
 export class Pagination extends SearchkitComponent<PaginationProps, any> {
@@ -114,8 +117,14 @@ export class Pagination extends SearchkitComponent<PaginationProps, any> {
     translations:SearchkitComponent.translationsPropType(
       Pagination.translations
     ),
-    showNumbers:React.PropTypes.bool
+    showNumbers:React.PropTypes.bool,
+    pageScope: React.PropTypes.number,
+    listComponent: React.PropTypes.any,
   }, SearchkitComponent.propTypes)
+
+  static defaultProps = {
+    listComponent: Toggle
+  }
 
   defineAccessor() {
     return new PaginationAccessor("p")
@@ -149,8 +158,9 @@ export class Pagination extends SearchkitComponent<PaginationProps, any> {
   render() {
     if (!this.hasHits()) return null;
 
-    const { showNumbers, pageScope } = this.props;
-    return <PaginationDisplay currentPage={this.getCurrentPage()}
+    const { showNumbers, pageScope, listComponent } = this.props;
+    return <PaginationDisplay listComponent={listComponent}
+                              currentPage = { this.getCurrentPage() }
                               totalPages={this.getTotalPages()}
                               showNumbers={showNumbers}
                               pageScope={pageScope}

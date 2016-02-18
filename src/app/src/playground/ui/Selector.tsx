@@ -2,9 +2,14 @@ import * as React from "react";
 
 const block = require('bem-cn')
 const map = require("lodash/map")
+const filter = require("lodash/filter")
 const transform = require("lodash/transform")
 
 require('./Selector.scss');
+
+function filterSelectorItems(items){
+  return filter(items, ({ hideInSelector = false }) => !hideInSelector)
+}
 
 export class Selector extends React.Component<any, any> {
 
@@ -34,9 +39,9 @@ export class Selector extends React.Component<any, any> {
     return (
       <div className={bemBlocks.container().state({ disabled }) }>
         <select onChange={this.onChange.bind(this)} value={this.getSelectedValue() }>
-          {map(items, ({label, title}) => {
+          {map(filterSelectorItems(items), ({label, title, disabled}, idx) => {
             const l = label || title
-            return <option key={l} value={l}>{l}</option>
+            return <option key={idx + '-' + l} value={l} disabled={disabled}>{l}</option>
           })}
           </select>
       </div>
