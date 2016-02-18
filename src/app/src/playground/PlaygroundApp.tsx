@@ -293,6 +293,11 @@ export class PlaygroundApp extends React.Component<any, any> {
                     { label: "Latest", field: "released", order: "desc" },
                     { label: "Earliest", field: "released", order: "asc" }
                   ]}/>
+                  <Sorting options={[
+                    { label: "Relevance", field: "_score", order: "desc", defaultOption: true },
+                    { label: "Latest", field: "released", order: "desc" },
+                    { label: "Earliest", field: "released", order: "asc" }
+                  ]}/>
                 </div>
 
                 <div className="sk-action-bar__filters">

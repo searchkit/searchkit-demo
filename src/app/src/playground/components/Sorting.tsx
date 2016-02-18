@@ -16,7 +16,7 @@ import { Selector } from '../ui'
 
 export interface SortingProps extends SearchkitComponentProps {
   options:Array<SortingOption>
-  listComponent: any
+  listComponent?: any
 }
 
 export class Sorting extends SearchkitComponent<SortingProps, any> {
