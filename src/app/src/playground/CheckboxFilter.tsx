@@ -57,9 +57,7 @@ export default class CheckboxFilter extends SearchkitComponent<CheckboxFilterPro
 
         const selected = this.accessor.state.contains(value)
 
-        const key = value.toLowerCase();
-        console.log('this.accessor.getBuckets()', this.accessor.getBuckets());
-        var option = this.accessor.getBuckets().find(v => v.key === key);
+        var option = this.accessor.getBuckets().find(v => v.key === value);
         const count = option ? option.doc_count : 0;
 
         return (

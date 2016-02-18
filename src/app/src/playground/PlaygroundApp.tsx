@@ -1,6 +1,8 @@
 import * as React from "react";
 import * as _ from "lodash";
 
+const Perf = require('react-addons-perf');
+
 import {
 SearchBox,
 Hits,
@@ -12,14 +14,14 @@ MenuFilter,
 SelectedFilters,
 HierarchicalMenuFilter,
 NumericRefinementListFilter,
-SortingSelector,
+// SortingSelector,
 SearchkitComponent,
 SearchkitProvider,
 SearchkitManager,
 NoHits,
 RangeFilter,
 InitialLoader,
-ViewSwitcherToggle,
+// ViewSwitcherToggle,
 ViewSwitcherHits
 } from "searchkit";
 
@@ -31,7 +33,12 @@ import GroupedSelectedFilters from './GroupedSelectedFilters/GroupedSelectedFilt
 import CheckboxFilter from './CheckboxFilter';
 import TagFilter from './TagFilter';
 import FacetEnabler from './FacetEnabler';
+import { ViewSwitcher, Sorting } from './components';
 
+import { Toggle, Selector } from './ui';
+
+
+// import { RefinementListFilter } from './RefinementListFilter'
 
 
 const MovieHitsGridItem = (props) => {
@@ -76,7 +83,6 @@ const MovieHitsListItem = (props) => {
         <a href={url} target="_blank"><h2 className={bemBlocks.item("title") } dangerouslySetInnerHTML={{ __html: source.title }}></h2></a>
         <h3 className={bemBlocks.item("subtitle") }>Released in {source.year}, rated {source.imdbRating}/10</h3>
         <ul style={{ marginTop: 8, marginBottom: 8, listStyle: 'none', paddingLeft: 20 }}>
-          <li>Released: {released}</li>
           <li>Rating: {rated}</li>
           <li>Genres: {mapAndJoin(genres, a => <TagFilter key={a} field="genres.raw" value={a}>{a}</TagFilter>) }</li>
           <li>Writers: {mapAndJoin(writers, a => <TagFilter key={a} field="writers.raw" value={a}>{a}</TagFilter>) }</li>
@@ -182,8 +188,8 @@ export class PlaygroundApp extends React.Component<any, any> {
 
   constructor() {
     super()
-    const host = "http://localhost:9200/imdb/movies"
-    // const host = "http://demo.searchkit.co/api/movies"
+    // const host = "http://localhost:9200/imdb/movies"
+    const host = "http://demo.searchkit.co/api/movies"
     // const host = "/api/mock"
     this.searchkit = new SearchkitManager(host)
     // this.searchkit.setQueryProcessor(queryOptimizer)
@@ -208,8 +214,16 @@ export class PlaygroundApp extends React.Component<any, any> {
     this.setState({ hitsPerPage: parseInt(e.target.value, 10) })
   }
 
+  refresh(e){
+    Perf.start()
+    this.forceUpdate(() => {
+      Perf.stop()
+      Perf.printWasted(Perf.getLastMeasurements())
+    })
+  }
+
   render() {
-    const { displayMode, hitsPerPage } = this.state;
+    const { hitsPerPage } = this.state;
     return (
       <div>
       <SearchkitProvider searchkit={this.searchkit}>
@@ -232,6 +246,7 @@ export class PlaygroundApp extends React.Component<any, any> {
           <div className="sk-layout__body">
 
             <div className="sk-layout__filters">
+              <button onClick={this.refresh.bind(this)}>Click to refresh</button>
               <HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
               <NumericRefinementListFilter id="imdbRating" title="IMDB Rating" field="imdbRating" options={[
@@ -261,21 +276,22 @@ export class PlaygroundApp extends React.Component<any, any> {
                 <div className="sk-action-bar__info">
                   <HitsStats/>
 
-
+                  {/*
                   <div className="sk-sorting-selector" style={{ marginRight: 8 }}>
                     <select value={"" + hitsPerPage} onChange={this.onHitsPerPageChange.bind(this) }>
                       <option value="12">12</option>
                       <option value="24">24</option>
                       <option value="48">48</option>
                       </select>
-                    </div>
+                    </div>*/}
 
-                  <ViewSwitcherToggle/>
+                  <ViewSwitcher/>
+                  <ViewSwitcher listComponent={Selector}/>
 
-                  <SortingSelector options={[
+                  <Sorting listComponent={Toggle} options={[
                     { label: "Relevance", field: "_score", order: "desc", defaultOption: true },
-                    { label: "Latest Releases", field: "released", order: "desc" },
-                    { label: "Earliest Releases", field: "released", order: "asc" }
+                    { label: "Latest", field: "released", order: "desc" },
+                    { label: "Earliest", field: "released", order: "asc" }
                   ]}/>
                 </div>
 
@@ -286,7 +302,7 @@ export class PlaygroundApp extends React.Component<any, any> {
 
               </div>
               <ViewSwitcherHits
-                hitsPerPage={12} highlightFields={["title", "plot"]}
+                hitsPerPage={hitsPerPage} highlightFields={["title", "plot"]}
                 sourceFilter={["plot", "title", "poster", "imdbId", "imdbRating", "year", "actors", "writers", "genres", "rated"]}
                 hitComponents = {[
                   { key: "grid", title: "Grid", itemComponent: MovieHitsGridItem, defaultOption: true },
