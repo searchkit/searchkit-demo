@@ -8,7 +8,7 @@ SearchBox,
 Hits,
 HitsStats,
 RefinementListFilter,
-Pagination,
+Pagination as OriginalPagination,
 ResetFilters,
 MenuFilter,
 SelectedFilters,
@@ -30,12 +30,11 @@ import "searchkit/theming/theme.scss";
 
 import MultiSelectFilter from './MultiSelectFilter/MultiSelectFilter';
 import GroupedSelectedFilters from './GroupedSelectedFilters/GroupedSelectedFilters';
-import CheckboxFilter from './CheckboxFilter';
-import TagFilter from './TagFilter';
 import FacetEnabler from './FacetEnabler';
-import { ViewSwitcher, Sorting } from './components';
 
+import { ViewSwitcher, Sorting, CheckboxFilter, TagFilter, Pagination } from './components';
 import { Toggle, Selector } from './ui';
+import { queryOptimizer } from './helpers';
 
 
 // import { RefinementListFilter } from './RefinementListFilter'
@@ -95,91 +94,6 @@ const MovieHitsListItem = (props) => {
 }
 // "title", "poster", "imdbId", "released", "rated", "genres", "writers", "actors", "plot"]
 
-var serialize = JSON.stringify;
-
-function filterMap(boolMust) {
-  var filters = {}
-  _.forEach(boolMust, filter => {
-    filters[serialize(filter)] = filter
-  })
-  return filters
-}
-
-function queryOptimizer(query){
-  console.log(query)
-  console.log("initial:", JSON.stringify(query).length, "bytes")
-
-  // Find common filters...
-  if (!query.filter || !query.filter.bool || !query.filter.bool.must) {
-    console.log('No common filters');
-    return query
-  }
-  var commonFilters = filterMap(query.filter.bool.must)
-  console.log('Filters to check', _.keys(commonFilters))
-
-  if (query.aggs){
-    // Find missing keys...
-    _.forIn(query.aggs, (agg, name) => {
-      const boolMust = (agg.filter && agg.filter.bool && agg.filter.bool.must) || [];
-      if (boolMust.length == 0) {
-        console.log('Empty filters for', name)
-        commonFilters = {} // flush
-        return
-      }
-      const filtersToCheck = filterMap(boolMust)
-      // Remove non-common filters
-      _.forEach(_.keys(commonFilters), key => {
-        if (!filtersToCheck[key]){
-          console.log('delete', key, ', missing from ', name)
-          delete commonFilters[key]
-        }
-      })
-    })
-  }
-
-  if (_.keys(commonFilters).length == 0) {
-    // Nothing to optimize
-    console.log('Nothing to optimize')
-    return query
-  }
-
-  console.log('Found filters to optimize !!', commonFilters)
-
-  // Add filters query to query
-  if (query.query){
-    query.query.bool.filter = {
-      bool:{
-        must:_.values(commonFilters)
-      }
-    }
-  } else {
-
-    query.query = {
-      bool: {
-        filter: {
-          bool: {
-            must: _.values(commonFilters)
-          }
-        }
-      }
-    }
-  }
-
-  // Remove these filters everywhere else...
-  if (query.aggs) {
-    _.forIn(query.aggs, (agg, name) => {
-      const boolMust = (agg.filter && agg.filter.bool && agg.filter.bool.must) || [];
-      agg.filter.bool.must = _.filter(agg.filter.bool.must, filter => {
-        // Keep filters NOT in the common filters
-        return !(serialize(filter) in commonFilters)
-      })
-    })
-  }
-
-  console.log("=>", JSON.stringify(query).length, "bytes")
-
-  return query
-}
 
 
 export class PlaygroundApp extends React.Component<any, any> {
@@ -188,13 +102,13 @@ export class PlaygroundApp extends React.Component<any, any> {
 
   constructor() {
     super()
-    // const host = "http://localhost:9200/imdb/movies"
-    const host = "http://demo.searchkit.co/api/movies"
-    // const host = "/api/mock"
+    const host = "http://localhost:9200/imdb/movies"
+    // const host = "http://demo.searchkit.co/api/movies"
+
     this.searchkit = new SearchkitManager(host)
     // this.searchkit.setQueryProcessor(queryOptimizer)
     this.searchkit.translateFunction = (key) => {
-      return { "pagination.next": "Next Page", "pagination.previous": "Previous Page" }[key]
+      return { "pagination.previous": "<", "pagination.next": ">" }[key]
     }
     this.state = {
       displayMode: "thumbnail",
@@ -300,6 +214,10 @@ export class PlaygroundApp extends React.Component<any, any> {
                   ]}/>
                 </div>
 
+              <div className="sk-action-bar__info">
+                <Pagination showNumbers={true}/>
+              </div>
+
                 <div className="sk-action-bar__filters">
                   <GroupedSelectedFilters/>
                   <ResetFilters/>
@@ -317,7 +235,7 @@ export class PlaygroundApp extends React.Component<any, any> {
                 />
               {/*<NoHits suggestionsField={"title"}/>*/}
               <InitialLoader/>
-              <Pagination showNumbers={true}/>
+              <OriginalPagination showNumbers={true}/>
               </div>
             </div>
           <a className="view-src-link" href="https://github.com/searchkit/searchkit-demo/blob/master/src/app/src/App.tsx">View source »</a>

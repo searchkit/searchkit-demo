@@ -26,6 +26,7 @@
     color: $sk-action-text-color;
     padding:5px 10px;
     border-right:none;
+    text-decoration: none;
 
     &:first-child {
       border-radius: $sk-border-radius 0 0 $sk-border-radius;
@@ -41,6 +42,11 @@
       color:white;
       font-weight: $sk-bold-weight;
       border-color:$sk-active-bg-color;
+    }
+
+    &.is-disabled {
+      cursor: initial;
+      color: #ddd;
     }
   }
 }

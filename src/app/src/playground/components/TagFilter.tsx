@@ -3,14 +3,10 @@ import * as React from "react";
 import {
 SearchkitComponent,
 SearchkitComponentProps,
-SearchkitProvider,
-SearchkitManager,
-FacetAccessor,
-FilterCheckboxItemComponent,
 FastClick,
 } from "searchkit";
 
-export default class TagFilter extends SearchkitComponent<any, any> {
+export class TagFilter extends SearchkitComponent<any, any> {
 
   constructor(){
     super()

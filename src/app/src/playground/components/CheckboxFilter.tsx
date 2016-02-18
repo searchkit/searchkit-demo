@@ -3,8 +3,6 @@ import * as React from "react";
 import {
 SearchkitComponent,
 SearchkitComponentProps,
-SearchkitProvider,
-SearchkitManager,
 FacetAccessor,
 FilterCheckboxItemComponent,
 } from "searchkit";
@@ -17,7 +15,7 @@ export interface CheckboxFilterProps extends SearchkitComponentProps {
     label: string
 }
 
-export default class CheckboxFilter extends SearchkitComponent<CheckboxFilterProps, any> {
+export class CheckboxFilter extends SearchkitComponent<CheckboxFilterProps, any> {
     accessor: FacetAccessor
 
     defineAccessor() {
@@ -61,18 +59,18 @@ export default class CheckboxFilter extends SearchkitComponent<CheckboxFilterPro
         const count = option ? option.doc_count : 0;
 
         return (
-          <div data-qa={`filter--${this.props.id}`} className={className}>
+            <div data-qa={`filter--${this.props.id}`} className={className}>
             <div data-qa="header" className={block("header") }>{title}</div>
             <div data-qa="options" className={block("options") }>
               <FilterCheckboxItemComponent
-                label={label}
-                count={count}
-                selected={selected}
-                translate={this.translate.bind(this) }
-                bemBlocks={this.bemBlocks}
-                toggleFilter={this.onToggleFilter.bind(this) } />
-            </div>
-          </div>
+                  label={label}
+                  count={count}
+                  selected={selected}
+                  translate={this.translate.bind(this) }
+                  bemBlocks={this.bemBlocks}
+                  toggleFilter={this.onToggleFilter.bind(this) } />
+                </div>
+                </div>
         )
         // field="rated" value="R" title="Movie rating" label="rated 'R'"
     }
