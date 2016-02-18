@@ -11,9 +11,6 @@ require('./Toggle.scss');
 
 const ViewItemComponent = ({toggleItem, bemBlocks, active, disabled, view, url}) => {
 
-  // < a className= { className } href= { urlBuilder(pageNumber) } >
-  //       <div className={bemBlocks.option("text") }>{displayText}</div>
-  //   </a >
   const className = bemBlocks.container("action").state({ active, disabled })
   var component;
   if (url) {
