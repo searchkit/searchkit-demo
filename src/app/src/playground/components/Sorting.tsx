@@ -56,7 +56,8 @@ export class Sorting extends SearchkitComponent<SortingProps, any> {
       items: options,
       selectedItems: selected,
       toggleItem: this.onSelect.bind(this),
-      disabled: disabled
+      disabled: disabled,
+      urlBuilder: (item) => this.accessor.urlWithState(item.label || item.title)
     })
   }
 }
