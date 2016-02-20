@@ -32,7 +32,10 @@ import MultiSelectFilter from './MultiSelectFilter/MultiSelectFilter';
 import GroupedSelectedFilters from './GroupedSelectedFilters/GroupedSelectedFilters';
 import FacetEnabler from './FacetEnabler';
 
-import { ViewSwitcher, Sorting, CheckboxFilter, TagFilter, Pagination } from './components';
+import {
+  ViewSwitcher, Sorting, CheckboxFilter,
+  TagFilter, Pagination, PageSizeSelector
+} from './components';
 import { Toggle, Selector } from './ui';
 import { queryOptimizer } from './helpers';
 
@@ -201,6 +204,7 @@ export class PlaygroundApp extends React.Component<any, any> {
 
                   <ViewSwitcher/>
                   <ViewSwitcher listComponent={Selector}/>
+                  <PageSizeSelector options={[4, 8, 12, 24 ]}/>
 
                   <Sorting listComponent={Toggle} options={[
                     { label: "Relevance", field: "_score", order: "desc", defaultOption: true },

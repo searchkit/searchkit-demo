@@ -17,6 +17,7 @@
     "./src/app/src/crime/CrimeAggs.tsx",
     "./src/app/src/crime/CrimeApp.tsx",
     "./src/app/src/playground/components/CheckboxFilter.tsx",
+    "./src/app/src/playground/components/PageSizeSelector.tsx",
     "./src/app/src/playground/components/Pagination.tsx",
     "./src/app/src/playground/components/Sorting.tsx",
     "./src/app/src/playground/components/TagFilter.tsx",
