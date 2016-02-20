@@ -7,7 +7,7 @@ import {
 SearchBox,
 Hits,
 HitsStats,
-RefinementListFilter,
+// RefinementListFilter,
 Pagination as OriginalPagination,
 ResetFilters,
 MenuFilter,
@@ -32,10 +32,9 @@ import MultiSelectFilter from './MultiSelectFilter/MultiSelectFilter';
 import GroupedSelectedFilters from './GroupedSelectedFilters/GroupedSelectedFilters';
 import FacetEnabler from './FacetEnabler';
 
-import {
-  ViewSwitcher, Sorting, CheckboxFilter,
-  TagFilter, Pagination, PageSizeSelector
-} from './components';
+import { ViewSwitcher, Sorting, Pagination, PageSizeSelector } from './components';
+import { CheckboxFilter, TagFilter, RangeInputFilter, RefinementListFilter } from './components';
+
 import { Toggle, Selector } from './ui';
 import { queryOptimizer } from './helpers';
 
@@ -115,7 +114,8 @@ export class PlaygroundApp extends React.Component<any, any> {
     }
     this.state = {
       displayMode: "thumbnail",
-      hitsPerPage: 12
+      hitsPerPage: 12,
+      operator: "OR"
     }
   }
 
@@ -137,6 +137,11 @@ export class PlaygroundApp extends React.Component<any, any> {
       Perf.stop()
       Perf.printWasted(Perf.getLastMeasurements())
     })
+  }
+
+  handleOperatorChange(e){
+    console.log('update operator to ', e.target.value)
+    this.setState({operator: e.target.value})
   }
 
   render() {
@@ -163,21 +168,27 @@ export class PlaygroundApp extends React.Component<any, any> {
           <div className="sk-layout__body">
 
             <div className="sk-layout__filters">
-              <button onClick={this.refresh.bind(this)}>Click to refresh</button>
+              {/*<button onClick={this.refresh.bind(this)}>Click to refresh</button>*/}
               <HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
-              <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
-              <NumericRefinementListFilter id="imdbRating" title="IMDB Rating" field="imdbRating" options={[
-                { title: "All" },
-                { title: "\u2605\u2605\u2605\u2605\u2606 & up", from: 8, to: 10 },
-                { title: "\u2605\u2605\u2605\u2606\u2606 & up", from: 6, to: 10 },
-                { title: "\u2605\u2605\u2606\u2606\u2606 & up", from: 4, to: 10 },
-                { title: "\u2605\u2606\u2606\u2606\u2606 & up", from: 2, to: 10 },
-              ]}/>
+              <RangeInputFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
+
+
+              <MultiSelectFilter id="actors" title="Actors" field="actors.raw" size={200}/>
               <FacetEnabler id="genres" title="Genres" field="genres.raw" operator="AND"/>
               <MultiSelectFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={100}/>
               <CheckboxFilter id="rating" title="Rating" field="rated.raw" value="R" label="Rated 'R'"/>
-              <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={10}/>
-              <RefinementListFilter translations={{ "facets.view_more": "View more writers" }} id="writers" title="Writers" field="writers.raw" operator="OR" size={10}/>
+              <select value={this.state.operator} onChange={this.handleOperatorChange.bind(this) }>
+                <option value="AND">AND</option>
+                <option value="OR">OR</option>
+              </select>
+              <RefinementListFilter translations={{ "facets.view_more": "View more writers" }} id="writers" title="Writers" field="writers.raw" operator={this.state.operator} size={10}/>
+                            <NumericRefinementListFilter id="imdbRating" title="IMDB Rating" field="imdbRating" options={[
+                                { title: "All" },
+                                { title: "\u2605\u2605\u2605\u2605\u2606 & up", from: 8, to: 10 },
+                                { title: "\u2605\u2605\u2605\u2606\u2606 & up", from: 6, to: 10 },
+                                { title: "\u2605\u2605\u2606\u2606\u2606 & up", from: 4, to: 10 },
+                                { title: "\u2605\u2606\u2606\u2606\u2606 & up", from: 2, to: 10 },
+                            ]}/>
               <NumericRefinementListFilter id="runtimeMinutes" title="Length" field="runtimeMinutes" options={[
                 { title: "All" },
                 { title: "up to 20", from: 0, to: 20 },
