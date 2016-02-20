@@ -3,7 +3,8 @@ import {
   SearchkitComponent,
   SearchkitComponentProps,
   PageSizeAccessor,
-  FastClick
+  FastClick,
+  PaginationAccessor
 } from "searchkit"
 
 import { Toggle } from '../ui'
@@ -24,6 +25,10 @@ export class PageSizeSelector extends SearchkitComponent<any, any> {
   setSize(size){
     let pageSizeAccessor = this.getPageSizeAccessor()
     if(size){
+      let paginationAccessor = this.searchkit.getAccessorByType(PaginationAccessor)
+      if(paginationAccessor){
+        paginationAccessor.resetState()
+      }
       pageSizeAccessor.size = size
       this.searchkit.performSearch()
     }
