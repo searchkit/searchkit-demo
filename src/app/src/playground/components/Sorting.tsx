@@ -42,8 +42,8 @@ export class Sorting extends SearchkitComponent<SortingProps, any> {
     return new SortingAccessor("sort", {options:this.props.options})
   }
 
-  onSelect(option) {
-    this.accessor.state = this.accessor.state.setValue(option.label);
+  onSelect(key) {
+    this.accessor.state = this.accessor.state.setValue(key);
     this.searchkit.performSearch();
   }
 
@@ -57,7 +57,7 @@ export class Sorting extends SearchkitComponent<SortingProps, any> {
       selectedItems: selected,
       toggleItem: this.onSelect.bind(this),
       disabled: disabled,
-      urlBuilder: (item) => this.accessor.urlWithState(item.label || item.title)
+      urlBuilder: (item) => this.accessor.urlWithState(item.key)
     })
   }
 }

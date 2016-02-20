@@ -41,12 +41,12 @@ export class Toggle extends React.Component<any, any> {
       const label = option.title || option.label
       return React.createElement(itemComponent, {
         view: label,
-        toggleItem: () => toggleItem(option),
+        toggleItem: () => toggleItem(option.key),
         bemBlocks: bemBlocks,
         key: option.key,
         disabled: disabled || option.disabled,
         url: urlBuilder && urlBuilder(option),
-        active: find(selectedItems, (it) => it.label === label || it.title === label) != undefined
+        active: find(selectedItems, {key:option.key}) != undefined
       })
     })
     return (

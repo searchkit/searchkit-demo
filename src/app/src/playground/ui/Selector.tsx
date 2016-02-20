@@ -4,6 +4,7 @@ const block = require('bem-cn')
 const map = require("lodash/map")
 const filter = require("lodash/filter")
 const transform = require("lodash/transform")
+const find = require("lodash/find")
 
 require('./Selector.scss');
 
@@ -19,14 +20,14 @@ export class Selector extends React.Component<any, any> {
 
   onChange(e){
     const { items, toggleItem } = this.props
-    const value = e.target.value
-    toggleItem(items.find(it => (it.label === value) || (it.title == value)))
+    const key = e.target.value
+    toggleItem(key)
   }
 
   getSelectedValue(){
     const { selectedItems=[] } = this.props
     if (selectedItems.length == 0) return null
-    return selectedItems[0].label || selectedItems[0].title
+    return selectedItems[0].key
   }
 
   render() {
@@ -39,9 +40,9 @@ export class Selector extends React.Component<any, any> {
     return (
       <div className={bemBlocks.container().state({ disabled }) }>
         <select onChange={this.onChange.bind(this)} value={this.getSelectedValue() }>
-          {map(filterSelectorItems(items), ({label, title, disabled}, idx) => {
+          {map(filterSelectorItems(items), ({key, label, title, disabled}, idx) => {
             const l = label || title
-            return <option key={idx + '-' + l} value={l} disabled={disabled}>{l}</option>
+            return <option key={idx + '-' + l} value={key} disabled={disabled}>{l}</option>
           })}
           </select>
       </div>

@@ -8,7 +8,7 @@ import {
 
 import { Toggle } from '../ui'
 
-
+const find = require("lodash/find")
 
 export class ViewSwitcher extends SearchkitComponent<any, any> {
 
@@ -20,8 +20,10 @@ export class ViewSwitcher extends SearchkitComponent<any, any> {
     return this.searchkit.getAccessorByType(ViewOptionsAccessor)
   }
 
-  setView(view){
-    this.getViewOptionsSwitcherAccessor().setView(view)
+  setView(key){
+    let viewOptionsAccessor = this.getViewOptionsSwitcherAccessor()
+    let view = find(viewOptionsAccessor.options, {key})
+    viewOptionsAccessor.setView(view)
   }
 
   render() {
