@@ -6,6 +6,8 @@ FastClick
 const block = require('bem-cn')
 const map = require("lodash/map")
 const find = require("lodash/find")
+const includes = require("lodash/includes")
+
 
 require('./Toggle.scss');
 
@@ -33,6 +35,8 @@ export class Toggle extends React.Component<any, any> {
   render() {
     const { mod, itemComponent, items, selectedItems = [], toggleItem, disabled, urlBuilder } = this.props
 
+    const keys = map(selectedItems, "key")
+
     const bemBlocks = {
       container: block(mod)
     }
@@ -46,7 +50,7 @@ export class Toggle extends React.Component<any, any> {
         key: option.key,
         disabled: disabled || option.disabled,
         url: urlBuilder && urlBuilder(option),
-        active: find(selectedItems, {key:option.key}) != undefined
+        active: includes(keys, option.key)
       })
     })
     return (
