@@ -11,38 +11,62 @@ import {
 
 
 const defaults = require("lodash/defaults")
+const get = require("lodash/get")
+const clamp = require("lodash/clamp")
 
 
-// class Input extends React.Component {
+class Input extends React.Component<any, any> {
 
-//   constructor(props){
-//     super(props)
-//     this.onChange = this.onChange.bind(this)
+  constructor(props){
+    super(props)
+    this.onChange = this.onChange.bind(this)
 
-//     state = {
-//       value: props.value
-//     }
-//   }
+    this.state = {
+      value: props.value
+    }
+  }
 
-//   isValidvalue(value){
-//     value = '' + value // ensure string
-//     if (parseInt(value, 10) ==
-//     return true
-//   }
+  static defaultProps = {
+    value: ''
+  }
 
-//   onChange(e){
+  componentWillReceiveProps(nextProps){
+    if (nextProps.value !== this.props.value){
+      this.setState({value: nextProps.value})
+    }
+  }
 
-//   }
+  isValid(value){
+    value = '' + value // ensure string
+    // Weird number check, please do something else
+    return ('' + parseInt(value, 10) == value)
+  }
 
-//   render(){
-//     const inputProps = defaults({
-//       value: this.state.value,
-//       onChange: this.onChange
-//     }, this.props)
+  onChange(e){
+    const { field, onChange } = this.props
 
-//     return React.createElement('input', inputProps)
-//   }
-// }
+    const value = e.target.value
+    this.setState( { value })
+    if (this.isValid(value) && onChange){
+      onChange(value, field)
+    }
+  }
+
+  render(){
+    const inputProps = defaults({
+      value: this.state.value,
+      onChange: this.onChange,
+      style: {
+        margin: 4,
+        display: 'inline-block',
+        width: '45%',
+        placeholder: this.props.field
+      }
+    }, this.props)
+
+    return React.createElement('input', inputProps)
+  }
+}
 
 export interface RangeFilterProps extends SearchkitComponentProps {
   field:string
@@ -56,40 +80,22 @@ export interface RangeFilterProps extends SearchkitComponentProps {
 
 export class RangeInputFilter extends RangeFilter {
 
-
   constructor(props){
     super(props);
-    this.state = {
-      min: "" + props.min,
-      max: "" + props.max
-    }
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.sliderUpdate = this.sliderUpdate.bind(this);
   }
 
-  sliderUpdate(newValues){
-    if ((newValues[0] == this.props.min) && (newValues[1] == this.props.max)){
-      this.accessor.state = this.accessor.state.clear()
-    } else {
-      this.accessor.state = this.accessor.state.setValue({min:newValues[0], max:newValues[1]})
-    }
-    this.setState({
-      min: "" + newValues[0],
-      max: "" + newValues[1]
-    });
+  handleInputChange(value, key){
+    const { min, max } = this.props
+    const values = defaults({
+      [key]: clamp(value, min, max)
+    }, this.accessor.state.getValue())
+    this.accessor.state = this.accessor.state.setValue(values)
+    this.searchkit.performSearch()
   }
 
-  handleSubmit(e){
-    e.preventDefault()
-    this.sliderUpdateAndSearch([
-      parseInt(this.state.min, 10),
-      parseInt(this.state.max, 10)
-    ])
-  }
-
-  handleInputChange(type, e){
-    this.setState({[type]: e.target.value})
+  getValue(key, defaultValue){
+    return get(this.accessor.state.getValue(), key, defaultValue)
   }
 
   render(){
@@ -97,10 +103,9 @@ export class RangeInputFilter extends RangeFilter {
     return (
       <div>
         {super.render()}
-        <form  onSubmit={this.handleSubmit}>
-          <input style={{display: "inline-block", maxWidth: 70, margin: 4}} value={this.state.min} onChange={e => this.handleInputChange("min", e)} />
-          <input style={{display: "inline-block", maxWidth: 70, margin: 4}} value={this.state.max} onChange={e => this.handleInputChange("max", e)}  />
-          <input type="submit"  style={{display: "inline-block", maxWidth: 70, margin: 4}} />
+        <form  onSubmit={() => {}}>
+          <Input value={this.getValue('min', this.props.min)} field="min" onChange={this.handleInputChange} />
+          <Input value={this.getValue('max', this.props.max)} field="max" onChange={this.handleInputChange} />
         </form>
       </div>
     )
