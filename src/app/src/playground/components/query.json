@@ -1,0 +1,15 @@
+{
+  "requests":[
+    {
+      "image":{
+        "content":"base64-encoded file data"
+      },
+      "features":[
+        {
+          "type":"LABEL_DETECTION",
+          "maxResults":5
+        }
+      ]
+    }
+  ]
+}

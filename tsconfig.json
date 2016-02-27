@@ -34,9 +34,6 @@
     "./src/index.tsx",
     "./src/app/index.ts",
     "./src/app/src/playground/components/index.ts",
-    "./src/app/src/playground/helpers/index.ts",
-    "./src/app/src/playground/helpers/PageUtils.ts",
-    "./src/app/src/playground/helpers/QueryOptimizer.ts",
     "./src/app/src/playground/ui/index.ts",
     "./typings/tsd.d.ts"
   ],

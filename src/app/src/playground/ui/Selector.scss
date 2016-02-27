@@ -7,6 +7,13 @@
   }
 }
 
+.sk-layout__filters {
+
+  .sk-selector select {
+    width: 100%
+  }
+}
+
 .sk-selector {
   position:relative;
   cursor:pointer;

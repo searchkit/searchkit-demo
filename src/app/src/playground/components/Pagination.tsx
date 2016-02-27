@@ -14,7 +14,7 @@ const assign = require("lodash/assign")
 const map = require("lodash/map")
 
 import { Toggle } from "../ui";
-import { generatePages } from "../helpers";
+import { generatePages } from "../utils";
 
 
 

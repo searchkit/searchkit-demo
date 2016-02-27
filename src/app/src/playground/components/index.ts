@@ -7,3 +7,4 @@ export * from "./Pagination";
 export * from "./PageSizeSelector";
 export * from "./RangeInputFilter";
 export * from "./RefinementListFilter";
+export * from "./NumericRefinementListFilter";

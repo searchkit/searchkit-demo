@@ -13,7 +13,7 @@ ResetFilters,
 MenuFilter,
 SelectedFilters,
 HierarchicalMenuFilter,
-NumericRefinementListFilter,
+// NumericRefinementListFilter,
 // SortingSelector,
 SearchkitComponent,
 SearchkitProvider,
@@ -33,67 +33,17 @@ import GroupedSelectedFilters from './GroupedSelectedFilters/GroupedSelectedFilt
 import FacetEnabler from './FacetEnabler';
 
 import { ViewSwitcher, Sorting, Pagination, PageSizeSelector } from './components';
-import { CheckboxFilter, TagFilter, RangeInputFilter, RefinementListFilter } from './components';
+import { CheckboxFilter, TagFilter, RangeInputFilter, RefinementListFilter, NumericRefinementListFilter } from './components';
 
 import { Toggle, Selector } from './ui';
-import { queryOptimizer } from './helpers';
+import { queryOptimizer } from './utils';
+import { MovieHitsGridItem, MovieHitsListItem } from './MovieHitsItems';
+
 
 
 // import { RefinementListFilter } from './RefinementListFilter'
 
 
-const MovieHitsGridItem = (props) => {
-  const {bemBlocks, result} = props
-  let url = "http://www.imdb.com/title/" + result._source.imdbId
-  const source: any = _.extend({}, result._source, result.highlight)
-  return (
-    <div className={bemBlocks.item().mix(bemBlocks.container("item")) } data-qa="hit">
-      <a href={url} target="_blank">
-        <img data-qa="poster" className={bemBlocks.item("poster") } src={result._source.poster} width="170" height="240"/>
-        <div data-qa="title" className={bemBlocks.item("title") } dangerouslySetInnerHTML={{ __html: source.title }}>
-          </div>
-        </a>
-      </div>
-  )
-}
-
-function mapAndJoin(array=[], func, joinString=", "){
-  const result = []
-  const length = array.length
-  array.forEach((c, idx) => {
-    result.push(func(c))
-    if (idx < length - 1) result.push(<span key={"joinString-" + idx}>{joinString}</span>)
-  })
-  return result;
-}
-
-
-
-const MovieHitsListItem = (props) => {
-  const {bemBlocks, result} = props
-  let url = "http://www.imdb.com/title/" + result._source.imdbId
-  const source: any = _.extend({}, result._source, result.highlight)
-  const { title, poster, writers = [], actors = [], genres = [], plot, released, rated } = source;
-
-  return (
-    <div className={bemBlocks.item().mix(bemBlocks.container("item")) } data-qa="hit">
-      <div className={bemBlocks.item("poster") }>
-        <img data-qa="poster" src={result._source.poster}/>
-        </div>
-      <div className={bemBlocks.item("details") }>
-        <a href={url} target="_blank"><h2 className={bemBlocks.item("title") } dangerouslySetInnerHTML={{ __html: source.title }}></h2></a>
-        <h3 className={bemBlocks.item("subtitle") }>Released in {source.year}, rated {source.imdbRating}/10</h3>
-        <ul style={{ marginTop: 8, marginBottom: 8, listStyle: 'none', paddingLeft: 20 }}>
-          <li>Rating: {rated}</li>
-          <li>Genres: {mapAndJoin(genres, a => <TagFilter key={a} field="genres.raw" value={a}>{a}</TagFilter>) }</li>
-          <li>Writers: {mapAndJoin(writers, a => <TagFilter key={a} field="writers.raw" value={a}>{a}</TagFilter>) }</li>
-          <li>Actors: {mapAndJoin(actors, a => <TagFilter key={a} field="actors.raw" value={a}>{a}</TagFilter>) }</li>
-        </ul>
-        <div className={bemBlocks.item("text") } dangerouslySetInnerHTML={{ __html: source.plot }}></div>
-        </div>
-      </div>
-  )
-}
 // "title", "poster", "imdbId", "released", "rated", "genres", "writers", "actors", "plot"]
 
 
@@ -140,7 +90,6 @@ export class PlaygroundApp extends React.Component<any, any> {
   }
 
   handleOperatorChange(e){
-    console.log('update operator to ', e.target.value)
     this.setState({operator: e.target.value})
   }
 
@@ -169,6 +118,18 @@ export class PlaygroundApp extends React.Component<any, any> {
 
             <div className="sk-layout__filters">
               {/*<button onClick={this.refresh.bind(this)}>Click to refresh</button>*/}
+              <NumericRefinementListFilter id="runtimeMinutes" title="Length" field="runtimeMinutes" options={[
+                  { title: "All" },
+                  { title: "≤20", from: 0, to: 20 },
+                  { title: "21\u201160", from: 21, to: 60 },
+                  { title: "≥60", from: 61, to: 1000 }
+                ]} listComponent={Selector} />
+              <NumericRefinementListFilter id="runtimeMinutes" title="Length" field="runtimeMinutes" options={[
+                  { title: "All" },
+                  { title: "≤20", from: 0, to: 20 },
+                  { title: "21\u201160", from: 21, to: 60 },
+                  { title: "≥60", from: 61, to: 1000 }
+              ]} listComponent={Toggle} />
               <HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
               <RangeInputFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
 
@@ -189,12 +150,6 @@ export class PlaygroundApp extends React.Component<any, any> {
                                 { title: "\u2605\u2605\u2606\u2606\u2606 & up", from: 4, to: 10 },
                                 { title: "\u2605\u2606\u2606\u2606\u2606 & up", from: 2, to: 10 },
                             ]}/>
-              <NumericRefinementListFilter id="runtimeMinutes" title="Length" field="runtimeMinutes" options={[
-                { title: "All" },
-                { title: "up to 20", from: 0, to: 20 },
-                { title: "21 to 60", from: 21, to: 60 },
-                { title: "60 or more", from: 61, to: 1000 }
-              ]}/>
               </div>
 
             <div className="sk-layout__results sk-results-list">

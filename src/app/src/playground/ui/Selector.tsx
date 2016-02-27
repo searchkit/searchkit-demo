@@ -41,7 +41,7 @@ export class Selector extends React.Component<any, any> {
       <div className={bemBlocks.container().state({ disabled }) }>
         <select onChange={this.onChange.bind(this)} value={this.getSelectedValue() }>
           {map(filterSelectorItems(items), ({key, label, title, disabled}, idx) => {
-            const text = label || title
+            const text = label || title || key
             return <option key={key} value={key} disabled={disabled}>{text}</option>
           })}
           </select>

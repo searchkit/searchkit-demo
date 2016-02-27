@@ -42,7 +42,7 @@ export class Toggle extends React.Component<any, any> {
     }
 
     const actions = map(items, (option) => {
-      const label = option.title || option.label
+      const label = option.title || option.label || option.key
       return React.createElement(itemComponent, {
         view: label,
         toggleItem: () => toggleItem(option.key),
