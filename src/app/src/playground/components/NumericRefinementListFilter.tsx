@@ -1,3 +1,11 @@
+/*
+  CHANGELOG
+
+  Use listComponent for rendering
+  Switch on "ALL" value by default (and when removing other values)
+  `multiselect` option
+ */
+
 import * as React from "react";
 
 import {
@@ -31,6 +39,7 @@ export interface NumericRefinementListFilterProps extends SearchkitComponentProp
   options:Array<RangeOption>
   id:string
   listComponent?: any
+  multiselect?: boolean
 }
 
 export class NumericRefinementListFilter extends SearchkitComponent<NumericRefinementListFilterProps, any> {
@@ -41,6 +50,7 @@ export class NumericRefinementListFilter extends SearchkitComponent<NumericRefin
     field:React.PropTypes.string.isRequired,
     title:React.PropTypes.string.isRequired,
     id:React.PropTypes.string.isRequired,
+    multiselect: React.PropTypes.bool,
     options:React.PropTypes.arrayOf(
       React.PropTypes.shape({
         title:React.PropTypes.string.isRequired,
@@ -52,13 +62,14 @@ export class NumericRefinementListFilter extends SearchkitComponent<NumericRefin
   }, SearchkitComponent.propTypes)
 
   static defaultProps = {
-    listComponent: FilterItemList
+    listComponent: FilterItemList,
+    multiselect: false
   }
 
   defineAccessor() {
-    const {id, field, options, title} = this.props
+    const {id, field, options, title, multiselect} = this.props
     return new NumericOptionsAccessor(id, {
-      id, field, options, title
+      id, field, options, title, multiselect
     })
   }
 
@@ -71,14 +82,12 @@ export class NumericRefinementListFilter extends SearchkitComponent<NumericRefin
   }
 
   toggleFilter(key) {
-    const option = find(this.accessor.getBuckets(), it => it.key == key)
-    this.accessor.setOption(option)
+    this.accessor.toggleOption(key)
   }
 
   getSelectedItems() {
-    let selectedOption = this.accessor.getSelectedOrDefaultOption()
-    if (!selectedOption) return []
-    else return [{key: selectedOption.title}]
+    const selectedOptions = this.accessor.getSelectedOrDefaultOptions() || []
+    return map(selectedOptions, opt => ({key: opt.title}))
   }
 
   hasOptions(): boolean {

@@ -123,13 +123,14 @@ export class PlaygroundApp extends React.Component<any, any> {
                   { title: "≤20", from: 0, to: 20 },
                   { title: "21\u201160", from: 21, to: 60 },
                   { title: "≥60", from: 61, to: 1000 }
-                ]} listComponent={Selector} />
-              <NumericRefinementListFilter id="runtimeMinutes" title="Length" field="runtimeMinutes" options={[
+              ]} listComponent={Toggle} multiselect={true} />
+              <NumericRefinementListFilter id="imdbRating" title="IMDB Rating" field="imdbRating" options={[
                   { title: "All" },
-                  { title: "≤20", from: 0, to: 20 },
-                  { title: "21\u201160", from: 21, to: 60 },
-                  { title: "≥60", from: 61, to: 1000 }
-              ]} listComponent={Toggle} />
+                  { title: "\u2605\u2605\u2605\u2605\u2606 & up", from: 8, to: 10 },
+                  { title: "\u2605\u2605\u2605\u2606\u2606 & up", from: 6, to: 10 },
+                  { title: "\u2605\u2605\u2606\u2606\u2606 & up", from: 4, to: 10 },
+                  { title: "\u2605\u2606\u2606\u2606\u2606 & up", from: 2, to: 10 },
+              ]} listComponent={Selector} />
               <HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
               <RangeInputFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
 
@@ -143,14 +144,14 @@ export class PlaygroundApp extends React.Component<any, any> {
                 <option value="OR">OR</option>
               </select>
               <RefinementListFilter translations={{ "facets.view_more": "View more writers" }} id="writers" title="Writers" field="writers.raw" operator={this.state.operator} size={10}/>
-                            <NumericRefinementListFilter id="imdbRating" title="IMDB Rating" field="imdbRating" options={[
-                                { title: "All" },
-                                { title: "\u2605\u2605\u2605\u2605\u2606 & up", from: 8, to: 10 },
-                                { title: "\u2605\u2605\u2605\u2606\u2606 & up", from: 6, to: 10 },
-                                { title: "\u2605\u2605\u2606\u2606\u2606 & up", from: 4, to: 10 },
-                                { title: "\u2605\u2606\u2606\u2606\u2606 & up", from: 2, to: 10 },
-                            ]}/>
-              </div>
+              <NumericRefinementListFilter id="imdbRating" title="IMDB Rating" field="imdbRating" options={[
+                  { title: "All" },
+                  { title: "\u2605\u2605\u2605\u2605\u2606 & up", from: 8, to: 10 },
+                  { title: "\u2605\u2605\u2605\u2606\u2606 & up", from: 6, to: 10 },
+                  { title: "\u2605\u2605\u2606\u2606\u2606 & up", from: 4, to: 10 },
+                  { title: "\u2605\u2606\u2606\u2606\u2606 & up", from: 2, to: 10 },
+              ]}/>
+            </div>
 
             <div className="sk-layout__results sk-results-list">
 

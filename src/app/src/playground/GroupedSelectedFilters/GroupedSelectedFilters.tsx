@@ -130,6 +130,7 @@ export default class GroupedSelectedFilters extends SearchkitComponent<SelectedF
     if (!this.hasFilters()) {
         return null
     }
+    // console.log('grouped filters', this.getGroupedFilters())
     // <div className={bemBlocks.option("remove-action") }>x</div>
     return (
       <div className={this.bemBlocks.container() }>

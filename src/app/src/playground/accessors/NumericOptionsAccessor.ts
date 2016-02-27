@@ -1,8 +1,8 @@
-import {State, ValueState, FilterBasedAccessor} from "searchkit"
+import {State, ArrayState, FilterBasedAccessor} from "searchkit"
 import {Utils} from "searchkit"
 import {
   RangeQuery,
-  RangeBucket, FilterBucket
+  RangeBucket, FilterBucket, SelectedFilter, BoolShould
 } from "searchkit";
 const find = require("lodash/find")
 const compact = require("lodash/compact")
@@ -18,12 +18,13 @@ export interface NumericOptions {
   field:string
   title:string
   options:Array<RangeOption>
+  multiselect?: boolean
   id:string
 }
 
-export class NumericOptionsAccessor extends FilterBasedAccessor<ValueState> {
+export class NumericOptionsAccessor extends FilterBasedAccessor<ArrayState> {
 
-  state = new ValueState()
+  state = new ArrayState()
   options:NumericOptions
   constructor(key, options:NumericOptions){
     super(key)
@@ -38,20 +39,45 @@ export class NumericOptionsAccessor extends FilterBasedAccessor<ValueState> {
   }
 
   getSelectedOption() {
-    return find(this.options.options, { key: this.state.getValue() })
+    if (this.state.getValue().length == 0) return null
+    const key = this.state.getValue()[0] // Use first key
+    return find(this.options.options, { key })
   }
 
-  getSelectedOrDefaultOption() {
-    return this.getSelectedOption() || this.getDefaultOption()
+  getSelectedOptions() {
+    return map(this.state.getValue(), key => find(this.options.options, {key}))
   }
 
+  getSelectedOrDefaultOptions() {
+    const selectedOptions = this.getSelectedOptions()
+    if (selectedOptions && selectedOptions.length > 0) return selectedOptions
+    const defaultOption = this.getDefaultOption()
+    if (defaultOption) return [defaultOption]
+    return []
+  }
+
+  // Old updated version for compatibility reasons
   setOption(facetOption){
     let option = find(this.options.options, {title:facetOption.key})
     if(option){
       if (option === this.getDefaultOption()){
         this.state = this.state.clear()
       } else {
+        this.state = this.state.setValue([option.key])
+      }
+      this.searchkit.performSearch()
+    }
+  }
+
+  toggleOption(key){
+    let option = find(this.options.options, { title: key })
+    if (option) {
+      if (option === this.getDefaultOption()) {
+        this.state = this.state.clear()
+      } else if (this.options.multiselect) {
         this.state = this.state.toggle(option.key)
+      } else {
+        this.state = this.state.setValue([option.key])
       }
       this.searchkit.performSearch()
     }
@@ -68,25 +94,22 @@ export class NumericOptionsAccessor extends FilterBasedAccessor<ValueState> {
   }
 
   buildSharedQuery(query) {
-    let selectedOption = this.getSelectedOption()
-    if (selectedOption) {
-
-      let rangeFilter = RangeQuery(this.options.field,{
-        gte:selectedOption.from, lt:selectedOption.to
-      })
-      let selectedFilter = {
-        name:this.translate(this.options.title),
-        value:this.translate(selectedOption.title),
-        id:this.options.id,
-        remove:()=> {
-          this.state = this.state.clear()
-        }
+    var filters = this.getSelectedOptions()
+    var filterRanges = map(filters, filter => RangeQuery(this.options.field, {
+      gte: filter.from, lt: filter.to
+    }))
+    var selectedFilters: Array<SelectedFilter> = map(filters, (filter) => {
+      return {
+        name: this.translate(this.options.title),
+        value: this.translate(filter.title),
+        id: this.options.id,
+        remove: () => this.state = this.state.remove(filter.key)
       }
+    })
 
-      return query
-        .addFilter(this.uuid, rangeFilter)
-        .addSelectedFilter(selectedFilter)
-
+    if (filterRanges.length > 0) {
+      query = query.addFilter(this.uuid, BoolShould(filterRanges))
+        .addSelectedFilters(selectedFilters)
     }
 
     return query
