@@ -24,6 +24,10 @@
     color:$sk-list-text-color;
   }
 
+  &:hover &__text {
+    font-weight:$sk-bold-weight;
+  }
+
   &__count {
     font-size: $sk-list-secondary-font-size;
     text-align: right;
