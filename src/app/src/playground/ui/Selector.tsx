@@ -15,7 +15,8 @@ function filterSelectorItems(items){
 export class Selector extends React.Component<any, any> {
 
   static defaultProps: any = {
-    mod: "sk-selector"
+    mod: "sk-selector",
+    showCount: true
   }
 
   onChange(e){
@@ -31,7 +32,7 @@ export class Selector extends React.Component<any, any> {
   }
 
   render() {
-    const { mod, items, disabled } = this.props
+    const { mod, items, disabled, showCount } = this.props
 
     const bemBlocks = {
       container: block(mod)
@@ -40,8 +41,9 @@ export class Selector extends React.Component<any, any> {
     return (
       <div className={bemBlocks.container().state({ disabled }) }>
         <select onChange={this.onChange.bind(this)} value={this.getSelectedValue() }>
-          {map(filterSelectorItems(items), ({key, label, title, disabled}, idx) => {
-            const text = label || title || key
+          {map(filterSelectorItems(items), ({key, label, title, disabled, doc_count}, idx) => {
+            var text = label || title || key
+            if (showCount && doc_count !== undefined) text += ` (${doc_count})`
             return <option key={key} value={key} disabled={disabled}>{text}</option>
           })}
           </select>
