@@ -31,6 +31,7 @@
     "./src/app/src/playground/MovieHitsItems.tsx",
     "./src/app/src/playground/MultiSelectFilter/MultiSelectFilter.tsx",
     "./src/app/src/playground/PlaygroundApp.tsx",
+    "./src/app/src/playground/ui/FacetContainer.tsx",
     "./src/app/src/playground/ui/FilterItemList.tsx",
     "./src/app/src/playground/ui/Selector.tsx",
     "./src/app/src/playground/ui/Toggle.tsx",

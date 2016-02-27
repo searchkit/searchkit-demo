@@ -22,7 +22,7 @@ import {
   NumericOptionsAccessor
 } from '../accessors'
 
-import { FilterItemList } from '../ui'
+import { FilterItemList, FacetContainer } from '../ui'
 
 const block = require('bem-cn')
 
@@ -31,16 +31,16 @@ const map = require("lodash/map")
 const includes = require("lodash/includes")
 const find = require("lodash/find")
 
-
-
 export interface NumericRefinementListFilterProps extends SearchkitComponentProps {
   field:string
   title:string
   options:Array<RangeOption>
   id:string
-  listComponent?: any
   multiselect?: boolean
   showCount?: boolean
+  collapsable?: boolean
+  listComponent?: any
+  containerComponent?: any
 }
 
 export class NumericRefinementListFilter extends SearchkitComponent<NumericRefinementListFilterProps, any> {
@@ -65,6 +65,7 @@ export class NumericRefinementListFilter extends SearchkitComponent<NumericRefin
 
   static defaultProps = {
     listComponent: FilterItemList,
+    containerComponent: FacetContainer,
     multiselect: false,
     showCount: true
   }
@@ -74,14 +75,6 @@ export class NumericRefinementListFilter extends SearchkitComponent<NumericRefin
     return new NumericOptionsAccessor(id, {
       id, field, options, title, multiselect
     })
-  }
-
-  defineBEMBlocks() {
-    var blockName = this.props.mod || "sk-numeric-refinement-list"
-    return {
-      container: blockName,
-      option: `${blockName}-option`
-    }
   }
 
   toggleFilter(key) {
@@ -98,25 +91,20 @@ export class NumericRefinementListFilter extends SearchkitComponent<NumericRefin
   }
 
   render() {
-    const { listComponent, showCount } = this.props
+    const { listComponent, containerComponent, showCount, title, id, collapsable } = this.props
 
-    var block = this.bemBlocks.container
-    var className = block()
-      .mix(`filter--${this.props.id}`)
-      .state({
-          disabled: !this.hasOptions()
+    return React.createElement(containerComponent, {
+      title,
+      className: id ? `filter--${id}` : undefined,
+      disabled: !this.hasOptions(),
+      collapsable
+    }, [
+      React.createElement(listComponent, {
+        items: this.accessor.getBuckets(),
+        selectedItems: this.getSelectedItems(),
+        toggleItem: this.toggleFilter.bind(this),
+        showCount
       })
-
-    return (
-      <div className={className}>
-        <div className={block("header")}>{this.props.title}</div>
-        {React.createElement(listComponent, {
-          items: this.accessor.getBuckets(),
-          selectedItems: this.getSelectedItems(),
-          toggleItem: this.toggleFilter.bind(this),
-          showCount
-        })}
-      </div>
-    );
+    ]);
   }
 }

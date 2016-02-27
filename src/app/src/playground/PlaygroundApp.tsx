@@ -124,6 +124,12 @@ export class PlaygroundApp extends React.Component<any, any> {
                   { title: "21\u201160", from: 21, to: 60 },
                   { title: "≥60", from: 61, to: 1000 }
               ]} listComponent={Toggle} multiselect={true} />
+              <NumericRefinementListFilter id="runtimeMinutes" title="Length" field="runtimeMinutes" options={[
+                  { title: "All" },
+                  { title: "≤20", from: 0, to: 20 },
+                  { title: "21\u201160", from: 21, to: 60 },
+                  { title: "≥60", from: 61, to: 1000 }
+              ]} multiselect={true} collapsable={true} />
               <NumericRefinementListFilter id="imdbRating" title="IMDB Rating" field="imdbRating" options={[
                   { title: "All" },
                   { title: "\u2605\u2605\u2605\u2605\u2606 & up", from: 8, to: 10 },

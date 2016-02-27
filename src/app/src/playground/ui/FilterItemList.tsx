@@ -85,7 +85,7 @@ export class FilterItemList extends React.Component<any, {}> {
     return (
       <div className={bemBlocks.container().state({ disabled }) }>
         {actions}
-        </div>
+      </div>
     )
   }
 }

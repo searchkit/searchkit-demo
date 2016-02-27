@@ -1,137 +1,87 @@
+/*
+  CHANGELOG
+
+  add FacetContainer
+  add collapsable
+
+ */
+
 import * as React from "react";
 
-import {
-  PureRender
-} from "searchkit"
+const bemBlock = require('bem-cn')
 
-const defaults = require("lodash/defaults")
-const map = require("lodash/map")
-const isNumber = require("lodash/isNumber")
+require('./FacetContainer.scss')
 
-
-
-@PureRender
-export default class FacetContainer extends React.Component<any, {}> {
-
-  render() {
-
-    const { key, title, bemBlocks, children } = this.props
-
-    let block = bemBlocks.container
-    let className = block()
-      .mix(`filter--${id}`)
-      .state({
-        disabled: !this.hasOptions()
-      })
-
-    return (
-      <div key={key} className={className}>
-        <div data-qa="header" className={block("header")}>{title}</div>
-        <div data-qa="options" className={block("options")}>
-          {children}
-        </div>
-        {this.renderShowMore()}
-      </div>
-    );
-  }
-
-  renderShowMore() {
-
-    const { bemBlocks, moreSizeOption, toggleViewMoreOption, translate } = this.props
-
-    let option = moreSizeOption
-
-    if (!option) {
-      return null;
-    }
-
-    return (
-      <FastClick handler={() => toggleViewMoreOption(option) }>
-        <div data-qa="show-more" className={bemBlocks.container("view-more-action") }>
-          {translate(option.label) }
-          </div>
-      </FastClick>
-    )
-  }
+export interface FacetContainerProps extends React.Props<FacetContainer> {
+  key?: any
+  title?: string
+  mod?: string
+  disabled?: boolean
+  className?: string
+  collapsable?: boolean
 }
 
+export class FacetContainer extends React.Component<FacetContainerProps, {collapsed: boolean}> {
 
-export interface RefinementListFilterProps extends SearchkitComponentProps {
-  field:string
-  operator?:string
-  size?:number
-  title:string
-  id:string
-  component?: ReactComponentType<RefinementListFilterDisplayProps>
-  itemComponent?: ReactComponentType<FilterItemComponentProps>
-  orderKey?:string
-  orderDirection?:string
-}
-
-export class RefinementListFilter extends SearchkitComponent<RefinementListFilterProps, any> {
-  accessor:FacetAccessor
-
-  static propTypes = defaults({
-    field:React.PropTypes.string.isRequired,
-    operator:React.PropTypes.oneOf(["AND", "OR"]),
-    size:React.PropTypes.number,
-    title:React.PropTypes.string.isRequired,
-    id:React.PropTypes.string.isRequired,
-    translations:SearchkitComponent.translationsPropType(
-      FacetAccessor.translations
-    ),
-    orderKey:React.PropTypes.string,
-    orderDirection:React.PropTypes.oneOf(["asc", "desc"])
-  }, SearchkitComponent.propTypes)
+  static propTypes = {
+      title: React.PropTypes.string,
+      disabled: React.PropTypes.bool,
+      mod: React.PropTypes.string,
+      className: React.PropTypes.string,
+      collapsable: React.PropTypes.bool,
+  }
 
   static defaultProps = {
-    component: RefinementListFilterDisplay,
-    itemComponent: FilterCheckboxItemComponent
+    disabled: false,
+    collapsable: false,
+    mod: "sk-facet-container"
   }
 
-  defineAccessor() {
-    const {
-      field, id, operator, title,
-      size=50, translations, orderKey, orderDirection
-    } = this.props
-    return new FacetAccessor(field,{
-      id, operator,title, size,
-      translations, orderKey, orderDirection
-    })
-}
-
-  defineBEMBlocks() {
-    var blockName = this.props.mod || "sk-refinement-list"
-    return {
-      container: blockName,
-      option: `${blockName}-option`
+  constructor(props){
+    super(props)
+    this.state = {
+      collapsed: props.collapsable
     }
   }
 
-  toggleFilter(key) {
-    this.accessor.state = this.accessor.state.toggle(key)
-    this.searchkit.performSearch()
-  }
-
-  toggleViewMoreOption(option:ISizeOption) {
-    this.accessor.setViewMoreOption(option);
-    this.searchkit.performSearch()
+  toggleCollapsed(){
+    this.setState({
+      collapsed: !this.state.collapsed
+    })
   }
 
   render() {
-    const { id, title, component, itemComponent } = this.props;
+      const { title, mod, className, disabled, children, collapsable } = this.props
+      const { collapsed } = this.state
 
-    return React.createElement(component, {
-      id,
-      title,
-      itemComponent,
-      bemBlocks: this.bemBlocks,
-      buckets:this.accessor.getBuckets(),
-      toggleFilter: this.toggleFilter.bind(this),
-      moreSizeOption:this.accessor.getMoreSizeOption(),
-      toggleViewMoreOption:this.toggleViewMoreOption.bind(this),
-      translate:this.translate,
-      state:this.accessor.state
-    });
+      const bemBlocks = {
+          container: bemBlock(mod)
+      }
+
+      var block = bemBlocks.container
+      var containerClass = block()
+          .mix(className)
+          .state({ disabled })
+
+      var titleDiv
+      if (collapsable){
+        const arrowClass = collapsed ? 'sk-arrow-right' : 'sk-arrow-down'
+        titleDiv = (
+          <div className={block("header").state({ collapsable })} onClick={this.toggleCollapsed.bind(this)}>
+            <span className={arrowClass}/>&nbsp;{title}
+          </div>
+        )
+      } else {
+        titleDiv = <div className={block("header") }>{title}</div>
+      }
+
+      return (
+        <div className={containerClass}>
+          {titleDiv}
+          <div className={block("content").state({ collapsed })}>
+            {children}
+          </div>
+        </div>
+      );
   }
 }

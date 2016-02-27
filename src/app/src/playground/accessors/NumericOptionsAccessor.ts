@@ -1,3 +1,10 @@
+/*
+  CHANGELOG
+
+  add multiselect option
+
+ */
+
 import {State, ArrayState, FilterBasedAccessor} from "searchkit"
 import {Utils} from "searchkit"
 import {
@@ -38,6 +45,7 @@ export class NumericOptionsAccessor extends FilterBasedAccessor<ArrayState> {
     return find(this.options.options, it => isUndefined(it.from) && isUndefined(it.to))
   }
 
+  // Deprecated
   getSelectedOption() {
     if (this.state.getValue().length == 0) return null
     const key = this.state.getValue()[0] // Use first key
