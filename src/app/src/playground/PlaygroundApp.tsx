@@ -131,6 +131,13 @@ export class PlaygroundApp extends React.Component<any, any> {
                   { title: "\u2605\u2605\u2606\u2606\u2606 & up", from: 4, to: 10 },
                   { title: "\u2605\u2606\u2606\u2606\u2606 & up", from: 2, to: 10 },
               ]} listComponent={Selector} />
+              <NumericRefinementListFilter id="imdbRating" title="IMDB Rating (showCount=false)" field="imdbRating" options={[
+                  { title: "All" },
+                  { title: "\u2605\u2605\u2605\u2605\u2606 & up", from: 8, to: 10 },
+                  { title: "\u2605\u2605\u2605\u2606\u2606 & up", from: 6, to: 10 },
+                  { title: "\u2605\u2605\u2606\u2606\u2606 & up", from: 4, to: 10 },
+                  { title: "\u2605\u2606\u2606\u2606\u2606 & up", from: 2, to: 10 },
+              ]} listComponent={Selector} showCount={false} />
               <HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
               <RangeInputFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
 

@@ -40,6 +40,7 @@ export interface NumericRefinementListFilterProps extends SearchkitComponentProp
   id:string
   listComponent?: any
   multiselect?: boolean
+  showCount?: boolean
 }
 
 export class NumericRefinementListFilter extends SearchkitComponent<NumericRefinementListFilterProps, any> {
@@ -51,6 +52,7 @@ export class NumericRefinementListFilter extends SearchkitComponent<NumericRefin
     title:React.PropTypes.string.isRequired,
     id:React.PropTypes.string.isRequired,
     multiselect: React.PropTypes.bool,
+    showCount: React.PropTypes.bool,
     options:React.PropTypes.arrayOf(
       React.PropTypes.shape({
         title:React.PropTypes.string.isRequired,
@@ -63,7 +65,8 @@ export class NumericRefinementListFilter extends SearchkitComponent<NumericRefin
 
   static defaultProps = {
     listComponent: FilterItemList,
-    multiselect: false
+    multiselect: false,
+    showCount: true
   }
 
   defineAccessor() {
@@ -95,7 +98,7 @@ export class NumericRefinementListFilter extends SearchkitComponent<NumericRefin
   }
 
   render() {
-    const { listComponent } = this.props
+    const { listComponent, showCount } = this.props
 
     var block = this.bemBlocks.container
     var className = block()
@@ -110,7 +113,8 @@ export class NumericRefinementListFilter extends SearchkitComponent<NumericRefin
         {React.createElement(listComponent, {
           items: this.accessor.getBuckets(),
           selectedItems: this.getSelectedItems(),
-          toggleItem: this.toggleFilter.bind(this)
+          toggleItem: this.toggleFilter.bind(this),
+          showCount
         })}
       </div>
     );
