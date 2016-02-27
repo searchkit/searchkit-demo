@@ -2,13 +2,17 @@ import * as React from "react";
 
 import {
   SearchkitComponent,
-  NumericOptionsAccessor,
+  // NumericOptionsAccessor,
   SearchkitComponentProps,
   RangeOption,
   FilterItemComponent,
   FilterCheckboxItemComponent,
   FastClick
 } from "searchkit"
+
+import {
+  NumericOptionsAccessor
+} from '../accessors'
 
 import { FilterItemList } from '../ui'
 
@@ -72,7 +76,7 @@ export class NumericRefinementListFilter extends SearchkitComponent<NumericRefin
   }
 
   getSelectedItems() {
-    let selectedOption = this.accessor.getSelectedOption()
+    let selectedOption = this.accessor.getSelectedOrDefaultOption()
     if (!selectedOption) return []
     else return [{key: selectedOption.title}]
   }
