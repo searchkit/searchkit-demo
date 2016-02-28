@@ -1,7 +1,8 @@
 
 export * from "./FacetContainer";
-export * from "./Toggle";
-export * from "./Selector";
 export * from "./FilterItemList";
 export * from "./FilterItem";
+export * from "./FilterGroup";
+export * from "./Selector";
+export * from "./Toggle";
 

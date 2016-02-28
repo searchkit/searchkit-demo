@@ -1,0 +1,81 @@
+@import "./vars.scss";
+
+.sk-filter-group {
+  &-option {
+    &__title {
+      font-weight: bold;
+    }
+
+    &__value {
+      padding-left: 4px;
+    }
+
+    &__value:hover {
+      text-decoration: line-through;
+      cursor: pointer;
+    }
+
+    &__remove-action {
+      cursor: pointer;
+      font-weight: 700;
+    }
+  }
+}
+
+.sk-action-bar {
+  .sk-filter-group {
+    display: flex;
+    flex-flow: row;
+    margin-right: 10px;
+    color: $sk-action-text-color;
+
+    &-option {
+      border: none;
+      background: #f4f4f4;
+      display: flex;
+      padding: 10px 10px 10px 0px;
+      font-size: 14px;
+      line-height: 20px;
+      border-radius: 3px;
+
+      &__remove-action {
+        padding: 0 10px;
+      }
+    }
+
+    &__item {
+      flex: auto;
+      margin-right: 10px;
+    }
+  }
+}
+
+.sk-layout__filters {
+  .sk-filter-group {
+    display: block;
+    width: 100%;
+    margin-right: 10px;
+    color: $sk-list-text-color;
+
+    &-option {
+      border: none;
+      display: inline;
+      /*padding: 10px 10px 10px 0px;*/
+      font-size: 14px;
+      line-height: 20px;
+
+      &__title, &__value, &__remove-action {
+        display: inline-block;
+      }
+
+      &__remove-action {
+        padding-right: 10px;
+      }
+    }
+
+    &__item {
+      margin-right: 10px;
+      display: block;
+    }
+  }
+}

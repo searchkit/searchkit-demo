@@ -1,3 +1,10 @@
+/*
+  CHANGELOG
+
+  Add sorting to facet panel (main problem: requires wrapping with FacetContainer)
+
+ */
+
 import * as React from "react";
 import * as _ from "lodash";
 
@@ -29,13 +36,16 @@ import "./../../styles/customisations.scss";
 import "searchkit/theming/theme.scss";
 
 import MultiSelectFilter from './MultiSelectFilter/MultiSelectFilter';
-import GroupedSelectedFilters from './GroupedSelectedFilters/GroupedSelectedFilters';
 import FacetEnabler from './FacetEnabler';
 
 import { ViewSwitcher, Sorting, Pagination, PageSizeSelector } from './components';
-import { CheckboxFilter, TagFilter, RangeInputFilter, RefinementListFilter, NumericRefinementListFilter } from './components';
+import {
+  CheckboxFilter, TagFilter, RangeInputFilter,
+  RefinementListFilter, NumericRefinementListFilter,
+  GroupedSelectedFilters
+} from './components';
 
-import { Toggle, Selector } from './ui';
+import { Toggle, Selector, FilterItemList, FacetContainer } from './ui';
 import { queryOptimizer } from './utils';
 import { MovieHitsGridItem, MovieHitsListItem } from './MovieHitsItems';
 
@@ -117,6 +127,16 @@ export class PlaygroundApp extends React.Component<any, any> {
 
             <div className="sk-layout__filters">
               {/*<button onClick={this.refresh.bind(this)}>Click to refresh</button>*/}
+              <FacetContainer title="Selected filters">
+                <GroupedSelectedFilters/>
+              </FacetContainer>
+              <FacetContainer title="Sorting">
+                <Sorting listComponent={FilterItemList} options={[
+                    { label: "Relevance", field: "_score", order: "desc", defaultOption: true },
+                    { label: "Latest", field: "released", order: "desc" },
+                    { label: "Earliest", field: "released", order: "asc" }
+                ]}/>
+              </FacetContainer>
               <NumericRefinementListFilter id="runtimeMinutes" title="Length" field="runtimeMinutes" options={[
                   { title: "All" },
                   { title: "≤20", from: 0, to: 20 },
