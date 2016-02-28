@@ -99,7 +99,6 @@ export class PlaygroundApp extends React.Component<any, any> {
       <div>
       <SearchkitProvider searchkit={this.searchkit}>
       <div>
-      hello
         <div className="sk-layout">
 
           <div className="sk-layout__top-bar sk-top-bar">
