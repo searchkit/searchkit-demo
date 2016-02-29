@@ -14,3 +14,11 @@ Should the collapsable prop be passed from the parent component (NumericRefineme
 ## Extra component props
 
 One was to pass props would be to have like listComponent={...} and listComponentProps={...}. Not pretty and forces all components to implement the forward, but pretty straight forward.
+
+## Filter Components
+
+In the current implementation, Filter components are adapters between the accessors and the ui components. If more work is done to format the accessor output, the Filter components could become simple bindings between the 2. 
+
+## Item Components
+
+Toggle uses `view`, FilterItemList uses `label`. That's the only difference that prevents from merging the 'list' part of Toggle and FilterItemlist (they could be the same component with just different default props (mod and itemComponent))
