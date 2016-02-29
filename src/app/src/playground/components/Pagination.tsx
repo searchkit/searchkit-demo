@@ -146,7 +146,14 @@ export class Pagination extends SearchkitComponent<PaginationProps, any> {
     return (pageNumber < 1) || (pageNumber > this.getTotalPages());
   }
 
-  setPage(pageNumber:number) {
+  normalizePage(page: (number | string)):number {
+      if (page === 'previous') return this.getCurrentPage() - 1;
+      else if (page === 'next') return this.getCurrentPage() + 1;
+      else return +page
+  }
+
+  setPage(page:(number|string)) {
+    const pageNumber:number = this.normalizePage(page)
     if (this.isDisabled(pageNumber)) { return };
     if (pageNumber == this.getCurrentPage()) {
       return; // Same page, no need to rerun query
