@@ -7,16 +7,17 @@ import {
 } from "searchkit"
 
 export interface FilterItemComponentProps {
-  bemBlocks: { container: any, option: any },
-  toggleItem: Function,
-  translate: Function,
-  active: boolean,
-  label: string,
+  bemBlocks: { container: any, option: any }
+  toggleItem: Function
+  translate: Function
+  active: boolean
+  label: string
   count: number
+  showCount: boolean
 }
 
 function itemRenderer(props: FilterItemComponentProps, showCheckbox) {
-  const {bemBlocks, toggleItem, translate, active, label, count} = props
+  const {bemBlocks, toggleItem, translate, active, label, count, showCount} = props
   const block = bemBlocks.option
   const className = block()
     .state({ active })
@@ -26,7 +27,7 @@ function itemRenderer(props: FilterItemComponentProps, showCheckbox) {
       <div className={className} data-qa="option">
         {showCheckbox ? <input type="checkbox" data-qa="checkbox" checked={active} readOnly className={block("checkbox").state({ active }) } ></input> : undefined}
         <div data-qa="label" className={block("text") }>{label}</div>
-        <div data-qa="count" className={block("count") }>{count}</div>
+        {showCount ? < div data-qa="count" className={block("count") }>{count}</div> : undefined}
         </div>
       </FastClick>
   )
@@ -34,6 +35,11 @@ function itemRenderer(props: FilterItemComponentProps, showCheckbox) {
 
 @PureRender
 export class FilterItemComponent extends React.Component<FilterItemComponentProps, any>{
+
+  static defaultProps = {
+    showCount: true
+  }
+
   render() {
     return itemRenderer(this.props, false)
   }
@@ -41,6 +47,11 @@ export class FilterItemComponent extends React.Component<FilterItemComponentProp
 
 @PureRender
 export class FilterCheckboxItemComponent extends React.Component<FilterItemComponentProps, any>{
+
+  static defaultProps = {
+    showCount: true
+  }
+
   render() {
     return itemRenderer(this.props, true)
   }

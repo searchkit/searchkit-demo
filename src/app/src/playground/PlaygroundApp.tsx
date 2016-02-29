@@ -17,7 +17,7 @@ HitsStats,
 // RefinementListFilter,
 Pagination as OriginalPagination,
 ResetFilters,
-MenuFilter,
+// MenuFilter,
 SelectedFilters,
 HierarchicalMenuFilter,
 // NumericRefinementListFilter,
@@ -41,7 +41,7 @@ import FacetEnabler from './FacetEnabler';
 import { ViewSwitcher, Sorting, Pagination, PageSizeSelector } from './components';
 import {
   CheckboxFilter, TagFilter, RangeInputFilter,
-  RefinementListFilter, NumericRefinementListFilter,
+  RefinementListFilter, NumericRefinementListFilter, MenuFilter,
   GroupedSelectedFilters
 } from './components';
 
@@ -130,6 +130,7 @@ export class PlaygroundApp extends React.Component<any, any> {
               <FacetContainer title="Selected filters">
                 <GroupedSelectedFilters/>
               </FacetContainer>
+              <MenuFilter field="type.raw" title="Categories" id="categories"/>
               <FacetContainer title="Sorting">
                 <Sorting listComponent={FilterItemList} options={[
                     { label: "Relevance", field: "_score", order: "desc", defaultOption: true },

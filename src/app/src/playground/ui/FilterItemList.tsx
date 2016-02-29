@@ -19,7 +19,7 @@ export class AbstractFilterItemList extends React.Component<any, {}> {
   }
 
   render() {
-    const { mod, itemComponent, items, selectedItems = [], toggleItem, disabled, urlBuilder } = this.props
+    const { mod, itemComponent, items, selectedItems = [], toggleItem, disabled, urlBuilder, showCount } = this.props
     const keys = map(selectedItems, "key")
 
     const bemBlocks = {
@@ -38,6 +38,7 @@ export class AbstractFilterItemList extends React.Component<any, {}> {
         disabled: disabled || option.disabled,
         url: urlBuilder && urlBuilder(option),
         count: option.doc_count,
+        showCount,
         active: includes(keys, option.key)
       })
     })
