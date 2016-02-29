@@ -22,3 +22,7 @@ In the current implementation, Filter components are adapters between the access
 ## Item Components
 
 Toggle uses `view`, FilterItemList uses `label`. That's the only difference that prevents from merging the 'list' part of Toggle and FilterItemlist (they could be the same component with just different default props (mod and itemComponent))
+
+## Selected Items
+
+The selected items is currently an `Array<{key: any}>`. All UI components start by mapping that to an `Array<any>` to just search the item's key in the array. As the accessor states are stored as an Array of keys anyways, we could avoid multiple conversions. 
