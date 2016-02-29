@@ -14,14 +14,11 @@ export class MultiSelect extends React.Component<any, {}>{
   }
 
   handleChange(selectedOptions = []) {
-    const { setItems, selectedItems=[] } = this.props
-    setItems(map(selectedOptions, 'value'))
+    this.props.setItems(map(selectedOptions, 'value'))
   }
 
   render() {
-    const { placeholder, clearable = true, items, selectedItems = [], disabled, showCount } = this.props
-
-    const keys = map(selectedItems, "key")
+    const { placeholder, clearable = true, items, selectedItems = [], disabled, showCount, setItems } = this.props
 
     const options = map(items, (option) => {
       let label = option.title || option.label || option.key
@@ -30,7 +27,8 @@ export class MultiSelect extends React.Component<any, {}>{
     })
 
     return (
-      <Select multi disabled={disabled} value={keys}
+      <Select multi disabled={disabled}
+        value={map(selectedItems, "key") }
         placeholder={placeholder}
         options={options}
         valueRenderer={(v) => v.value}
