@@ -9,7 +9,6 @@ SearchkitComponentProps,
 FastClick,
 ReactComponentType,
 ArrayState,
-PureRender
 } from "searchkit"
 
 import {FilterCheckboxItemComponent, FilterItemComponentProps} from "searchkit";
@@ -118,7 +117,7 @@ export class RefinementListFilter extends SearchkitComponent<RefinementListFilte
 
   render() {
     const { listComponent, containerComponent, showCount, title, id, collapsable } = this.props
-    console.log('this.getSelectedItems()', this.getSelectedItems())
+
     return React.createElement(containerComponent, {
       title,
       className: id ? `filter--${id}` : undefined,
