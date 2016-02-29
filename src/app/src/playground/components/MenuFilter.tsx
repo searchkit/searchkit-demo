@@ -13,7 +13,6 @@ import { FacetContainer, FilterItemList } from '../ui'
 const defaults = require("lodash/defaults")
 const map = require("lodash/map")
 const concat = require("lodash/concat")
-const sumBy = require("lodash/sumBy")
 
 export interface MenuFilterProps extends SearchkitComponentProps {
   field: string
@@ -90,7 +89,7 @@ export class MenuFilter extends SearchkitComponent<MenuFilterProps, any> {
     const { listComponent, containerComponent, showCount, title, id, collapsable } = this.props
 
     const buckets = this.accessor.getBuckets()
-    const allItem = { key: 'All', doc_count: sumBy(buckets, 'doc_count') }
+    const allItem = { key: 'All'}
     const items = concat([allItem], buckets)
 
     return React.createElement(containerComponent, {

@@ -130,7 +130,7 @@ export class PlaygroundApp extends React.Component<any, any> {
               <FacetContainer title="Selected filters">
                 <GroupedSelectedFilters/>
               </FacetContainer>
-              <MenuFilter field="type.raw" title="Categories" id="categories"/>
+              <MenuFilter field="type.raw" title="Categories" id="categories" showCount={true}/>
               <FacetContainer title="Sorting">
                 <Sorting listComponent={FilterItemList} options={[
                     { label: "Relevance", field: "_score", order: "desc", defaultOption: true },
