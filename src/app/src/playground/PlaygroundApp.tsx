@@ -35,7 +35,6 @@ ViewSwitcherHits
 import "./../../styles/customisations.scss";
 import "searchkit/theming/theme.scss";
 
-import MultiSelectFilter from './MultiSelectFilter/MultiSelectFilter';
 import FacetEnabler from './FacetEnabler';
 
 import { ViewSwitcher, Sorting, Pagination, PageSizeSelector } from './components';
@@ -45,7 +44,7 @@ import {
   GroupedSelectedFilters
 } from './components';
 
-import { Toggle, Selector, FilterItemList, FacetContainer } from './ui';
+import { Toggle, Selector, MultiSelect, FilterItemList, FacetContainer } from './ui';
 import { queryOptimizer } from './utils';
 import { MovieHitsGridItem, MovieHitsListItem } from './MovieHitsItems';
 
@@ -130,6 +129,7 @@ export class PlaygroundApp extends React.Component<any, any> {
               <FacetContainer title="Selected filters">
                 <GroupedSelectedFilters/>
               </FacetContainer>
+              <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={200} listComponent={MultiSelect}/>
               <MenuFilter field="type.raw" title="Categories" id="categories" showCount={true}/>
               <FacetContainer title="Sorting">
                 <Sorting listComponent={FilterItemList} options={[
@@ -168,9 +168,8 @@ export class PlaygroundApp extends React.Component<any, any> {
               <RangeInputFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
 
 
-              <MultiSelectFilter id="actors" title="Actors" field="actors.raw" size={200}/>
               <FacetEnabler id="genres" title="Genres" field="genres.raw" operator="AND"/>
-              <MultiSelectFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={100}/>
+              <RefinementListFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={100} listComponent={MultiSelect}/>
               <CheckboxFilter id="rating" title="Rating" field="rated.raw" value="R" label="Rated 'R'"/>
               <select value={this.state.operator} onChange={this.handleOperatorChange.bind(this) }>
                 <option value="AND">AND</option>

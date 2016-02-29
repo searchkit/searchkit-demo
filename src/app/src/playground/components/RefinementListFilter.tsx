@@ -102,6 +102,11 @@ export class RefinementListFilter extends SearchkitComponent<RefinementListFilte
     this.searchkit.performSearch()
   }
 
+  setFilters(keys) {
+    this.accessor.state = this.accessor.state.setValue(keys)
+    this.searchkit.performSearch()
+  }
+
   toggleViewMoreOption(option: ISizeOption) {
     this.accessor.setViewMoreOption(option);
     this.searchkit.performSearch()
@@ -128,6 +133,7 @@ export class RefinementListFilter extends SearchkitComponent<RefinementListFilte
           items: this.accessor.getBuckets(),
           selectedItems: this.getSelectedItems(),
           toggleItem: this.toggleFilter.bind(this),
+          setItems: this.setFilters.bind(this),
           showCount
       }),
       this.renderShowMore()
