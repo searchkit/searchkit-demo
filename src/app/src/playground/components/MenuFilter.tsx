@@ -8,7 +8,7 @@ SearchkitComponentProps,
 ReactComponentType
 } from "searchkit"
 
-import { FacetContainer, FilterItemList } from '../ui'
+import { Panel, FilterItemList } from '../ui'
 
 const defaults = require("lodash/defaults")
 const map = require("lodash/map")
@@ -52,7 +52,7 @@ export class MenuFilter extends SearchkitComponent<MenuFilterProps, any> {
 
   static defaultProps = {
     listComponent: FilterItemList,
-    containerComponent: FacetContainer,
+    containerComponent: Panel,
     collapsable: false,
     showCount: false,
     size: 50

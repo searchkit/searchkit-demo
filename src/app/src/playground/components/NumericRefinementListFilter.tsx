@@ -22,7 +22,7 @@ import {
   NumericOptionsAccessor
 } from '../accessors'
 
-import { FilterItemList, FacetContainer } from '../ui'
+import { FilterItemList, Panel } from '../ui'
 
 const block = require('bem-cn')
 
@@ -65,7 +65,7 @@ export class NumericRefinementListFilter extends SearchkitComponent<NumericRefin
 
   static defaultProps = {
     listComponent: FilterItemList,
-    containerComponent: FacetContainer,
+    containerComponent: Panel,
     multiselect: false,
     showCount: true
   }

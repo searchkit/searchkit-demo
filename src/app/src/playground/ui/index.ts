@@ -1,9 +1,9 @@
 
-export * from "./FacetContainer";
 export * from "./FilterItemList";
 export * from "./FilterItem";
 export * from "./FilterGroup";
 export * from "./MultiSelect";
+export * from "./Panel";
 export * from "./RangeComponents";
 export * from "./RangeHistogram";
 export * from "./RangeInput";

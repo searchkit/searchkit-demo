@@ -13,7 +13,7 @@ ArrayState,
 
 import {FilterCheckboxItemComponent, FilterItemComponentProps} from "searchkit";
 
-import { FilterCheckboxItemList, FacetContainer } from '../ui'
+import { FilterCheckboxItemList, Panel } from '../ui'
 
 const defaults = require("lodash/defaults")
 const map = require("lodash/map")
@@ -63,7 +63,7 @@ export class RefinementListFilter extends SearchkitComponent<RefinementListFilte
 
   static defaultProps = {
     listComponent: FilterCheckboxItemList,
-    containerComponent: FacetContainer,
+    containerComponent: Panel,
     // component: RefinementListFilterDisplay,
     // itemComponent: FilterCheckboxItemComponent,
     size: 50,
