@@ -8,7 +8,7 @@ import {
   ReactComponentType,
 } from "searchkit"
 
-import { FacetContainer, FilterItemList } from '../ui'
+import { FilterItemList } from '../ui'
 import { RefinementListFilter} from "./RefinementListFilter"
 
 const defaults = require("lodash/defaults")

@@ -10,7 +10,7 @@ import {
   ReactComponentType
 } from "searchkit"
 
-import { FacetContainer, RangeSlider, RangeSliderHistogram } from '../ui'
+import { Panel, RangeSlider, RangeSliderHistogram } from '../ui'
 
 const defaults = require("lodash/defaults")
 const maxBy = require("lodash/maxBy")
@@ -44,7 +44,7 @@ export class RangeFilter extends SearchkitComponent<RangeFilterProps, any> {
   }, SearchkitComponent.propTypes)
 
   static defaultProps = {
-    containerComponent: FacetContainer,
+    containerComponent: Panel,
     rangeComponent: RangeSliderHistogram,
     showHistogram: true,
     collapsable: false

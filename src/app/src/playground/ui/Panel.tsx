@@ -3,6 +3,7 @@
 
   add FacetContainer
   add collapsable
+  renamed to Panel
 
  */
 
@@ -10,9 +11,9 @@ import * as React from "react";
 
 const bemBlock = require('bem-cn')
 
-require('./FacetContainer.scss')
+require('./Panel.scss')
 
-export interface FacetContainerProps extends React.Props<FacetContainer> {
+export interface PanelProps extends React.Props<Panel> {
   key?: any
   title?: string
   mod?: string
@@ -21,7 +22,7 @@ export interface FacetContainerProps extends React.Props<FacetContainer> {
   collapsable?: boolean
 }
 
-export class FacetContainer extends React.Component<FacetContainerProps, {collapsed: boolean}> {
+export class Panel extends React.Component<PanelProps, {collapsed: boolean}> {
 
   static propTypes = {
       title: React.PropTypes.string,
@@ -34,7 +35,7 @@ export class FacetContainer extends React.Component<FacetContainerProps, {collap
   static defaultProps = {
     disabled: false,
     collapsable: false,
-    mod: "sk-facet-container"
+    mod: "sk-panel"
   }
 
   constructor(props){

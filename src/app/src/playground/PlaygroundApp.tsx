@@ -44,7 +44,7 @@ import {
   GroupedSelectedFilters
 } from './components';
 
-import { Toggle, Selector, MultiSelect, FilterItemList, FacetContainer,
+import { Toggle, Selector, MultiSelect, FilterItemList, Panel,
          RangeSliderInput, RangeHistogramInput } from './ui';
 import { queryOptimizer } from './utils';
 import { MovieHitsGridItem, MovieHitsListItem } from './MovieHitsItems';
@@ -127,22 +127,22 @@ export class PlaygroundApp extends React.Component<any, any> {
 
             <div className="sk-layout__filters">
               {/*<button onClick={this.refresh.bind(this)}>Click to refresh</button>*/}
-              <FacetContainer title="Selected filters">
+              <Panel title="Selected filters">
                 <GroupedSelectedFilters/>
-              </FacetContainer>
+              </Panel>
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={false}/>
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" rangeComponent={RangeHistogramInput} />
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" rangeComponent={RangeSliderInput} />
               <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={200} listComponent={MultiSelect}/>
               <MenuFilter field="type.raw" title="Categories" id="categories" showCount={true}/>
-              <FacetContainer title="Sorting">
+              <Panel title="Sorting">
                 <Sorting listComponent={FilterItemList} options={[
                     { label: "Relevance", field: "_score", order: "desc", defaultOption: true },
                     { label: "Latest", field: "released", order: "desc" },
                     { label: "Earliest", field: "released", order: "asc" }
                 ]}/>
-              </FacetContainer>
+              </Panel>
               <NumericRefinementListFilter id="runtimeMinutes" title="Length" field="runtimeMinutes" options={[
                   { title: "All" },
                   { title: "≤20", from: 0, to: 20 },
