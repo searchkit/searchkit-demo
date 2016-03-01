@@ -4,7 +4,7 @@ const defaults = require("lodash/defaults")
 const get = require("lodash/get")
 const clamp = require("lodash/clamp")
 
-class Input extends React.Component<any, any> {
+export class Input extends React.Component<any, any> {
 
   constructor(props) {
     super(props)

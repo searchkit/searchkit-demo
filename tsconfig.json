@@ -23,7 +23,6 @@
     "./src/app/src/playground/components/PageSizeSelector.tsx",
     "./src/app/src/playground/components/Pagination.tsx",
     "./src/app/src/playground/components/RangeFilter.tsx",
-    "./src/app/src/playground/components/RangeInputFilter.tsx",
     "./src/app/src/playground/components/RefinementListFilter.tsx",
     "./src/app/src/playground/components/Sorting.tsx",
     "./src/app/src/playground/components/TagFilter.tsx",

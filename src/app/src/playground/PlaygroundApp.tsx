@@ -39,7 +39,7 @@ import FacetEnabler from './FacetEnabler';
 
 import { ViewSwitcher, Sorting, Pagination, PageSizeSelector } from './components';
 import {
-  CheckboxFilter, TagFilter, RangeFilter, RangeInputFilter,
+  CheckboxFilter, TagFilter, RangeFilter,
   RefinementListFilter, NumericRefinementListFilter, MenuFilter,
   GroupedSelectedFilters
 } from './components';
