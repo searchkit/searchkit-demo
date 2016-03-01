@@ -73,6 +73,7 @@ export class GroupedSelectedFilters extends SearchkitComponent<GroupedSelectedFi
       <div className={this.bemBlocks.container() }>
         {_.map(this.getGroupedFilters(), (filters) =>
           React.createElement(listComponent, {
+            key:filters[0].name,
             title: filters[0].name,
             filters: filters,
             translate: this.translate,

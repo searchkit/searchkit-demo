@@ -93,7 +93,7 @@ export class CheckboxFilter extends SearchkitComponent<CheckboxFilterProps, any>
       className: id ? `filter--${id}` : undefined,
       disabled: !this.hasOptions(),
       collapsable
-    }, [
+    },
       React.createElement(listComponent, {
         items: [{ key: value, doc_count }],
         selectedItems: this.getSelectedItems(),
@@ -101,7 +101,7 @@ export class CheckboxFilter extends SearchkitComponent<CheckboxFilterProps, any>
         setItems: this.setFilters.bind(this),
         showCount
       })
-    ]);
+    );
   }
 
 }

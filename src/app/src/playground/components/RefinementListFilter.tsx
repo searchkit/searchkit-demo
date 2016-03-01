@@ -138,11 +138,12 @@ export class RefinementListFilter extends SearchkitComponent<RefinementListFilte
       collapsable
     }, [
       React.createElement(listComponent, {
-          items: this.getItems(),
-          selectedItems: this.getSelectedItems(),
-          toggleItem: this.toggleFilter.bind(this),
-          setItems: this.setFilters.bind(this),
-          showCount
+        key:"listComponent",
+        items: this.getItems(),
+        selectedItems: this.getSelectedItems(),
+        toggleItem: this.toggleFilter.bind(this),
+        setItems: this.setFilters.bind(this),
+        showCount
       }),
       this.renderShowMore()
     ]);
@@ -156,7 +157,7 @@ export class RefinementListFilter extends SearchkitComponent<RefinementListFilte
     }
 
     return (
-      <FastClick handler={() => this.toggleViewMoreOption(option) }>
+      <FastClick handler={() => this.toggleViewMoreOption(option) } key="showMore">
         <div data-qa="show-more" className={this.bemBlocks.container("view-more-action") }>
           {this.translate(option.label) }
         </div>

@@ -97,9 +97,7 @@ export class RangeFilter extends SearchkitComponent<RangeFilterProps, any> {
       className: id ? `filter--${id}` : undefined,
       disabled: maxValue == 0,
       collapsable
-    }, [
-        this.renderRangeComponent(this.getRangeComponent())
-    ])
+    }, this.renderRangeComponent(this.getRangeComponent()))
   }
 
   renderRangeComponent(Component: ReactComponentType<any>) {

@@ -94,17 +94,16 @@ export class NumericRefinementListFilter extends SearchkitComponent<NumericRefin
     const { listComponent, containerComponent, showCount, title, id, collapsable } = this.props
 
     return React.createElement(containerComponent, {
-      title,
-      className: id ? `filter--${id}` : undefined,
-      disabled: !this.hasOptions(),
-      collapsable
-    }, [
+        title,
+        className: id ? `filter--${id}` : undefined,
+        disabled: !this.hasOptions(),
+        collapsable
+      },
       React.createElement(listComponent, {
         items: this.accessor.getBuckets(),
         selectedItems: this.getSelectedItems(),
         toggleItem: this.toggleFilter.bind(this),
         showCount
-      })
-    ]);
+      }));
   }
 }
