@@ -10,7 +10,7 @@ import {
   ReactComponentType
 } from "searchkit"
 
-import { FacetContainer, RangeHistogram, RangeSlider } from '../ui'
+import { FacetContainer, RangeSlider, RangeSliderHistogram } from '../ui'
 
 const defaults = require("lodash/defaults")
 const maxBy = require("lodash/maxBy")
@@ -45,6 +45,8 @@ export class RangeFilter extends SearchkitComponent<RangeFilterProps, any> {
 
   static defaultProps = {
     containerComponent: FacetContainer,
+    rangeComponent: RangeSliderHistogram,
+    showHistogram: true,
     collapsable: false
   }
 
@@ -62,14 +64,6 @@ export class RangeFilter extends SearchkitComponent<RangeFilterProps, any> {
     )
   }
 
-  // defineBEMBlocks() {
-  //   let block = this.props.mod || "sk-range-filter"
-  //   return {
-  //     container: block,
-  //     labels: block+"-value-labels"
-  //   }
-  // }
-
   sliderUpdate(newValues) {
     if ((newValues[0] == this.props.min) && (newValues[1] == this.props.max)){
       this.accessor.state = this.accessor.state.clear()
@@ -84,24 +78,13 @@ export class RangeFilter extends SearchkitComponent<RangeFilterProps, any> {
     this.searchkit.performSearch()
   }
 
-  renderComponent(Component){
-    const { min, max } = this.props
-    const state = this.accessor.state.getValue()
-    return React.createElement(Component, {
-      min, max,
-      minValue: get(state, "min", min),
-      maxValue: get(state, "max", max),
-      items: this.accessor.getBuckets(),
-      onChange: this.sliderUpdate,
-      onFinished: this.sliderUpdateAndSearch
-    })
-  }
-
-  renderHistogram(){
-    const { showHistogram, min, max } = this.props
-    if (!showHistogram) return null
-
-    return this.renderComponent(RangeHistogram)
+  getRangeComponent():ReactComponentType<any>{
+    const { rangeComponent, showHistogram } = this.props
+    if (!showHistogram && (rangeComponent === RangeSliderHistogram)) {
+      return RangeSlider
+    } else {
+      return rangeComponent
+    }
   }
 
   render() {
@@ -115,8 +98,20 @@ export class RangeFilter extends SearchkitComponent<RangeFilterProps, any> {
       disabled: maxValue == 0,
       collapsable
     }, [
-      this.renderHistogram(),
-      this.renderComponent(RangeSlider)
+        this.renderRangeComponent(this.getRangeComponent())
     ])
+  }
+
+  renderRangeComponent(Component: ReactComponentType<any>) {
+    const { min, max } = this.props
+    const state = this.accessor.state.getValue()
+    return React.createElement(Component, {
+      min, max,
+      minValue: get(state, "min", min),
+      maxValue: get(state, "max", max),
+      items: this.accessor.getBuckets(),
+      onChange: this.sliderUpdate,
+      onFinished: this.sliderUpdateAndSearch
+    })
   }
 }

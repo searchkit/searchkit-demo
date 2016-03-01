@@ -6,6 +6,7 @@ export * from "./FilterGroup";
 export * from "./MultiSelect";
 export * from "./RangeHistogram";
 export * from "./RangeSlider";
+export * from "./RangeSliderHistogram";
 export * from "./Selector";
 export * from "./Toggle";
 

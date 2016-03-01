@@ -130,6 +130,7 @@ export class PlaygroundApp extends React.Component<any, any> {
                 <GroupedSelectedFilters/>
               </FacetContainer>
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
+              <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={false}/>
               <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={200} listComponent={MultiSelect}/>
               <MenuFilter field="type.raw" title="Categories" id="categories" showCount={true}/>
               <FacetContainer title="Sorting">
