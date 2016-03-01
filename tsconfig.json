@@ -35,6 +35,7 @@
     "./src/app/src/playground/ui/FilterItemList.tsx",
     "./src/app/src/playground/ui/FilterGroup.tsx",
     "./src/app/src/playground/ui/MultiSelect.tsx",
+    "./src/app/src/playground/ui/RangeComponents.tsx",
     "./src/app/src/playground/ui/RangeHistogram.tsx",
     "./src/app/src/playground/ui/RangeSlider.tsx",
     "./src/app/src/playground/ui/Selector.tsx",

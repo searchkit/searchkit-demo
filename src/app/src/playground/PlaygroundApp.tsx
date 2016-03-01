@@ -44,7 +44,8 @@ import {
   GroupedSelectedFilters
 } from './components';
 
-import { Toggle, Selector, MultiSelect, FilterItemList, FacetContainer } from './ui';
+import { Toggle, Selector, MultiSelect, FilterItemList, FacetContainer,
+         RangeSliderInput, RangeHistogramInput } from './ui';
 import { queryOptimizer } from './utils';
 import { MovieHitsGridItem, MovieHitsListItem } from './MovieHitsItems';
 
@@ -131,6 +132,8 @@ export class PlaygroundApp extends React.Component<any, any> {
               </FacetContainer>
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={false}/>
+              <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" rangeComponent={RangeHistogramInput} />
+              <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" rangeComponent={RangeSliderInput} />
               <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={200} listComponent={MultiSelect}/>
               <MenuFilter field="type.raw" title="Categories" id="categories" showCount={true}/>
               <FacetContainer title="Sorting">
