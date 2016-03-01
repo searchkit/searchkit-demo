@@ -126,10 +126,10 @@ export class PlaygroundApp extends React.Component<any, any> {
 
             <div className="sk-layout__filters">
               {/*<button onClick={this.refresh.bind(this)}>Click to refresh</button>*/}
-              <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
               <FacetContainer title="Selected filters">
                 <GroupedSelectedFilters/>
               </FacetContainer>
+              <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
               <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={200} listComponent={MultiSelect}/>
               <MenuFilter field="type.raw" title="Categories" id="categories" showCount={true}/>
               <FacetContainer title="Sorting">
