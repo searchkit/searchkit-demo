@@ -22,6 +22,11 @@
     border: 1px solid transparent;
     border-radius: $sk-border-radius $sk-border-radius 0 0;
 
+    a {
+      text-decoration: none;
+      color: $sk-action-text-color;
+    }
+
     &.is-active {
       background-color: white;
       color:$sk-list-text-color;
@@ -29,6 +34,10 @@
       cursor: default;
       border: 1px solid #ddd;
       border-bottom-color: transparent;
+
+      a {
+        color:$sk-list-text-color;
+      }
     }
 
     &.is-disabled {
