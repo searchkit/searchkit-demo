@@ -30,7 +30,7 @@ export class ViewSwitcher extends SearchkitComponent<any, any> {
     let viewOptionsAccessor = this.getViewOptionsSwitcherAccessor()
     if(viewOptionsAccessor){
       let options = viewOptionsAccessor.options
-      let selectedOption = viewOptionsAccessor.getSelectedOption()
+      let selectedOption = viewOptionsAccessor.getSelectedOption().key
 
       return React.createElement(this.props.listComponent, {
         disabled: !this.hasHits(),

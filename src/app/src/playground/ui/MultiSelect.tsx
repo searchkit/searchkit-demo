@@ -28,7 +28,7 @@ export class MultiSelect extends React.Component<any, {}>{
 
     return (
       <Select multi disabled={disabled}
-        value={map(selectedItems, "key") }
+        value={selectedItems}
         placeholder={placeholder}
         options={options}
         valueRenderer={(v) => v.value}

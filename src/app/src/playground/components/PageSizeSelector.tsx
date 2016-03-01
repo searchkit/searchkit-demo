@@ -45,7 +45,7 @@ export class PageSizeSelector extends SearchkitComponent<any, any> {
       return React.createElement(this.props.listComponent, {
         disabled: !this.hasHits(),
         items: options,
-        selectedItems: [{label:selectedSize, key:selectedSize}],
+        selectedItems: [selectedSize],
         toggleItem: this.setSize.bind(this),
         urlBuilder: (item) => {}
       })

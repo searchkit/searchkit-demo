@@ -81,8 +81,8 @@ export class MenuFilter extends SearchkitComponent<MenuFilterProps, any> {
 
   getSelectedItems() {
     const values = this.accessor.state.getValue()
-    if (values.length == 0) return [{ key: 'All' } ]
-    return [{ key: values[0] }]
+    if (values.length == 0) return ['All']
+    return [values[0]]
   }
 
   render() {

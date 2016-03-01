@@ -35,8 +35,6 @@ export class Toggle extends React.Component<any, any> {
   render() {
     const { mod, itemComponent, items, selectedItems = [], toggleItem, disabled, urlBuilder } = this.props
 
-    const keys = map(selectedItems, "key")
-
     const bemBlocks = {
       container: block(mod)
     }
@@ -50,7 +48,7 @@ export class Toggle extends React.Component<any, any> {
         key: option.key,
         disabled: disabled || option.disabled,
         url: urlBuilder && urlBuilder(option),
-        active: includes(keys, option.key)
+        active: includes(selectedItems, option.key)
       })
     })
     return (

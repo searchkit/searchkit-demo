@@ -83,7 +83,7 @@ export class NumericRefinementListFilter extends SearchkitComponent<NumericRefin
 
   getSelectedItems() {
     const selectedOptions = this.accessor.getSelectedOrDefaultOptions() || []
-    return map(selectedOptions, opt => ({key: opt.title}))
+    return map(selectedOptions, opt => opt.title)
   }
 
   hasOptions(): boolean {

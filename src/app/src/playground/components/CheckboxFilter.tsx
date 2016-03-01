@@ -79,7 +79,7 @@ export class CheckboxFilter extends SearchkitComponent<CheckboxFilterProps, any>
   }
 
   getSelectedItems() {
-    return map(this.accessor.state.getValue(), key => ({ key }))
+    return this.accessor.state.getValue()
   }
 
   render() {

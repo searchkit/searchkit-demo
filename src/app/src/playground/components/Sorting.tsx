@@ -49,7 +49,7 @@ export class Sorting extends SearchkitComponent<SortingProps, any> {
 
   render() {
     const { listComponent, options } = this.props
-    const selected = [this.accessor.getSelectedOption()]
+    const selected = [this.accessor.getSelectedOption().key]
     const disabled = !this.hasHits()
 
     return React.createElement(listComponent, {

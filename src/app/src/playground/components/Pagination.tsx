@@ -88,7 +88,7 @@ export class PaginationDisplay extends React.Component<PaginationDisplayProps, a
 
     return React.createElement(listComponent, {
       items,
-      selectedItems: [{ label: '' + currentPage , key:currentPage}],
+      selectedItems: [currentPage],
       toggleItem:setPage,
       disabled: totalPages <= 1,
       urlBuilder: item => urlBuilder(item.page)

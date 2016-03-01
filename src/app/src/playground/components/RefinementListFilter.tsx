@@ -121,7 +121,7 @@ export class RefinementListFilter extends SearchkitComponent<RefinementListFilte
   }
 
   getSelectedItems(){
-    return map(this.accessor.state.getValue(), key => ({key}))
+    return this.accessor.state.getValue()
   }
 
   getItems(){

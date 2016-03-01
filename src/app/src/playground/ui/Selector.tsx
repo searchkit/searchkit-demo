@@ -28,7 +28,7 @@ export class Selector extends React.Component<any, any> {
   getSelectedValue(){
     const { selectedItems=[] } = this.props
     if (selectedItems.length == 0) return null
-    return selectedItems[0].key
+    return selectedItems[0]
   }
 
   render() {
