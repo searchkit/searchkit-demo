@@ -44,7 +44,7 @@ import {
   GroupedSelectedFilters
 } from './components';
 
-import { Toggle, Selector, MultiSelect, ItemList, Panel,
+import { Tabs, Toggle, Selector, MultiSelect, ItemList, Panel,
          RangeSliderInput, RangeHistogramInput } from './ui';
 import { queryOptimizer } from './utils';
 import { MovieHitsGridItem, MovieHitsListItem } from './MovieHitsItems';
@@ -135,7 +135,6 @@ export class PlaygroundApp extends React.Component<any, any> {
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" rangeComponent={RangeHistogramInput} />
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" rangeComponent={RangeSliderInput} />
               <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={200} listComponent={MultiSelect}/>
-              <MenuFilter field="type.raw" title="Categories" id="categories" showCount={true}/>
               <Panel title="Sorting">
                 <Sorting listComponent={ItemList} options={[
                     { label: "Relevance", field: "_score", order: "desc", defaultOption: true },
@@ -148,7 +147,7 @@ export class PlaygroundApp extends React.Component<any, any> {
                   { title: "≤20", from: 0, to: 20 },
                   { title: "21\u201160", from: 21, to: 60 },
                   { title: "≥60", from: 61, to: 1000 }
-              ]} listComponent={Toggle} multiselect={true} />
+              ]} listComponent={Toggle} multiselect={true} showCount={true} />
               <NumericRefinementListFilter id="runtimeMinutes" title="Length" field="runtimeMinutes" options={[
                   { title: "All" },
                   { title: "≤20", from: 0, to: 20 },
@@ -221,15 +220,19 @@ export class PlaygroundApp extends React.Component<any, any> {
                   ]}/>
                 </div>
 
+              <div className="sk-action-bar__filters">
+                <GroupedSelectedFilters/>
+                <ResetFilters/>
+              </div>
+
+              <div className="sk-action-bar__info">
+                <MenuFilter field="type.raw" id="categories" showCount={true} listComponent={Tabs}/>
+              </div>
+
               <div className="sk-action-bar__info">
                 <Pagination showNumbers={true}/>
                 <Pagination showNumbers={true} listComponent={Selector} />
               </div>
-
-                <div className="sk-action-bar__filters">
-                  <GroupedSelectedFilters/>
-                  <ResetFilters/>
-                </div>
 
               </div>
               <ViewSwitcherHits

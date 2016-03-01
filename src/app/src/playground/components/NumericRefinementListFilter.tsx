@@ -33,7 +33,7 @@ const find = require("lodash/find")
 
 export interface NumericRefinementListFilterProps extends SearchkitComponentProps {
   field:string
-  title:string
+  title?:string
   options:Array<RangeOption>
   id:string
   multiselect?: boolean

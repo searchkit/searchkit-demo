@@ -22,7 +22,7 @@ export interface RefinementListFilterProps extends SearchkitComponentProps {
   field: string
   operator?: string
   size?: number
-  title: string
+  title?: string
   id: string
   containerComponent?: ReactComponentType<any>
   itemComponent?: ReactComponentType<ItemComponentProps>

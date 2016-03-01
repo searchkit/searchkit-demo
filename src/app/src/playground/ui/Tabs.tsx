@@ -1,4 +1,5 @@
-import * as React from "react";
+import * as React from "react"
+
 import {
 FastClick
 } from "searchkit"
@@ -8,28 +9,27 @@ const map = require("lodash/map")
 const find = require("lodash/find")
 const includes = require("lodash/includes")
 
+require('./Tabs.scss');
 
-require('./Toggle.scss');
+const Tab = ({toggleItem, bemBlocks, active, disabled, label, url}) => {
 
-const ToggleItem = ({toggleItem, bemBlocks, active, disabled, label, url}) => {
-
-  const className = bemBlocks.container("action").state({ active, disabled })
+  const className = bemBlocks.container("tab").state({ active, disabled })
   var component;
   if (url) {
-    component = <a href={url} className={className}>{label}</a>
+    component = <li className={className}><a href={url}>{label}</a></li>
   } else {
-    component = <div className={className}>{label}</div>
+    component = <li className={className}>{label}</li>
   }
   return <FastClick handler={toggleItem}>{component}</FastClick>
 }
 
 
-export class Toggle extends React.Component<any, any> {
+export class Tabs extends React.Component<any, any> {
 
   static defaultProps: any = {
-    mod: "sk-toggle",
+    mod: "sk-tabs",
     urlBuilder: () => undefined,
-    itemComponent: ToggleItem
+    itemComponent: Tab
   }
 
   render() {
@@ -39,7 +39,7 @@ export class Toggle extends React.Component<any, any> {
       container: block(mod)
     }
 
-    const actions = map(items, (option) => {
+    const options = map(items, (option) => {
       var label = option.title || option.label || option.key
       if (showCount && (option.doc_count !== undefined)) label += ` (${option.doc_count})`
       return React.createElement(itemComponent, {
@@ -53,9 +53,9 @@ export class Toggle extends React.Component<any, any> {
       })
     })
     return (
-      <div className={bemBlocks.container().state({ disabled }) }>
-        {actions}
-      </div>
+      <ul className={bemBlocks.container().state({ disabled }) }>
+        {options}
+      </ul>
     )
   }
 }
