@@ -1,7 +1,7 @@
 
 export * from "./CheckboxFilter";
 export * from "./GroupedSelectedFilters";
-export * from "./MenuFilter";
+export * from "./MenuFilterExt";
 export * from "./NumericRefinementListFilter";
 export * from "./Pagination";
 export * from "./PageSizeSelector";

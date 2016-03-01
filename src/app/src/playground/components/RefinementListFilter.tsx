@@ -126,6 +126,10 @@ export class RefinementListFilter extends SearchkitComponent<RefinementListFilte
     return map(this.accessor.state.getValue(), key => ({key}))
   }
 
+  getItems(){
+    return this.accessor.getBuckets()
+  }
+
   render() {
     const { listComponent, containerComponent, showCount, title, id, collapsable } = this.props
 
@@ -136,7 +140,7 @@ export class RefinementListFilter extends SearchkitComponent<RefinementListFilte
       collapsable
     }, [
       React.createElement(listComponent, {
-          items: this.accessor.getBuckets(),
+          items: this.getItems(),
           selectedItems: this.getSelectedItems(),
           toggleItem: this.toggleFilter.bind(this),
           setItems: this.setFilters.bind(this),
