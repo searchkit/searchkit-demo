@@ -8,7 +8,7 @@ SearchkitComponentProps,
 ReactComponentType
 } from "searchkit"
 
-import { Panel, FilterItemList } from '../ui'
+import { Panel, ItemList } from '../ui'
 
 const defaults = require("lodash/defaults")
 const map = require("lodash/map")
@@ -51,7 +51,7 @@ export class MenuFilter extends SearchkitComponent<MenuFilterProps, any> {
   }, SearchkitComponent.propTypes)
 
   static defaultProps = {
-    listComponent: FilterItemList,
+    listComponent: ItemList,
     containerComponent: Panel,
     collapsable: false,
     showCount: false,

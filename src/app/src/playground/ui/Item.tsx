@@ -6,7 +6,7 @@ import {
   PureRender
 } from "searchkit"
 
-export interface FilterItemComponentProps {
+export interface ItemComponentProps {
   bemBlocks: { container: any, option: any }
   toggleItem: Function
   translate: Function
@@ -16,7 +16,7 @@ export interface FilterItemComponentProps {
   showCount: boolean
 }
 
-function itemRenderer(props: FilterItemComponentProps, showCheckbox) {
+function itemRenderer(props: ItemComponentProps, showCheckbox) {
   const {bemBlocks, toggleItem, translate, active, label, count, showCount} = props
   const block = bemBlocks.option
   const className = block()
@@ -28,13 +28,13 @@ function itemRenderer(props: FilterItemComponentProps, showCheckbox) {
         {showCheckbox ? <input type="checkbox" data-qa="checkbox" checked={active} readOnly className={block("checkbox").state({ active }) } ></input> : undefined}
         <div data-qa="label" className={block("text") }>{label}</div>
         {showCount ? < div data-qa="count" className={block("count") }>{count}</div> : undefined}
-        </div>
-      </FastClick>
+      </div>
+    </FastClick>
   )
 }
 
 @PureRender
-export class FilterItemComponent extends React.Component<FilterItemComponentProps, any>{
+export class ItemComponent extends React.Component<ItemComponentProps, any>{
 
   static defaultProps = {
     showCount: true
@@ -46,7 +46,7 @@ export class FilterItemComponent extends React.Component<FilterItemComponentProp
 }
 
 @PureRender
-export class FilterCheckboxItemComponent extends React.Component<FilterItemComponentProps, any>{
+export class CheckboxItemComponent extends React.Component<ItemComponentProps, any>{
 
   static defaultProps = {
     showCount: true

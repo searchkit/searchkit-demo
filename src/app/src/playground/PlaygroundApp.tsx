@@ -44,7 +44,7 @@ import {
   GroupedSelectedFilters
 } from './components';
 
-import { Toggle, Selector, MultiSelect, FilterItemList, Panel,
+import { Toggle, Selector, MultiSelect, ItemList, Panel,
          RangeSliderInput, RangeHistogramInput } from './ui';
 import { queryOptimizer } from './utils';
 import { MovieHitsGridItem, MovieHitsListItem } from './MovieHitsItems';
@@ -137,7 +137,7 @@ export class PlaygroundApp extends React.Component<any, any> {
               <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={200} listComponent={MultiSelect}/>
               <MenuFilter field="type.raw" title="Categories" id="categories" showCount={true}/>
               <Panel title="Sorting">
-                <Sorting listComponent={FilterItemList} options={[
+                <Sorting listComponent={ItemList} options={[
                     { label: "Relevance", field: "_score", order: "desc", defaultOption: true },
                     { label: "Latest", field: "released", order: "desc" },
                     { label: "Earliest", field: "released", order: "asc" }

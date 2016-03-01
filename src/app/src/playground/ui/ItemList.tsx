@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { FilterItemComponent, FilterCheckboxItemComponent } from "./FilterItem"
+import { ItemComponent, CheckboxItemComponent } from "./Item"
 
 const block = require('bem-cn')
 
@@ -8,13 +8,13 @@ const map = require("lodash/map")
 const includes = require("lodash/includes")
 const defaults = require("lodash/defaults")
 
-require('./FilterItemList.scss');
+require('./ItemList.scss');
 
 
 
 export class AbstractFilterItemList extends React.Component<any, {}> {
   static defaultProps: any = {
-    mod: "sk-filter-item-list",
+    mod: "sk-item-list",
     urlBuilder: () => undefined
   }
 
@@ -50,14 +50,14 @@ export class AbstractFilterItemList extends React.Component<any, {}> {
   }
 }
 
-export class FilterItemList extends AbstractFilterItemList {
+export class ItemList extends AbstractFilterItemList {
     static defaultProps = defaults({
-        itemComponent: FilterItemComponent
+        itemComponent: ItemComponent
     }, AbstractFilterItemList.defaultProps)
 }
 
-export class FilterCheckboxItemList extends AbstractFilterItemList {
+export class CheckboxItemList extends AbstractFilterItemList {
     static defaultProps = defaults({
-        itemComponent: FilterCheckboxItemComponent
+        itemComponent: CheckboxItemComponent
     }, AbstractFilterItemList.defaultProps)
 }

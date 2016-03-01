@@ -1,7 +1,7 @@
 
-export * from "./FilterItemList";
-export * from "./FilterItem";
 export * from "./FilterGroup";
+export * from "./Item";
+export * from "./ItemList";
 export * from "./MultiSelect";
 export * from "./Panel";
 export * from "./RangeComponents";

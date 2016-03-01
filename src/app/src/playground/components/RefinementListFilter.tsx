@@ -11,9 +11,7 @@ ReactComponentType,
 ArrayState,
 } from "searchkit"
 
-import {FilterCheckboxItemComponent, FilterItemComponentProps} from "searchkit";
-
-import { FilterCheckboxItemList, Panel } from '../ui'
+import { CheckboxItemList, Panel, CheckboxItemComponent, ItemComponentProps } from '../ui'
 
 const defaults = require("lodash/defaults")
 const map = require("lodash/map")
@@ -21,20 +19,20 @@ const isNumber = require("lodash/isNumber")
 
 
 export interface RefinementListFilterProps extends SearchkitComponentProps {
-    field: string
-    operator?: string
-    size?: number
-    title: string
-    id: string
-    containerComponent?: ReactComponentType<any>
-    itemComponent?: ReactComponentType<FilterItemComponentProps>
-    listComponent?: ReactComponentType<any>
-    orderKey?: string
-    orderDirection?: string
-    include?: Array<string> | string
-    exclude?: Array<string> | string
-    collapsable?: boolean
-    showCount?: boolean
+  field: string
+  operator?: string
+  size?: number
+  title: string
+  id: string
+  containerComponent?: ReactComponentType<any>
+  itemComponent?: ReactComponentType<ItemComponentProps>
+  listComponent?: ReactComponentType<any>
+  orderKey?: string
+  orderDirection?: string
+  include?: Array<string> | string
+  exclude?: Array<string> | string
+  collapsable?: boolean
+  showCount?: boolean
 }
 
 export class RefinementListFilter extends SearchkitComponent<RefinementListFilterProps, any> {
@@ -62,7 +60,7 @@ export class RefinementListFilter extends SearchkitComponent<RefinementListFilte
   }, SearchkitComponent.propTypes)
 
   static defaultProps = {
-    listComponent: FilterCheckboxItemList,
+    listComponent: CheckboxItemList,
     containerComponent: Panel,
     // component: RefinementListFilterDisplay,
     // itemComponent: FilterCheckboxItemComponent,
