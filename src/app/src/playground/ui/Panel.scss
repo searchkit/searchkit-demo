@@ -29,6 +29,14 @@
   }
 }
 
+.sk-action-bar {
+  .sk-panel {
+    &__header {
+      display: none;
+    }
+  }
+}
+
 .sk-panel {
   width: 100%;
 

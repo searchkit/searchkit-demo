@@ -226,7 +226,7 @@ export class PlaygroundApp extends React.Component<any, any> {
               </div>
 
               <div className="sk-action-bar__info">
-                <MenuFilter field="type.raw" id="categories" showCount={true} listComponent={Tabs}/>
+                <MenuFilter field="type.raw" title="Categories" id="categories" showCount={true} listComponent={Tabs}/>
               </div>
 
               <div className="sk-action-bar__info">

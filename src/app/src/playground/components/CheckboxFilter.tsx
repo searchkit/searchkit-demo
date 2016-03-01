@@ -16,7 +16,7 @@ export interface CheckboxFilterProps extends SearchkitComponentProps {
   id: string
   field: string
   value: any
-  title?: string
+  title: string
   label: string
   containerComponent?: ReactComponentType<any>
   listComponent?: ReactComponentType<any>
