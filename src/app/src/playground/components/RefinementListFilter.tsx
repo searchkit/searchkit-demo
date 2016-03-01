@@ -71,6 +71,12 @@ export class RefinementListFilter extends SearchkitComponent<RefinementListFilte
     showCount: true
   }
 
+  constructor(props){
+    super(props)
+
+    this.toggleViewMoreOption = this.toggleViewMoreOption.bind(this)
+  }
+
   defineAccessor() {
     const {
       field, id, operator, title, include, exclude,
@@ -142,14 +148,13 @@ export class RefinementListFilter extends SearchkitComponent<RefinementListFilte
 
   renderShowMore() {
     const option = this.accessor.getMoreSizeOption()
-    const toggleViewMoreOption = this.toggleViewMoreOption.bind(this)
 
     if (!option) {
         return null;
     }
 
     return (
-      <FastClick handler={() => toggleViewMoreOption(option) }>
+      <FastClick handler={() => this.toggleViewMoreOption(option) }>
         <div data-qa="show-more" className={this.bemBlocks.container("view-more-action") }>
           {this.translate(option.label) }
         </div>

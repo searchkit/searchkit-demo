@@ -5,10 +5,10 @@ import {
   SearchkitComponent,
   SearchkitComponentProps,
   FastClick,
-  RangeAccessor,
-  RangeFilter
+  RangeAccessor
 } from "searchkit";
 
+import { RangeFilter } from './RangeFilter'
 
 const defaults = require("lodash/defaults")
 const get = require("lodash/get")

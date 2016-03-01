@@ -11,14 +11,14 @@ const includes = require("lodash/includes")
 
 require('./Toggle.scss');
 
-const ViewItemComponent = ({toggleItem, bemBlocks, active, disabled, view, url}) => {
+const ToggleItem = ({toggleItem, bemBlocks, active, disabled, label, url}) => {
 
   const className = bemBlocks.container("action").state({ active, disabled })
   var component;
   if (url) {
-    component = <a href={url} className={className}>{view}</a>
+    component = <a href={url} className={className}>{label}</a>
   } else {
-    component = <div className={className}>{view}</div>
+    component = <div className={className}>{label}</div>
   }
   return <FastClick handler={toggleItem}>{component}</FastClick>
 }
@@ -29,7 +29,7 @@ export class Toggle extends React.Component<any, any> {
   static defaultProps: any = {
     mod: "sk-toggle",
     urlBuilder: () => undefined,
-    itemComponent: ViewItemComponent
+    itemComponent: ToggleItem
   }
 
   render() {
@@ -44,7 +44,7 @@ export class Toggle extends React.Component<any, any> {
     const actions = map(items, (option) => {
       const label = option.title || option.label || option.key
       return React.createElement(itemComponent, {
-        view: label,
+        label,
         toggleItem: () => toggleItem(option.key),
         bemBlocks: bemBlocks,
         key: option.key,

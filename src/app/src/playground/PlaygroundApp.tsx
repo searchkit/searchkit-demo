@@ -15,10 +15,10 @@ SearchBox,
 Hits,
 HitsStats,
 // RefinementListFilter,
-Pagination as OriginalPagination,
+// Pagination,
 ResetFilters,
 // MenuFilter,
-SelectedFilters,
+// SelectedFilters,
 HierarchicalMenuFilter,
 // NumericRefinementListFilter,
 // SortingSelector,
@@ -26,7 +26,7 @@ SearchkitComponent,
 SearchkitProvider,
 SearchkitManager,
 NoHits,
-RangeFilter,
+// RangeFilter,
 InitialLoader,
 // ViewSwitcherToggle,
 ViewSwitcherHits
@@ -39,7 +39,7 @@ import FacetEnabler from './FacetEnabler';
 
 import { ViewSwitcher, Sorting, Pagination, PageSizeSelector } from './components';
 import {
-  CheckboxFilter, TagFilter, RangeInputFilter,
+  CheckboxFilter, TagFilter, RangeFilter, RangeInputFilter,
   RefinementListFilter, NumericRefinementListFilter, MenuFilter,
   GroupedSelectedFilters
 } from './components';
@@ -126,6 +126,7 @@ export class PlaygroundApp extends React.Component<any, any> {
 
             <div className="sk-layout__filters">
               {/*<button onClick={this.refresh.bind(this)}>Click to refresh</button>*/}
+              <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
               <FacetContainer title="Selected filters">
                 <GroupedSelectedFilters/>
               </FacetContainer>
@@ -165,7 +166,6 @@ export class PlaygroundApp extends React.Component<any, any> {
                   { title: "\u2605\u2606\u2606\u2606\u2606 & up", from: 2, to: 10 },
               ]} listComponent={Selector} showCount={false} />
               <HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
-              <RangeInputFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
 
 
               <FacetEnabler id="genres" title="Genres" field="genres.raw" operator="AND"/>
@@ -239,7 +239,6 @@ export class PlaygroundApp extends React.Component<any, any> {
                 />
               {/*<NoHits suggestionsField={"title"}/>*/}
               <InitialLoader/>
-              <OriginalPagination showNumbers={true}/>
               </div>
             </div>
           <a className="view-src-link" href="https://github.com/searchkit/searchkit-demo/blob/master/src/app/src/App.tsx">View source »</a>
