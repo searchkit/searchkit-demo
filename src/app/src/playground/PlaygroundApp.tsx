@@ -131,8 +131,6 @@ export class PlaygroundApp extends React.Component<any, any> {
                 <GroupedSelectedFilters/>
               </Panel>
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
-              <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={false}/>
-              <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" rangeComponent={RangeHistogramInput} />
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" rangeComponent={RangeSliderInput} />
               <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={200} listComponent={MultiSelect}/>
               <Panel title="Sorting">
@@ -147,7 +145,7 @@ export class PlaygroundApp extends React.Component<any, any> {
                   { title: "≤20", from: 0, to: 20 },
                   { title: "21\u201160", from: 21, to: 60 },
                   { title: "≥60", from: 61, to: 1000 }
-              ]} listComponent={Toggle} multiselect={true} showCount={true} />
+              ]} listComponent={Toggle} multiselect={true} showCount={false} />
               <NumericRefinementListFilter id="runtimeMinutes" title="Length" field="runtimeMinutes" options={[
                   { title: "All" },
                   { title: "≤20", from: 0, to: 20 },
@@ -161,13 +159,6 @@ export class PlaygroundApp extends React.Component<any, any> {
                   { title: "\u2605\u2605\u2606\u2606\u2606 & up", from: 4, to: 10 },
                   { title: "\u2605\u2606\u2606\u2606\u2606 & up", from: 2, to: 10 },
               ]} listComponent={Selector} />
-              <NumericRefinementListFilter id="imdbRating" title="IMDB Rating (showCount=false)" field="imdbRating" options={[
-                  { title: "All" },
-                  { title: "\u2605\u2605\u2605\u2605\u2606 & up", from: 8, to: 10 },
-                  { title: "\u2605\u2605\u2605\u2606\u2606 & up", from: 6, to: 10 },
-                  { title: "\u2605\u2605\u2606\u2606\u2606 & up", from: 4, to: 10 },
-                  { title: "\u2605\u2606\u2606\u2606\u2606 & up", from: 2, to: 10 },
-              ]} listComponent={Selector} showCount={false} />
               <HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
 
 
