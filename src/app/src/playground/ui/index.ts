@@ -9,4 +9,5 @@ export * from "./RangeInput";
 export * from "./RangeSlider";
 export * from "./Selector";
 export * from "./Tabs";
+export * from "./TagCloud";
 export * from "./Toggle";

@@ -41,6 +41,7 @@
     "./src/app/src/playground/ui/RangeInput.tsx",
     "./src/app/src/playground/ui/RangeSlider.tsx",
     "./src/app/src/playground/ui/Selector.tsx",
+    "./src/app/src/playground/ui/TagCloud.tsx",
     "./src/app/src/playground/ui/Toggle.tsx",
     "./src/app/src/playground/utils/MapAndJoin.tsx",
     "./src/app/src/TaxonomyApp.tsx",

@@ -44,7 +44,7 @@ import {
   GroupedSelectedFilters
 } from './components';
 
-import { Tabs, Toggle, Selector, MultiSelect, ItemList, Panel,
+import { Tabs, Toggle, Selector, TagCloud, MultiSelect, ItemList, Panel,
          RangeSliderInput, RangeHistogramInput } from './ui';
 import { queryOptimizer } from './utils';
 import { MovieHitsGridItem, MovieHitsListItem } from './MovieHitsItems';
@@ -130,6 +130,7 @@ export class PlaygroundApp extends React.Component<any, any> {
               <Panel title="Selected filters">
                 <GroupedSelectedFilters/>
               </Panel>
+              <RefinementListFilter id="genres" title="Genres" field="genres.raw" size={15} listComponent={TagCloud} showCount={false} />
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" rangeComponent={RangeSliderInput} />
               <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={200} listComponent={MultiSelect}/>
