@@ -11,3 +11,4 @@ export * from "./Selector";
 export * from "./Tabs";
 export * from "./TagCloud";
 export * from "./Toggle";
+export * from "./TogglePanel";

@@ -44,7 +44,7 @@ import {
   GroupedSelectedFilters
 } from './components';
 
-import { Tabs, Toggle, Selector, TagCloud, MultiSelect, ItemList, Panel,
+import { Tabs, Toggle, Selector, TagCloud, MultiSelect, ItemList, Panel, TogglePanel,
          RangeSliderInput, RangeHistogramInput } from './ui';
 import { queryOptimizer } from './utils';
 import { MovieHitsGridItem, MovieHitsListItem } from './MovieHitsItems';
@@ -166,11 +166,20 @@ export class PlaygroundApp extends React.Component<any, any> {
               <FacetEnabler id="genres" title="Genres" field="genres.raw" operator="AND"/>
               <RefinementListFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={100} listComponent={MultiSelect}/>
               <CheckboxFilter id="rating" title="Rating" field="rated.raw" value="R" label="Rated 'R'"/>
-              <select value={this.state.operator} onChange={this.handleOperatorChange.bind(this) }>
-                <option value="AND">AND</option>
-                <option value="OR">OR</option>
-              </select>
-              <RefinementListFilter translations={{ "facets.view_more": "View more writers" }} id="writers" title="Writers" field="writers.raw" operator={this.state.operator} size={10}/>
+
+              <RefinementListFilter translations={{ "facets.view_more": "View more writers" }}
+                        containerComponent={(props) => (
+                          <TogglePanel {...props} rightComponent={(
+                              <select value={this.state.operator} onChange={this.handleOperatorChange.bind(this) }>
+                                <option value="AND">AND</option>
+                                <option value="OR">OR</option>
+                              </select>
+                            )} />
+                        )}
+                        id="writers" title="Writers"
+                        field="writers.raw"
+                        operator={this.state.operator}
+                        size={10}/>
               <NumericRefinementListFilter id="imdbRating" title="IMDB Rating" field="imdbRating" options={[
                   { title: "All" },
                   { title: "\u2605\u2605\u2605\u2605\u2606 & up", from: 8, to: 10 },
