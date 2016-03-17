@@ -33,7 +33,7 @@ ViewSwitcherToggle,
 ViewSwitcherHits, Pagination, PaginationSelect, PageSizeSelector,
 Select, RangeSliderInput, RangeHistogramInput,
 
-TermQuery, RangeQuery
+TermQuery, RangeQuery, BoolMust
 } from "searchkit";
 
 import "./../../styles/customisations.scss";
@@ -131,6 +131,11 @@ export class PlaygroundApp extends React.Component<any, any> {
               <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={200} listComponent={MultiSelect}/>
               <CheckboxFilter id="rated-r" title="Rating" label="Rated R" filter={TermQuery("rated.raw", 'R')} />
               <CheckboxFilter id="recent" title="Date" label="Recent" filter={RangeQuery("year", {gt: 2012})} />
+              <CheckboxFilter id="old-movies" title="Movile filter" label="Old movies" filter={
+                BoolMust([
+                  RangeQuery("year", {lt: 1970}),
+                  TermQuery("type.raw", "Movie")
+                ])} />
               <Panel title="Sorting">
                 <SortingSelector listComponent={ItemList} options={[
                     { label: "Relevance", field: "_score", order: "desc", defaultOption: true },
