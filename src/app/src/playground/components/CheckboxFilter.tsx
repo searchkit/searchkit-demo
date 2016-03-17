@@ -6,9 +6,9 @@ import {
   FacetAccessor,
   ReactComponentType,
   Panel,
+  CheckboxItemList
 } from "searchkit";
 
-import { CheckboxItemList } from '../ui'
 import { CheckboxFilterAccessor } from '../accessors'
 
 const defaults = require('lodash/defaults')
