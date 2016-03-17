@@ -65,7 +65,7 @@ export class CheckboxFilter extends SearchkitComponent<CheckboxFilterProps, any>
   }
 
   setFilters(keys) {
-    this.accessor.state.setValue(keys.length > 0)
+    this.accessor.state = this.accessor.state.setValue(keys.length > 0)
     this.searchkit.performSearch()
   }
 
