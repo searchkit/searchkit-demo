@@ -5,17 +5,18 @@ import {
   SearchkitComponentProps,
   FacetAccessor,
   ReactComponentType,
+  Panel,
 } from "searchkit";
 
-import { Panel, CheckboxItemList } from '../ui'
+import { CheckboxItemList } from '../ui'
+import { CheckboxFilterAccessor } from '../accessors'
 
 const defaults = require('lodash/defaults')
 const map = require('lodash/map')
 
 export interface CheckboxFilterProps extends SearchkitComponentProps {
   id: string
-  field: string
-  value: any
+  filter: any
   title: string
   label: string
   containerComponent?: ReactComponentType<any>
@@ -25,16 +26,15 @@ export interface CheckboxFilterProps extends SearchkitComponentProps {
 }
 
 export class CheckboxFilter extends SearchkitComponent<CheckboxFilterProps, any> {
-  accessor: FacetAccessor
+  accessor: CheckboxFilterAccessor
 
   static propTypes = defaults({
-    field: React.PropTypes.string.isRequired,
-    size: React.PropTypes.number,
-    title: React.PropTypes.string.isRequired,
-    value: React.PropTypes.string.isRequired,
     id: React.PropTypes.string.isRequired,
+    title: React.PropTypes.string.isRequired,
+    label: React.PropTypes.string.isRequired,
+    filter: React.PropTypes.object.isRequired,
     translations: SearchkitComponent.translationsPropType(
-        FacetAccessor.translations
+        CheckboxFilterAccessor.translations
     ),
     collapsable: React.PropTypes.bool,
     showCount: React.PropTypes.bool,
@@ -53,49 +53,46 @@ export class CheckboxFilter extends SearchkitComponent<CheckboxFilterProps, any>
   }
 
   defineAccessor() {
-    const { field, id, title, translations, value } = this.props;
-    return new FacetAccessor(field, {
-      id, operator: "AND", title, size: 1, translations,
-      include: [value]
+    const { id, title, translations, label, filter } = this.props;
+    return new CheckboxFilterAccessor(id, {
+      id, title, label, translations, filter
     })
   }
 
   toggleFilter(key) {
-    this.accessor.state = this.accessor.state.toggle(this.props.value)
+    this.accessor.state = this.accessor.state.create(!this.accessor.state.getValue())
     this.searchkit.performSearch()
   }
 
   setFilters(keys) {
     if (keys.length == 0){
-      this.accessor.state = this.accessor.state.clear()
+      this.accessor.state = this.accessor.state.setValue(false)
     } else {
-      this.accessor.state = this.accessor.state.setValue([this.props.value])
+      this.accessor.state = this.accessor.state.setValue(true)
     }
     this.searchkit.performSearch()
   }
 
-  hasOptions() {
-    return this.accessor.getBuckets().length != 0
-  }
-
   getSelectedItems() {
-    return this.accessor.state.getValue()
+    if (this.accessor.state.getValue()) {
+      return [this.props.label]
+    } else {
+      return []
+    } 
   }
 
   render() {
-    const { listComponent, containerComponent, showCount, title, id, collapsable, value } = this.props
+    const { listComponent, containerComponent, showCount, title, id, collapsable, label } = this.props
 
-    var option = this.accessor.getBuckets().find(v => v.key === value);
-    const doc_count = option ? option.doc_count : 0;
 
     return React.createElement(containerComponent, {
       title,
       className: id ? `filter--${id}` : undefined,
-      disabled: !this.hasOptions(),
+      disabled: false,
       collapsable
     },
       React.createElement(listComponent, {
-        items: [{ key: value, doc_count }],
+        items: [{ key: label, doc_count: this.accessor.getDocCount() }],
         selectedItems: this.getSelectedItems(),
         toggleItem: this.toggleFilter,
         setItems: this.setFilters.bind(this),
