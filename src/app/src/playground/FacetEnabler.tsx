@@ -20,6 +20,6 @@ export interface FacetEnablerProps extends SearchkitComponentProps {
 export default class FacetEnabler extends React.Component<FacetEnablerProps, {}> {
 
   render() {
-    return <RefinementListFilter {...this.props} size={0} component={NullComponent}/>
+    return <RefinementListFilter {...this.props} size={0} containerComponent={NullComponent}/>
   }
 }

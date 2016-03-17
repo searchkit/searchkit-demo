@@ -14,22 +14,26 @@ import {
 SearchBox,
 Hits,
 HitsStats,
-// RefinementListFilter,
-// Pagination,
+RefinementListFilter,
+Panel,
 ResetFilters,
-// MenuFilter,
-// SelectedFilters,
+MenuFilter,
+GroupedSelectedFilters,
 HierarchicalMenuFilter,
-// NumericRefinementListFilter,
-// SortingSelector,
+NumericRefinementListFilter,
+SortingSelector,
 SearchkitComponent,
 SearchkitProvider,
 SearchkitManager,
 NoHits,
-// RangeFilter,
+RangeFilter,
 InitialLoader,
-// ViewSwitcherToggle,
-ViewSwitcherHits
+Tabs, Toggle, TagCloud, 
+ViewSwitcherToggle,
+ViewSwitcherHits, Pagination, PaginationSelect, PageSizeSelector,
+Select, RangeSliderInput, RangeHistogramInput,
+
+TermQuery
 } from "searchkit";
 
 import "./../../styles/customisations.scss";
@@ -37,15 +41,8 @@ import "searchkit/theming/theme.scss";
 
 import FacetEnabler from './FacetEnabler';
 
-import { ViewSwitcher, Sorting, Pagination, PageSizeSelector } from './components';
-import {
-  CheckboxFilter, TagFilter, RangeFilter,
-  RefinementListFilter, NumericRefinementListFilter, MenuFilter,
-  GroupedSelectedFilters
-} from './components';
-
-import { Tabs, Toggle, Selector, TagCloud, MultiSelect, ItemList, Panel, TogglePanel,
-         RangeSliderInput, RangeHistogramInput } from './ui';
+import {  CheckboxFilter, TagFilter } from './components';
+import { MultiSelect, ItemList, TogglePanel } from './ui';
 import { queryOptimizer } from './utils';
 import { MovieHitsGridItem, MovieHitsListItem } from './MovieHitsItems';
 
@@ -61,11 +58,15 @@ import { MovieHitsGridItem, MovieHitsListItem } from './MovieHitsItems';
 export class PlaygroundApp extends React.Component<any, any> {
 
   searchkit: SearchkitManager
+  state: {
+    displayMode: string, 
+    operator: string
+  }
 
   constructor() {
     super()
-    // const host = "http://localhost:9200/imdb/movies"
-    const host = "http://demo.searchkit.co/api/movies"
+    const host = "http://localhost:9200/imdb/movies"
+    // const host = "http://demo.searchkit.co/api/movies"
 
     this.searchkit = new SearchkitManager(host)
     // this.searchkit.setQueryProcessor(queryOptimizer)
@@ -74,7 +75,6 @@ export class PlaygroundApp extends React.Component<any, any> {
     }
     this.state = {
       displayMode: "thumbnail",
-      hitsPerPage: 12,
       operator: "OR"
     }
   }
@@ -84,11 +84,7 @@ export class PlaygroundApp extends React.Component<any, any> {
   // }
 
   onDisplayModeChange(e) {
-    this.setState({ displayMode: e.target.value })
-  }
-
-  onHitsPerPageChange(e) {
-    this.setState({ hitsPerPage: parseInt(e.target.value, 10) })
+    this.setState({ displayMode: e.target.value as string })
   }
 
   refresh(e){
@@ -104,7 +100,6 @@ export class PlaygroundApp extends React.Component<any, any> {
   }
 
   render() {
-    const { hitsPerPage } = this.state;
     return (
       <div>
       <SearchkitProvider searchkit={this.searchkit}>
@@ -134,8 +129,9 @@ export class PlaygroundApp extends React.Component<any, any> {
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" rangeComponent={RangeSliderInput} />
               <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={200} listComponent={MultiSelect}/>
+              <CheckboxFilter id="rating" title="Rating" label="Rated R" filter={TermQuery("rated.raw", 'R')} />
               <Panel title="Sorting">
-                <Sorting listComponent={ItemList} options={[
+                <SortingSelector listComponent={ItemList} options={[
                     { label: "Relevance", field: "_score", order: "desc", defaultOption: true },
                     { label: "Latest", field: "released", order: "desc" },
                     { label: "Earliest", field: "released", order: "asc" }
@@ -152,20 +148,19 @@ export class PlaygroundApp extends React.Component<any, any> {
                   { title: "≤20", from: 0, to: 20 },
                   { title: "21\u201160", from: 21, to: 60 },
                   { title: "≥60", from: 61, to: 1000 }
-              ]} multiselect={true} collapsable={true} />
+              ]} multiselect={true} />
               <NumericRefinementListFilter id="imdbRating" title="IMDB Rating" field="imdbRating" options={[
                   { title: "All" },
                   { title: "\u2605\u2605\u2605\u2605\u2606 & up", from: 8, to: 10 },
                   { title: "\u2605\u2605\u2605\u2606\u2606 & up", from: 6, to: 10 },
                   { title: "\u2605\u2605\u2606\u2606\u2606 & up", from: 4, to: 10 },
                   { title: "\u2605\u2606\u2606\u2606\u2606 & up", from: 2, to: 10 },
-              ]} listComponent={Selector} />
+              ]} listComponent={Select} />
               <HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
 
 
               <FacetEnabler id="genres" title="Genres" field="genres.raw" operator="AND"/>
               <RefinementListFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={100} listComponent={MultiSelect}/>
-              <CheckboxFilter id="rating" title="Rating" field="rated.raw" value="R" label="Rated 'R'"/>
 
               <RefinementListFilter translations={{ "facets.view_more": "View more writers" }}
                         containerComponent={(props) => (
@@ -196,25 +191,16 @@ export class PlaygroundApp extends React.Component<any, any> {
                 <div className="sk-action-bar__info">
                   <HitsStats/>
 
-                  {/*
-                  <div className="sk-sorting-selector" style={{ marginRight: 8 }}>
-                    <select value={"" + hitsPerPage} onChange={this.onHitsPerPageChange.bind(this) }>
-                      <option value="12">12</option>
-                      <option value="24">24</option>
-                      <option value="48">48</option>
-                      </select>
-                    </div>*/}
-
-                  <ViewSwitcher/>
-                  <ViewSwitcher listComponent={Selector}/>
+                  <ViewSwitcherToggle/>
+                  <ViewSwitcherToggle listComponent={Select}/>
                   <PageSizeSelector options={[4, 8, 12, 24 ]}/>
 
-                  <Sorting listComponent={Toggle} options={[
+                  <SortingSelector listComponent={Toggle} options={[
                     { label: "Relevance", field: "_score", order: "desc", defaultOption: true },
                     { label: "Latest", field: "released", order: "desc" },
                     { label: "Earliest", field: "released", order: "asc" }
                   ]}/>
-                  <Sorting options={[
+                  <SortingSelector options={[
                     { label: "Relevance", field: "_score", order: "desc", defaultOption: true },
                     { label: "Latest", field: "released", order: "desc" },
                     { label: "Earliest", field: "released", order: "asc" }
@@ -231,17 +217,17 @@ export class PlaygroundApp extends React.Component<any, any> {
               </div>
 
               <div className="sk-action-bar__info">
-                <ViewSwitcher listComponent={Tabs}/>
+                <ViewSwitcherToggle listComponent={Tabs}/>
               </div>
 
               <div className="sk-action-bar__info">
-                <Pagination showNumbers={true}/>
-                <Pagination showNumbers={true} listComponent={Selector} />
+                <Pagination showNumbers={true} pageScope={2}/>
+                <PaginationSelect />
               </div>
 
               </div>
               <ViewSwitcherHits
-                hitsPerPage={hitsPerPage} highlightFields={["title", "plot"]}
+                hitsPerPage={12} highlightFields={["title", "plot"]}
                 sourceFilter={["plot", "title", "poster", "imdbId", "imdbRating", "year", "actors", "writers", "genres", "rated"]}
                 hitComponents = {[
                   { key: "grid", title: "Grid", itemComponent: MovieHitsGridItem, defaultOption: true },

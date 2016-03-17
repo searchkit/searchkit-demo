@@ -1,2 +1,2 @@
 
-export * from './NumericOptionsAccessor'
+export * from './CheckboxFilterAccessor'
