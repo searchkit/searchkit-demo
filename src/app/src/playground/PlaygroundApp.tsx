@@ -65,8 +65,8 @@ export class PlaygroundApp extends React.Component<any, any> {
 
   constructor() {
     super()
-    const host = "http://localhost:9200/imdb/movies"
-    // const host = "http://demo.searchkit.co/api/movies"
+    // const host = "http://localhost:9200/imdb/movies"
+    const host = "http://demo.searchkit.co/api/movies"
 
     this.searchkit = new SearchkitManager(host)
     // this.searchkit.setQueryProcessor(queryOptimizer)
