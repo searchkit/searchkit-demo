@@ -1,6 +1,5 @@
 import * as React from "react";
 import * as _ from "lodash";
-const BEMBlock = require("bem-cn")
 
 import {
   SearchBox,
@@ -24,7 +23,6 @@ import {
   ViewSwitcherHits
 } from "searchkit";
 
-import "./../styles/customisations.scss";
 import "searchkit/theming/theme.scss";
 
 const MovieHitsGridItem = (props)=> {
@@ -60,49 +58,42 @@ const MovieHitsListItem = (props)=> {
   )
 }
 
-export class App extends React.Component<any, any> {
+export class Demo3 extends React.Component<any, any> {
 
   searchkit:SearchkitManager
 
   constructor() {
     super()
+    // new searchkit Manager connecting to ES server
     const host = "http://demo.searchkit.co/api/movies"
     this.searchkit = new SearchkitManager(host)
-    this.searchkit.translateFunction = (key)=> {
-      return {"pagination.next":"Next Page", "pagination.previous":"Previous Page"}[key]
-    }
   }
 
 
   render(){
 
     return (
-      <div>
       <SearchkitProvider searchkit={this.searchkit}>
       <div>
         <div className="sk-layout sk-layout__size-l">
 
           <div className="sk-layout__top-bar sk-top-bar">
             <div className="sk-top-bar__content">
-              <div className="my-logo">Searchkit Acme co</div>
+
               <SearchBox
-                translations={{"searchbox.placeholder":"search movies"}}
-                queryOptions={{"minimum_should_match":"70%"}}
                 autofocus={true}
                 searchOnChange={true}
-                queryFields={["actors^1","type^2","languages","title^5", "genres^2", "plot"]}/>
+                queryFields={["title^5", "actors"]}
+                />
             </div>
           </div>
 
           <div className="sk-layout__body">
 
-      			<div className="sk-layout__filters">
-      				<HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
+            <div className="sk-layout__filters">
+              <HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
-              <RangeFilter min={0} max={10} field="imdbRating" id="imdbRating" title="IMDB Rating" showHistogram={true}/>
               <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={10}/>
-      				<RefinementListFilter translations={{"facets.view_more":"View more writers"}} id="writers" title="Writers" field="writers.raw" operator="OR" size={10}/>
-      				<RefinementListFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={10}/>
               <NumericRefinementListFilter id="runtimeMinutes" title="Length" field="runtimeMinutes" options={[
                 {title:"All"},
                 {title:"up to 20", from:0, to:20},
@@ -111,20 +102,20 @@ export class App extends React.Component<any, any> {
               ]}/>
             </div>
 
-      			<div className="sk-layout__results sk-results-list">
+      			<div className="sk-layout__results sk-results-list sk-results-list__no-filters">
 
               <div className="sk-results-list__action-bar sk-action-bar">
 
                 <div className="sk-action-bar__info">
-          				<HitsStats translations={{
-                    "hitstats.results_found":"{hitCount} results found"
-                  }}/>
+          				<HitsStats/>
+
                   <ViewSwitcherToggle/>
-          				<SortingSelector options={[
-          					{label:"Relevance", field:"_score", order:"desc",defaultOption:true},
-          					{label:"Latest Releases", field:"released", order:"desc"},
-          					{label:"Earliest Releases", field:"released", order:"asc"}
-          				]}/>
+
+                  <SortingSelector options={[
+                    {label:"Relevance", field:"_score", order:"desc",defaultOption:true},
+                    {label:"Latest Releases", field:"released", order:"desc"},
+                    {label:"Earliest Releases", field:"released", order:"asc"}
+                  ]}/>
 
           			</div>
 
@@ -136,25 +127,23 @@ export class App extends React.Component<any, any> {
               </div>
 
               <ViewSwitcherHits
-      				    hitsPerPage={12} highlightFields={["title","plot"]}
+      				    hitsPerPage={12}
+                  highlightFields={["title", "plot"]}
                   sourceFilter={["plot", "title", "poster", "imdbId", "imdbRating", "year"]}
                   hitComponents = {[
                     {key:"grid", title:"Grid", itemComponent:MovieHitsGridItem, defaultOption:true},
                     {key:"list", title:"List", itemComponent:MovieHitsListItem}
                   ]}
-                  scrollTo="body"
               />
 
-              <NoHits suggestionsField={"title"}/>
-              <InitialLoader/>
-      				<Pagination showNumbers={true}/>
+              <NoHits suggestionsField="title"/>
+
       			</div>
           </div>
-    			<a className="view-src-link" href="https://github.com/searchkit/searchkit-demo/blob/master/src/app/src/App.tsx">View source »</a>
+
     		</div>
       </div>
       </SearchkitProvider>
-      </div>
 	)}
 
 }
