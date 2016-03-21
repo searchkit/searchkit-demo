@@ -20,7 +20,8 @@ import {
   RangeFilter,
   InitialLoader,
   ViewSwitcherToggle,
-  ViewSwitcherHits
+  ViewSwitcherHits,
+  ItemHistogramList
 } from "searchkit";
 
 import "searchkit/theming/theme.scss";
@@ -75,7 +76,7 @@ export class Demo2 extends React.Component<any, any> {
             <div className="sk-layout__filters">
               <HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
-              <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={10}/>
+              <RefinementListFilter listComponent={ItemHistogramList} id="actors" title="Actors" field="actors.raw" size={10} operator="AND"/>
               <NumericRefinementListFilter id="runtimeMinutes" title="Length" field="runtimeMinutes" options={[
                 {title:"All"},
                 {title:"up to 20", from:0, to:20},
