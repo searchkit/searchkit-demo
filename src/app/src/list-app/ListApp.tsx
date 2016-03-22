@@ -5,7 +5,7 @@ import {
   ItemList, CheckboxItemList, ItemHistogramList,
   Tabs, TagCloud, Toggle, Select
 } from "searchkit";
-const host = "http://demo.searchkit.co/api/movies"
+const host = "/api/movies"
 import * as ReactDOM from "react-dom";
 import * as React from "react";
 const searchkit = new SearchkitManager(host)

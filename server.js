@@ -18,6 +18,7 @@ module.exports = {
     var express = require('express');
     var app = express();
     app.use(compression())
+    app.use("/images", express.static('images'))
     app.set('view engine', 'ejs');
     app.set('views', __dirname + '/server/views');
     app.use(bodyParser.urlencoded({ extended: false }))
@@ -54,7 +55,7 @@ module.exports = {
     }
 
 
-    var host = process.env.ES_URL
+    var host = process.env.ES_URL || "http://localhost:9200"
 
     app.use("/api", cors({
       origin:"*",
