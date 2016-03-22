@@ -40,8 +40,7 @@ compact = (ob)->
     delete ob[k] unless v and v isnt "N/A"
   return ob
 processedMovies = movies.map (movie)->
-  years = getYears(movie.Year)
-  console.log(movie.PosterS3)
+  years = getYears(movie.Year)  
   poster =
     if process.env.LOCAL && movie.PosterS3
       movie.PosterS3.replace(/https:\/\/s3-eu-west-1\.amazonaws\.com\/imdbimages/, "")

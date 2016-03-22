@@ -75,9 +75,7 @@ module.exports = {
 
 
     app.get('*', function(req, res) {
-      res.render('index', {
-        imdbUrl:""
-      });
+      res.render('index');
     });
 
     app.listen(port, function () {
