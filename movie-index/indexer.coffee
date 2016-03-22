@@ -41,6 +41,12 @@ compact = (ob)->
   return ob
 processedMovies = movies.map (movie)->
   years = getYears(movie.Year)
+  console.log(movie.PosterS3)
+  poster =
+    if process.env.LOCAL && movie.PosterS3
+      movie.PosterS3.replace(/https:\/\/s3-eu-west-1\.amazonaws\.com\/imdbimages/, "")
+    else
+      movie.PosterS3
   return compact({
     title:movie.Title
     year:years.year
@@ -56,7 +62,7 @@ processedMovies = movies.map (movie)->
     languages:splitComma(movie.Language)
     countries:splitComma(movie.Country)
     awards:movie.Awards if notNA(movie.Awards)
-    poster:movie.PosterS3
+    poster:poster
     metaScore:Number(movie.Metascore) if notNA(movie.Metascore)
     imdbRating:Number(movie.imdbRating)
     imdbVotes:toNumber(movie.imdbVotes)
