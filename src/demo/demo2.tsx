@@ -7,22 +7,17 @@ import {
   Hits,
   HitsStats,
   RefinementListFilter,
-  Pagination,
   ResetFilters,
-  MenuFilter,
   SelectedFilters,
   HierarchicalMenuFilter,
   NumericRefinementListFilter,
-  SortingSelector,
   SearchkitComponent,
   SearchkitProvider,
   SearchkitManager,
   NoHits,
   RangeFilter,
-  InitialLoader,
-  ViewSwitcherToggle,
-  ViewSwitcherHits,
-  ItemHistogramList
+  ItemHistogramList,
+  TagCloud
 } from "searchkit";
 
 import "searchkit/theming/theme.scss";
@@ -34,7 +29,8 @@ export class Demo2 extends React.Component<any, any> {
   constructor() {
     super()
     // new searchkit Manager connecting to ES server
-    const host = "http://demo.searchkit.co/api/movies"
+    // const host = "http://demo.searchkit.co/api/movies"
+    const host = "/api/movies"
     this.searchkit = new SearchkitManager(host)
   }
 
@@ -51,7 +47,7 @@ export class Demo2 extends React.Component<any, any> {
 
               <SearchBox
                 autofocus={true}
-                searchOnChange={true}
+                searchOnChange={false}
                 queryFields={["title^5", "actors"]}
                 />
             </div>
@@ -60,15 +56,9 @@ export class Demo2 extends React.Component<any, any> {
           <div className="sk-layout__body">
 
             <div className="sk-layout__filters">
-              <HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
-              <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
-              <RefinementListFilter listComponent={ItemHistogramList} id="actors" title="Actors" field="actors.raw" size={10} operator="AND"/>
-              <NumericRefinementListFilter id="runtimeMinutes" title="Length" field="runtimeMinutes" options={[
-                {title:"All"},
-                {title:"up to 20", from:0, to:20},
-                {title:"21 to 60", from:21, to:60},
-                {title:"60 or more", from:61, to:1000}
-              ]}/>
+
+              add filters here
+
             </div>
 
       			<div className="sk-layout__results sk-results-list sk-results-list__no-filters">
@@ -80,13 +70,10 @@ export class Demo2 extends React.Component<any, any> {
           			</div>
 
                 <div className="sk-action-bar__filters">
-                  <SelectedFilters/>
                   <ResetFilters/>
                 </div>
 
               </div>
-
-
 
               <Hits
                 itemComponent={MovieHitsGridItem}

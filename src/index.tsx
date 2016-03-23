@@ -5,7 +5,6 @@ import {TaxonomyApp} from "./app/src/TaxonomyApp.tsx";
 import {CrimeApp} from "./app/src/crime/CrimeApp.tsx";
 import {Demo1} from "./demo/demo1.tsx"
 import {Demo2} from "./demo/demo2.tsx";
-import {Demo3} from "./demo/demo3.tsx";
 import {ListApp} from "./app/src/list-app/ListApp.tsx";
 
 import {Router, Route, IndexRoute} from "react-router";
@@ -20,7 +19,6 @@ ReactDOM.render((
 
     <Route component={Demo1} path="demo/demo1"/>
     <Route component={Demo2} path="demo/demo2"/>
-    <Route component={Demo3} path="demo/demo3"/>
     
     <Route component={ListApp} path="list-app"/>
   </Router>
