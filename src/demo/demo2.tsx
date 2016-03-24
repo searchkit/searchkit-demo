@@ -29,8 +29,8 @@ export class Demo2 extends React.Component<any, any> {
   constructor() {
     super()
     // new searchkit Manager connecting to ES server
-    // const host = "http://demo.searchkit.co/api/movies"
-    const host = "/api/movies"
+    const host = "http://demo.searchkit.co/api/movies"
+    // const host = "/api/movies"
     this.searchkit = new SearchkitManager(host)
   }
 
