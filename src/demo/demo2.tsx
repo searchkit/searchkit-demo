@@ -47,7 +47,7 @@ export class Demo2 extends React.Component<any, any> {
 
               <SearchBox
                 autofocus={true}
-                searchOnChange={false}
+                searchOnChange={true}
                 queryFields={["title^5", "actors"]}
                 />
             </div>
@@ -57,7 +57,37 @@ export class Demo2 extends React.Component<any, any> {
 
             <div className="sk-layout__filters">
 
-              add filters here
+            <RangeFilter
+              min={0}
+              max={100}
+              field="metaScore"
+              id="metascore"
+              title="Metascore"
+            />
+
+              <RefinementListFilter
+                id="actors"
+                title="Actors"
+                field="actors.raw"
+                operator="OR"
+                size={10}
+                listComponent={ItemHistogramList}
+              />
+
+              <RefinementListFilter
+                id="writers"
+                title="Writers"
+                field="writers.raw"
+                operator="OR"
+                size={10}
+              />
+
+              <HierarchicalMenuFilter
+                fields={["type.raw", "genres.raw"]}
+                title="Categories"
+                id="categories"/>
+
+
 
             </div>
 
@@ -70,6 +100,7 @@ export class Demo2 extends React.Component<any, any> {
           			</div>
 
                 <div className="sk-action-bar__filters">
+                  <SelectedFilters/>
                   <ResetFilters/>
                 </div>
 
@@ -78,7 +109,7 @@ export class Demo2 extends React.Component<any, any> {
               <Hits
                 itemComponent={MovieHitsGridItem}
                 mod="sk-hits-grid"
-                hitsPerPage={12}
+                hitsPerPage={15}
                 highlightFields={["title"]}/>
               <NoHits suggestionsField="title"/>
 

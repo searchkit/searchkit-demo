@@ -41,8 +41,8 @@ export class Demo1 extends React.Component<any, any> {
 
               <SearchBox
                 autofocus={true}
-                searchOnChange={false}
-                queryFields={["title"]}
+                searchOnChange={true}
+                queryFields={["title", "actors"]}
                 />
 
             </div>
@@ -63,12 +63,12 @@ export class Demo1 extends React.Component<any, any> {
               <Hits
                 itemComponent={MovieHitsGridItem}
                 mod="sk-hits-grid"
-                hitsPerPage={10}
+                hitsPerPage={12}
+                highlightFields={["title"]}
                 />
-              <NoHits/>
+              <NoHits suggestionsField="title"/>
 
-              <Pagination/>
-
+              <Pagination showNumbers={true}/>
       			</div>
           </div>
 
