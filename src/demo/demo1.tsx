@@ -10,7 +10,8 @@ import {
   SearchkitManager,
   NoHits,
   ViewSwitcherToggle,
-  ViewSwitcherHits
+  ViewSwitcherHits,
+  Pagination
 } from "searchkit";
 
 import "searchkit/theming/theme.scss";
@@ -23,6 +24,7 @@ export class Demo1 extends React.Component<any, any> {
     super()
     // new searchkit Manager connecting to ES server
     const host = "http://demo.searchkit.co/api/movies"
+    // const host = "/api/movies"
     this.searchkit = new SearchkitManager(host)
   }
 
@@ -40,8 +42,9 @@ export class Demo1 extends React.Component<any, any> {
               <SearchBox
                 autofocus={true}
                 searchOnChange={true}
-                queryFields={["title^5", "actors"]}
+                queryFields={["title", "actors"]}
                 />
+
             </div>
           </div>
 
@@ -61,9 +64,11 @@ export class Demo1 extends React.Component<any, any> {
                 itemComponent={MovieHitsGridItem}
                 mod="sk-hits-grid"
                 hitsPerPage={12}
-                highlightFields={["title"]}/>
+                highlightFields={["title"]}
+                />
               <NoHits suggestionsField="title"/>
 
+              <Pagination showNumbers={true}/>
       			</div>
           </div>
 

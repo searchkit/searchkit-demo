@@ -30,9 +30,9 @@ export class CrimeApp extends React.Component<any, any> {
   searchkit:SearchkitManager
 
   constructor() {
+    super()
     const host = "/api/crimes"
     this.searchkit = new SearchkitManager(host)
-    super()
   }
 
   render(){
