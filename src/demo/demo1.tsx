@@ -11,7 +11,10 @@ import {
   NoHits,
   ViewSwitcherToggle,
   ViewSwitcherHits,
-  Pagination
+  Pagination,
+  Layout, LayoutBody, LayoutResults,
+  SideBar, TopBar,
+  ActionBar, ActionBarRow
 } from "searchkit";
 
 import "searchkit/theming/theme.scss";
@@ -33,33 +36,21 @@ export class Demo1 extends React.Component<any, any> {
 
     return (
       <SearchkitProvider searchkit={this.searchkit}>
-      <div>
-        <div className="sk-layout sk-layout__size-l">
-
-          <div className="sk-layout__top-bar sk-top-bar">
-            <div className="sk-top-bar__content">
-
-              <SearchBox
-                autofocus={true}
-                searchOnChange={true}
-                queryFields={["title", "actors"]}
-                />
-
-            </div>
-          </div>
-
-          <div className="sk-layout__body">
-
-      			<div className="sk-layout__results sk-results-list sk-results-list__no-filters">
-
-              <div className="sk-results-list__action-bar sk-action-bar">
-
-                <div className="sk-action-bar__info">
+        <Layout size="l">
+          <TopBar>
+            <SearchBox
+              autofocus={true}
+              searchOnChange={true}
+              queryFields={["title", "actors"]}
+              />
+          </TopBar>
+          <LayoutBody>
+      			<LayoutResults>
+              <ActionBar>
+                <ActionBarRow>
           				<HitsStats/>
-          			</div>
-
-              </div>
-
+          			</ActionBarRow>
+              </ActionBar>
               <Hits
                 itemComponent={MovieHitsGridItem}
                 mod="sk-hits-grid"
@@ -67,13 +58,10 @@ export class Demo1 extends React.Component<any, any> {
                 highlightFields={["title"]}
                 />
               <NoHits suggestionsField="title"/>
-
               <Pagination showNumbers={true}/>
-      			</div>
-          </div>
-
-    		</div>
-      </div>
+      			</LayoutResults>
+          </LayoutBody>
+    		</Layout>
       </SearchkitProvider>
 	)}
 

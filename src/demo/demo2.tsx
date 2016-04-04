@@ -17,7 +17,10 @@ import {
   NoHits,
   RangeFilter,
   ItemHistogramList,
-  TagCloud
+  TagCloud,
+  Layout, LayoutBody, LayoutResults,
+  SideBar, TopBar,
+  ActionBar, ActionBarRow
 } from "searchkit";
 
 import "searchkit/theming/theme.scss";
@@ -39,31 +42,26 @@ export class Demo2 extends React.Component<any, any> {
 
     return (
       <SearchkitProvider searchkit={this.searchkit}>
-      <div>
-        <div className="sk-layout sk-layout__size-l">
+        <Layout size="l">
 
-          <div className="sk-layout__top-bar sk-top-bar">
-            <div className="sk-top-bar__content">
+          <TopBar>
+            <SearchBox
+              autofocus={true}
+              searchOnChange={true}
+              queryFields={["title^5", "actors"]}
+              />
+          </TopBar>
 
-              <SearchBox
-                autofocus={true}
-                searchOnChange={true}
-                queryFields={["title^5", "actors"]}
-                />
-            </div>
-          </div>
+          <LayoutBody>
 
-          <div className="sk-layout__body">
-
-            <div className="sk-layout__filters">
-
-            <RangeFilter
-              min={0}
-              max={100}
-              field="metaScore"
-              id="metascore"
-              title="Metascore"
-            />
+            <SideBar>
+              <RangeFilter
+                min={0}
+                max={100}
+                field="metaScore"
+                id="metascore"
+                title="Metascore"
+              />
 
               <RefinementListFilter
                 id="actors"
@@ -89,22 +87,19 @@ export class Demo2 extends React.Component<any, any> {
 
 
 
-            </div>
+            </SideBar>
 
-      			<div className="sk-layout__results sk-results-list sk-results-list__no-filters">
+      			<LayoutResults>
 
-              <div className="sk-results-list__action-bar sk-action-bar">
-
-                <div className="sk-action-bar__info">
+              <ActionBar>
+                <ActionBarRow>
           				<HitsStats/>
-          			</div>
-
-                <div className="sk-action-bar__filters">
+          			</ActionBarRow>
+                <ActionBarRow>
                   <SelectedFilters/>
                   <ResetFilters/>
-                </div>
-
-              </div>
+                </ActionBarRow>
+              </ActionBar>
 
               <Hits
                 itemComponent={MovieHitsGridItem}
@@ -113,11 +108,10 @@ export class Demo2 extends React.Component<any, any> {
                 highlightFields={["title"]}/>
               <NoHits suggestionsField="title"/>
 
-      			</div>
-          </div>
+      			</LayoutResults>
+          </LayoutBody>
 
-    		</div>
-      </div>
+    		</Layout>
       </SearchkitProvider>
 	)}
 

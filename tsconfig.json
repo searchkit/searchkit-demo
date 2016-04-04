@@ -17,6 +17,7 @@
     "./src/app/src/crime/CrimeAggs.tsx",
     "./src/app/src/crime/CrimeApp.tsx",
     "./src/app/src/list-app/ListApp.tsx",
+    "./src/app/src/ResultComponents.tsx",
     "./src/app/src/TaxonomyApp.tsx",
     "./src/app/test/unit/AppSpec.tsx",
     "./src/demo/demo1.tsx",
