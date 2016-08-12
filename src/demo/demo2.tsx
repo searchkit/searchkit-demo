@@ -73,6 +73,15 @@ export class Demo2 extends React.Component<any, any> {
               />
 
               <RefinementListFilter
+                id="author"
+                title="Author"
+                field="author.raw"
+                operator="OR"
+                size={10}
+                listComponent={ItemHistogramList}
+              />
+
+              <RefinementListFilter
                 id="writers"
                 title="Writers"
                 field="writers.raw"

@@ -59,7 +59,7 @@ export class App extends React.Component<any, any> {
               queryOptions={{"minimum_should_match":"70%"}}
               autofocus={true}
               searchOnChange={true}
-              queryFields={["actors^1","type^2","languages","title^5", "genres^2", "plot"]}/>
+              queryFields={["actors^1","type^2","languages","title^5", "genres^2", "plot", "author"]}/>
           </TopBar>
 
           <LayoutBody>
@@ -69,6 +69,7 @@ export class App extends React.Component<any, any> {
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
               <RangeFilter min={0} max={10} field="imdbRating" id="imdbRating" title="IMDB Rating" showHistogram={true}/>
               <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={10}/>
+              <RefinementListFilter id="author" title="Author" field="author.raw" size={10}/>
       				<RefinementListFilter translations={{"facets.view_more":"View more writers"}} id="writers" title="Writers" field="writers.raw" operator="OR" size={10}/>
       				<RefinementListFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={10}/>
               <NumericRefinementListFilter id="runtimeMinutes" title="Length" field="runtimeMinutes" options={[

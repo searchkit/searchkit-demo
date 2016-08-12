@@ -32,7 +32,7 @@
     "react-dom": "^0.14.0",
     "react-google-maps": "^4.7.2",
     "react-hot-loader": "^1.3.0",
-    "searchkit": "^0.9.0",
+    "searchkit": "^0.10.0",
     "searchkit-express": "^0.2.1"
   },
   "devDependencies": {
