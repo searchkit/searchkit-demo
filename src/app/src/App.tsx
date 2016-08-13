@@ -11,8 +11,10 @@ import {
   ResetFilters,
   MenuFilter,
   SelectedFilters,
+  Toggle,
   HierarchicalMenuFilter,
   NumericRefinementListFilter,
+  PageSizeSelector,
   SortingSelector,
   SearchkitComponent,
   SearchkitProvider,
@@ -53,7 +55,7 @@ export class App extends React.Component<any, any> {
       <SearchkitProvider searchkit={this.searchkit}>
         <Layout size="l">
           <TopBar>
-            <div className="my-logo">Searchkit Acme co</div>
+            <div className="my-logo">MIR24 photobank</div>
             <SearchBox
               translations={{"searchbox.placeholder":"search movies"}}
               queryOptions={{"minimum_should_match":"70%"}}
@@ -67,9 +69,9 @@ export class App extends React.Component<any, any> {
       			<SideBar>
       				<HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
-              <RangeFilter min={0} max={3000} field="exifimagelength" id="exifimagelength" title="Image Length" showHistogram={true}/>
-              <RangeFilter min={0} max={3000} field="exifimagewidth" id="exifimagewidth" title="Image Width" showHistogram={true}/>
-              <RefinementListFilter id="author" title="Author" field="author.raw" size={10}/>
+              <RangeFilter min={1000} max={3000} field="exifimagelength" id="exifimagelength" title="Image Length" showHistogram={true}/>
+              <RangeFilter min={1000} max={3000} field="exifimagewidth" id="exifimagewidth" title="Image Width" showHistogram={true}/>
+              <RefinementListFilter operator="OR" id="author" title="Author" field="author.raw" size={10}/>
       				<RefinementListFilter translations={{"facets.view_more":"View more writers"}} id="writers" title="Writers" field="writers.raw" operator="OR" size={10}/>
       				<RefinementListFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={10}/>
               <NumericRefinementListFilter id="runtimeMinutes" title="Length" field="runtimeMinutes" options={[
@@ -88,7 +90,8 @@ export class App extends React.Component<any, any> {
           				<HitsStats translations={{
                     "hitstats.results_found":"{hitCount} results found"
                   }}/>
-                  <ViewSwitcherToggle/>
+		  <PageSizeSelector options={[4,12,24]} listComponent={Toggle}/>
+			  <ViewSwitcherToggle/>
           				<SortingSelector options={[
           					{label:"Relevance", field:"_score", order:"desc",defaultOption:true},
           					{label:"Latest Releases", field:"released", order:"desc"},
