@@ -3,7 +3,7 @@ import * as _ from "lodash";
 
 export const MovieHitsGridItem = (props)=> {
   const {bemBlocks, result} = props
-  let url = "http://www.mdb.com/title/" + result._source.imdbId
+  let url = "http://195.26.178.77/" + result._source.imdbId+ "/" + result._source.plot
   const source:any = _.extend({}, result._source, result.highlight)
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
