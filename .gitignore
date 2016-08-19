@@ -4,3 +4,5 @@ typings/**
 !typings/tsd.d.ts
 npm-debug.log
 /images
+*.swp
+*.swo
