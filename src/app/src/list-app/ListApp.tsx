@@ -58,7 +58,7 @@ export class ListApp extends React.Component<any, any> {
               </ActionBar>
               <Hits
                   hitsPerPage={12} highlightFields={["title","plot"]}
-                  sourceFilter={["plot", "title", "poster", "imdbId", "imdbRating", "year"]}
+                  sourceFilter={["plot", "title", "poster", "imdbId", "imdbRating", "year", "short_url", "original_filename"]}
                   mod="sk-hits-grid" itemComponent={MovieHitsGridItem} scrollTo="body"
               />
               <NoHits suggestionsField={"title"}/>

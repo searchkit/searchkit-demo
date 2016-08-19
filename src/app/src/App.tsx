@@ -57,11 +57,11 @@ export class App extends React.Component<any, any> {
           <TopBar>
             <div className="my-logo">MIR24 photobank</div>
             <SearchBox
-              translations={{"searchbox.placeholder":"search movies"}}
+              translations={{"searchbox.placeholder":"type at least 3 characters for image search"}}
               queryOptions={{"minimum_should_match":"70%"}}
               autofocus={true}
               searchOnChange={true}
-              queryFields={["actors^1","type^2","languages","title^5", "genres^2", "plot", "author"]}/>
+              queryFields={["actors^1","type^2","languages","title^5", "genres^2", "plot", "author", "short_url", "original_filename"]}/>
           </TopBar>
 
           <LayoutBody>
@@ -107,7 +107,7 @@ export class App extends React.Component<any, any> {
 
               <ViewSwitcherHits
       				    hitsPerPage={12} highlightFields={["title","plot"]}
-                  sourceFilter={["plot", "title", "poster", "imdbId", "imdbRating", "year"]}
+                  sourceFilter={["plot", "title", "poster", "imdbId", "imdbRating", "year", "short_url", "original_filename"]}
                   hitComponents = {[
                     {key:"grid", title:"Grid", itemComponent:MovieHitsGridItem, defaultOption:true},
                     {key:"list", title:"List", itemComponent:MovieHitsListItem}
