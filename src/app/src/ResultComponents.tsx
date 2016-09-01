@@ -7,9 +7,11 @@ export const MovieHitsGridItem = (props)=> {
   const source:any = _.extend({}, result._source, result.highlight)
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
-      <a href={url} target="_blank">
-        <img data-qa="poster" className={bemBlocks.item("poster")} src={result._source.poster} width="240" height="240"/>
-        <div data-qa="title" className={bemBlocks.item("title")} dangerouslySetInnerHTML={{__html:source.title}}>
+      <a href={url} onClick={(e)=>{e.preventDefault(); console.log("195.26.178.77/plugins/imageviewer/site/direct.php?s="+result._source.imdbId)}}>
+        <div >
+          <img data-qa="poster" className={bemBlocks.item("poster")} src={result._source.poster} width="240" height="240"/>
+          <div data-qa="title" className={bemBlocks.item("title")} dangerouslySetInnerHTML={{__html:source.title}}>
+          </div>
         </div>
       </a>
     </div>
