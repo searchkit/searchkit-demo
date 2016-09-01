@@ -6,9 +6,10 @@ import {CrimeApp} from "./app/src/crime/CrimeApp.tsx";
 import {Demo1} from "./demo/demo1.tsx"
 import {Demo2} from "./demo/demo2.tsx";
 import {ListApp} from "./app/src/list-app/ListApp.tsx";
-
 import {Router, Route, IndexRoute} from "react-router";
 const createBrowserHistory = require('history/lib/createBrowserHistory')
+
+window.history.pushState('', '', '/');
 
 ReactDOM.render((
   <Router history={createBrowserHistory()}>
