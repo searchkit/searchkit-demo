@@ -25,7 +25,8 @@ module.exports = {
     app.use(bodyParser.json())
     app.use(methodOverride())
 
-    var port = Number(process.env.PORT || 3000);
+    //var port = Number(process.env.PORT || 3000);
+    var port = Number(8080);
 
     if (!env.production) {
       var webpack = require("webpack");
@@ -79,7 +80,7 @@ module.exports = {
     });
 
     app.listen(port, function () {
-      console.log('server running at localhost:3000, go refresh and see magic');
+      console.log('server running, go refresh and see magic');
     });
   }
 }

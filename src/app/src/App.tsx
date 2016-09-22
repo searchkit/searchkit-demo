@@ -11,8 +11,10 @@ import {
   ResetFilters,
   MenuFilter,
   SelectedFilters,
+  Toggle,
   HierarchicalMenuFilter,
   NumericRefinementListFilter,
+  PageSizeSelector,
   SortingSelector,
   SearchkitComponent,
   SearchkitProvider,
@@ -39,7 +41,7 @@ export class App extends React.Component<any, any> {
 
   constructor() {
     super()
-    const host = "/api/movies"
+    const host = "http://195.26.178.77:9200/movies"
     this.searchkit = new SearchkitManager(host)
     this.searchkit.translateFunction = (key)=> {
       return {"pagination.next":"Next Page", "pagination.previous":"Previous Page"}[key]
@@ -53,13 +55,13 @@ export class App extends React.Component<any, any> {
       <SearchkitProvider searchkit={this.searchkit}>
         <Layout size="l">
           <TopBar>
-            <div className="my-logo">Searchkit Acme co</div>
+            <div className="my-logo">MIR24 photobank</div>
             <SearchBox
-              translations={{"searchbox.placeholder":"search movies"}}
+              translations={{"searchbox.placeholder":"type at least 3 characters for image search"}}
               queryOptions={{"minimum_should_match":"70%"}}
               autofocus={true}
               searchOnChange={true}
-              queryFields={["actors^1","type^2","languages","title^5", "genres^2", "plot"]}/>
+              queryFields={["actors^1","type^2","languages","title^5", "genres^2", "plot", "author", "short_url", "original_filename"]}/>
           </TopBar>
 
           <LayoutBody>
@@ -67,8 +69,9 @@ export class App extends React.Component<any, any> {
       			<SideBar>
       				<HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
               <RangeFilter min={0} max={100} field="metaScore" id="metascore" title="Metascore" showHistogram={true}/>
-              <RangeFilter min={0} max={10} field="imdbRating" id="imdbRating" title="IMDB Rating" showHistogram={true}/>
-              <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={10}/>
+              <RangeFilter min={1000} max={3000} field="exifimagelength" id="exifimagelength" title="Image Length" showHistogram={true}/>
+              <RangeFilter min={1000} max={3000} field="exifimagewidth" id="exifimagewidth" title="Image Width" showHistogram={true}/>
+              <RefinementListFilter operator="OR" id="author" title="Author" field="author.raw" size={10}/>
       				<RefinementListFilter translations={{"facets.view_more":"View more writers"}} id="writers" title="Writers" field="writers.raw" operator="OR" size={10}/>
       				<RefinementListFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={10}/>
               <NumericRefinementListFilter id="runtimeMinutes" title="Length" field="runtimeMinutes" options={[
@@ -87,7 +90,8 @@ export class App extends React.Component<any, any> {
           				<HitsStats translations={{
                     "hitstats.results_found":"{hitCount} results found"
                   }}/>
-                  <ViewSwitcherToggle/>
+		  <PageSizeSelector options={[4,12,24]} listComponent={Toggle}/>
+			  <ViewSwitcherToggle/>
           				<SortingSelector options={[
           					{label:"Relevance", field:"_score", order:"desc",defaultOption:true},
           					{label:"Latest Releases", field:"released", order:"desc"},
@@ -103,7 +107,7 @@ export class App extends React.Component<any, any> {
 
               <ViewSwitcherHits
       				    hitsPerPage={12} highlightFields={["title","plot"]}
-                  sourceFilter={["plot", "title", "poster", "imdbId", "imdbRating", "year"]}
+                  sourceFilter={["plot", "title", "poster", "imdbId", "imdbRating", "year", "short_url", "original_filename"]}
                   hitComponents = {[
                     {key:"grid", title:"Grid", itemComponent:MovieHitsGridItem, defaultOption:true},
                     {key:"list", title:"List", itemComponent:MovieHitsListItem}
