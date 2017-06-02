@@ -20,7 +20,7 @@
     "compression": "^1.6.0",
     "cors": "^2.7.1",
     "ejs": "^2.3.4",
-    "elasticsearch": "^10.0.1",
+    "elasticsearch": "13.0.0-beta2",
     "express": "^4.13.3",
     "history": "1.13.1",
     "lodash": "^4.2.0",

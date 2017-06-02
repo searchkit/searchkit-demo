@@ -40,7 +40,7 @@ compact = (ob)->
     delete ob[k] unless v and v isnt "N/A"
   return ob
 processedMovies = movies.map (movie)->
-  years = getYears(movie.Year)  
+  years = getYears(movie.Year)
   poster =
     if process.env.LOCAL && movie.PosterS3
       movie.PosterS3.replace(/https:\/\/s3-eu-west-1\.amazonaws\.com\/imdbimages/, "")
@@ -67,16 +67,16 @@ processedMovies = movies.map (movie)->
     imdbVotes:toNumber(movie.imdbVotes)
     imdbId:movie.imdbID
     type:_.capitalize(movie.Type)
-    suggest:{
-      input:movie.Title?.split?(" ") or []
-      output: movie.Title
-      payload: {id:movie.imdbID}
-    }
+    # suggest:{
+    #   input:movie.Title?.split?(" ") or []
+    #   output: movie.Title
+    #   payload: {id:movie.imdbID}
+    # }
   })
 
 getMultiFieldDef = (name) ->
   def = {
-    type: "multi_field"
+    type: "text"
     fields: {
       "raw": {type:"string", "index": "not_analyzed"}
     }
@@ -149,8 +149,7 @@ mapping = {
         actors: getMultiFieldDef("actors")
         type: getMultiFieldDef("type")
         suggest: {
-          type:"completion",
-          payloads:true
+          type:"completion"
         }
 }
 commands = []
@@ -169,6 +168,6 @@ client.indices.delete {index:"movies"}, (err, res)->
         if err
           return console.log err
         if res.errors
-          return console.log(errors)
+          return console.log(JSON.stringify(res, 2))
 
         console.log "indexed #{res.items.length} items in #{res.took}ms"
