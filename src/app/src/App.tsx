@@ -1,3 +1,5 @@
+declare var require: any
+
 import * as React from "react";
 import * as _ from "lodash";
 const BEMBlock = require("bem-cn")

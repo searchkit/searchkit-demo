@@ -1,5 +1,8 @@
+declare var require: any
+
 import * as React from "react"
 const {GoogleMapLoader, GoogleMap, Marker} = require("react-google-maps");
+import { map, debounce, min } from 'lodash'
 
 import {
   Accessor,
@@ -27,7 +30,7 @@ export class CrimeAccessor extends Accessor{
 
   setResults(results){
     super.setResults(results)
-     let significant = _.map(
+     let significant = map(
       this.getAggregations(["geo", "significant", "buckets"], [])
     , "key")
     console.log("significant", significant)
@@ -93,7 +96,7 @@ export class GeoMap extends SearchkitComponent<any, any> {
   }
   getMarkers(){
     let areas = this.accessor.getAggregations(["geo", "areas", "buckets"], [])
-    let markers =  _.map(areas, (area)=> {
+    let markers =  map(areas, (area)=> {
       return {
         position:this.centerFromBound(area["cell"].bounds),
         key:area["key"],
@@ -112,7 +115,7 @@ export class GeoMap extends SearchkitComponent<any, any> {
       top_right:{ lat:ne.lat(), lon:ne.lng() },
       bottom_left:{ lat:sw.lat(), lon:sw.lng() }
     }
-    this.accessor.setPrecision(_.min([10, this.map.getZoom()-1]))
+    this.accessor.setPrecision(min([10, this.map.getZoom()-1]))
     this.accessor.setArea(area)
     this.searchkit.search()
   }
@@ -130,7 +133,7 @@ export class GeoMap extends SearchkitComponent<any, any> {
       }
     })
     let timesCalled = 0
-    let fn = _.debounce(this.onBoundsChanged.bind(this), 500)
+    let fn = debounce(this.onBoundsChanged.bind(this), 500)
     let onBoundsChanged = ()=> {
       if(timesCalled > 0){
         fn()
@@ -155,7 +158,7 @@ export class GeoMap extends SearchkitComponent<any, any> {
              onBoundsChanged={onBoundsChanged}
              ref={(map) => this.map = map}>
              {
-               _.map(this.getMarkers(), (marker)=>{
+               map(this.getMarkers(), (marker)=>{
                  return <Marker {...marker}/>
                })
              }

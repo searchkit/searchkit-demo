@@ -1,3 +1,5 @@
+declare var require: any
+
 import * as ReactDOM from "react-dom";
 import * as React from "react";
 import {App} from "./app/src/App.tsx";

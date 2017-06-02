@@ -13,7 +13,6 @@ import * as ReactDOM from "react-dom";
 import * as React from "react";
 const searchkit = new SearchkitManager(host)
 
-const _ = require("lodash")
 import "searchkit/theming/theme.scss";
 import "./customisations.scss";
 

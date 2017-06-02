@@ -24,13 +24,12 @@
     "./src/demo/demo2.tsx",
     "./src/demo/HitItems.tsx",
     "./src/index.tsx",
-    "./src/app/index.ts",
-    "./typings/tsd.d.ts"
+    "./src/app/index.ts"
   ],
   "filesGlob": [
     "./src/**/*.tsx",
     "./src/**/*.ts",
-    "./typings/tsd.d.ts"
+    "./node_modules/**/*.d.ts"
   ],
   "exclude": [],
   "atom": {
