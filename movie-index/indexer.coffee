@@ -7,7 +7,7 @@ args = process.argv.slice(2);
 
 
 client = new elasticsearch.Client({
-  host:args[0] or "localhost:9200"
+  host:args[0] or "https://1a70a53ddd8663b6f3d9:d6174822aa@4425deab.qb0x.com:31547"
 })
 
 

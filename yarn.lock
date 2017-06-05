@@ -3883,9 +3883,9 @@ searchkit-express@^0.2.1:
     lodash "^3.10.1"
     request "^2.67.0"
 
-searchkit@^2.0.0:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/searchkit/-/searchkit-2.0.1.tgz#2488e854939d204e008429b94904381dfaab2cfd"
+searchkit@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/searchkit/-/searchkit-2.1.0.tgz#2a3076cdfc6c730674256609f2270fa7f64dba93"
   dependencies:
     "@types/classnames" "0.0.32"
     "@types/enzyme" "^2.7.1"
