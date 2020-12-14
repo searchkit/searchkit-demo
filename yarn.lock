@@ -97,9 +97,11 @@ after@0.8.2:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/after/-/after-0.8.2.tgz#fedb394f9f0e02aa9768e702bda23b505fae7e1f"
 
-agentkeepalive@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/agentkeepalive/-/agentkeepalive-2.2.0.tgz#c5d1bd4b129008f1163f236f86e5faea2026e2ef"
+agentkeepalive@^3.4.1:
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/agentkeepalive/-/agentkeepalive-3.5.2.tgz#a113924dd3fa24a0bc3b78108c450c2abee00f67"
+  dependencies:
+    humanize-ms "^1.2.1"
 
 ajv@^4.9.1:
   version "4.11.8"
@@ -1120,16 +1122,13 @@ ejs@^2.3.4:
   version "2.5.6"
   resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.5.6.tgz#479636bfa3fe3b1debd52087f0acb204b4f19c88"
 
-elasticsearch@13.0.0-beta2:
-  version "13.0.0-beta2"
-  resolved "https://registry.yarnpkg.com/elasticsearch/-/elasticsearch-13.0.0-beta2.tgz#189aebfab6c740afb704616aaebdcbb3a09b94cf"
+elasticsearch@16.0.0:
+  version "16.0.0"
+  resolved "https://registry.yarnpkg.com/elasticsearch/-/elasticsearch-16.0.0.tgz#39cf4d45bd806b443c0970379fce7cb216c233e4"
   dependencies:
-    agentkeepalive "^2.2.0"
+    agentkeepalive "^3.4.1"
     chalk "^1.0.0"
-    lodash "2.4.2"
-    lodash.get "^4.4.2"
-    lodash.isempty "^4.4.0"
-    lodash.trimend "^4.5.1"
+    lodash "^4.17.10"
 
 electron-to-chromium@^1.2.7:
   version "1.3.13"
@@ -1835,6 +1834,12 @@ https-browserify@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-0.0.1.tgz#3f91365cabe60b77ed0ebba24b454e3e09d95a82"
 
+humanize-ms@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/humanize-ms/-/humanize-ms-1.2.1.tgz#c46e3159a293f6b896da29316d8b6fe8bb79bbed"
+  dependencies:
+    ms "^2.0.0"
+
 iconv-lite@0.4.15, iconv-lite@~0.4.13:
   version "0.4.15"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.15.tgz#fe265a218ac6a57cfe854927e9d04c19825eddeb"
@@ -2350,10 +2355,6 @@ lodash.deburr@^3.0.0:
   dependencies:
     lodash._root "^3.0.0"
 
-lodash.get@^4.4.2:
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
-
 lodash.isarguments@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/lodash.isarguments/-/lodash.isarguments-3.1.0.tgz#2f573d85c6a24289ff00663b491c1d338ff3458a"
@@ -2361,10 +2362,6 @@ lodash.isarguments@^3.0.0:
 lodash.isarray@^3.0.0:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/lodash.isarray/-/lodash.isarray-3.0.4.tgz#79e4eb88c36a8122af86f844aa9bcd851b5fbb55"
-
-lodash.isempty@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/lodash.isempty/-/lodash.isempty-4.4.0.tgz#6f86cbedd8be4ec987be9aaf33c9684db1b31e7e"
 
 lodash.isequal@^3.0.4:
   version "3.0.4"
@@ -2389,10 +2386,6 @@ lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
 
-lodash.trimend@^4.5.1:
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/lodash.trimend/-/lodash.trimend-4.5.1.tgz#12804437286b98cad8996b79414e11300114082f"
-
 lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
@@ -2402,10 +2395,6 @@ lodash.words@^3.0.0:
   resolved "https://registry.yarnpkg.com/lodash.words/-/lodash.words-3.2.0.tgz#4e2a8649bc08745b17c695b1a3ce8fee596623b3"
   dependencies:
     lodash._root "^3.0.0"
-
-lodash@2.4.2:
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-2.4.2.tgz#fadd834b9683073da179b3eae6d9c0d15053f73e"
 
 lodash@4.14.2:
   version "4.14.2"
@@ -2418,6 +2407,10 @@ lodash@^3.10.1, lodash@^3.8.0:
 lodash@^4.0.0, lodash@^4.14.0, lodash@^4.17.2, lodash@^4.2.0:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
+
+lodash@^4.17.10:
+  version "4.17.11"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
 
 lodash@~4.16.4:
   version "4.16.6"
@@ -2681,6 +2674,10 @@ ms@0.7.2:
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
+
+ms@^2.0.0:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
 
 nan@^2.3.0, nan@^2.3.2:
   version "2.6.2"

@@ -7,7 +7,7 @@ args = process.argv.slice(2);
 
 
 client = new elasticsearch.Client({
-  host:args[0] or "https://1a70a53ddd8663b6f3d9:d6174822aa@4425deab.qb0x.com:31547"
+  host: process.env.ES_HOST
 })
 
 
@@ -54,11 +54,11 @@ processedMovies = movies.map (movie)->
     released:moment(movie.Released, "DD MMM YYYY").format("YYYY-MM-DD") if notNA(movie.Released)
     runtimeMinutes:toNumber(movie.Runtime)
     genres:splitComma(movie.Genre)
-    directors:splitComma(movie.Director)
+    # directors:splitComma(movie.Director)
     writers:splitWriter(movie.Writer)
     actors:splitComma(movie.Actors)
     plot:movie.Plot
-    languages:splitComma(movie.Language)
+    # languages:splitComma(movie.Language)
     countries:splitComma(movie.Country)
     awards:movie.Awards if notNA(movie.Awards)
     poster:poster
@@ -75,18 +75,12 @@ processedMovies = movies.map (movie)->
   })
 
 getMultiFieldDef = (name) ->
-  def = {
-    type: "text"
+  return {
+    type: 'text',
     fields: {
-      "raw": {type:"string", "index": "not_analyzed"}
+      "raw": {type:"keyword"}
     }
   }
-
-  def.fields[name] =  {"type" : "string", "index" : "analyzed"}
-
-  def
-
-# console.log processedMovies
 
 settings = {
   "analysis": {
@@ -129,7 +123,7 @@ settings = {
 
 mapping = {
   index:"movies"
-  type:"movie"
+  type: "movie"
   body:
     movie:
       properties:
@@ -148,11 +142,16 @@ mapping = {
         directors: getMultiFieldDef("directors")
         actors: getMultiFieldDef("actors")
         type: getMultiFieldDef("type")
+        plot: { type: "text" },
+        poster: { type: "keyword" }
+        imdbId: { type: "keyword" }
         suggest: {
           type:"completion"
         }
 }
 commands = []
+
+# console.log(processedMovies)
 
 for m in processedMovies
   commands.push {index:{_index:"movies", _type:"movie", _id:m.imdbId}}
