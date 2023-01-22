@@ -1,38 +1,29 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
-    "declaration": true,
-    "module": "commonjs",
     "target": "es5",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "outDir": "lib",
-    "sourceMap": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
     "moduleResolution": "node",
-    "noEmitOnError": true,
-    "jsx": "react"
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
   },
-  "files": [
-    "./src/app/src/App.tsx",
-    "./src/app/src/crime/CrimeAggs.tsx",
-    "./src/app/src/crime/CrimeApp.tsx",
-    "./src/app/src/list-app/ListApp.tsx",
-    "./src/app/src/ResultComponents.tsx",
-    "./src/app/src/TaxonomyApp.tsx",
-    "./src/app/test/unit/AppSpec.tsx",
-    "./src/demo/demo1.tsx",
-    "./src/demo/demo2.tsx",
-    "./src/demo/HitItems.tsx",
-    "./src/index.tsx",
-    "./src/app/index.ts"
-  ],
-  "filesGlob": [
-    "./src/**/*.tsx",
-    "./src/**/*.ts",
-    "./node_modules/**/*.d.ts"
-  ],
-  "exclude": [],
-  "atom": {
-    "rewriteTsconfig": true
-  }
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }

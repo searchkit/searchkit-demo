@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@media (max-width: 767px) {
+  .ais-SearchBox-input,
+  .ais-RangeInput-input {
+    font-size: 1rem; } }
+
+    body { font-family: sans-serif; }
+    .ais-SearchBox { margin: 1em 0; }
+    .ais-Pagination { margin-top: 1em }
+    .left-panel { float: left; width: 250px; }
+    .right-panel { margin-left: 260px; }
+
+
+    .ais-CurrentRefinements-label, .ais-CurrentRefinements-categoryLabel {
+      color: #888;
+    }
+
+    html {
+      font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1, "ss06" 1 !important;
+    }
+    
+
+.ais-Hits-item h2 {
+  @apply text-2xl
+} 
+
+.hit-image {
+  @apply mb-4 max-h-72;
+}
+
+.ais-SortBy {
+  width: 230px;
+  float:right;
+}
+
+.ais-Panel {
+  @apply mb-6;
+}
