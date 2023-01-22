@@ -3,12 +3,21 @@ import Client from '@searchkit/instantsearch-client'
 import Searchkit from "searchkit"
 import { config } from "./api/config"
 
-// const searchkitClient = new Searchkit(config)
-// const searchClient = Client(searchkitClient);
 
-const searchClient = Client({
-  url: '/api/search',
-});
+// This is setup to use Searchkit to call Elasticsearch directly.
+// If you want to proxy the search request through your API, you can use the commented out code below.
+// and will use the pages/api/search.ts file to proxy the request.
+
+const searchkitClient = new Searchkit(config)
+const searchClient = Client(searchkitClient);
+
+
+// Uncomment this code to use the pages/api/search.ts file to proxy the request.
+// and uncomment the two lines above to stop calling Elasticsearch directly.
+
+// const searchClient = Client({
+//   url: '/api/search',
+// });
 
 const hitView = (props: any) => {
   return (
